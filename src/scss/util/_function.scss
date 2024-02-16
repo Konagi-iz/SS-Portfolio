@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+@use 'sass:math';
+
+/*------------------------------------------------
+functions
+------------------------------------------------*/
+/* vw ------------ */
+@function pcvw($pixel) {
+	@return math.div($pixel, 1300) * 100vw;
+}
+
+@function vw($pixel) {
+	@return math.div($pixel, 375) * 100vw;
+}
+
+/* minpx ------------ */
+@function minpx($pixel, $min: 1024, $vw: 1300) {
+	@return math.div($pixel, $vw) * $min * 1px;
+}
+
+/* maxpx ------------ */
+@function maxpx($pixel, $max: 1900, $vw: 1300) {
+	@return math.div($pixel, $vw) * $max * 1px;
+}
+
+@function vwclamp($pixel, $min: 1024, $max: 1900) {
+	@return clamp(#{minpx($pixel, $min)}, #{pcvw($pixel)}, #{maxpx($pixel, $max)});
+}

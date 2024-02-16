@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+@use './util/util' as *;
+
+.dn-w {
+	@include media_wide {
+		display: none;
+	}
+}
+.dn-n {
+	@include media_narrow {
+		display: none;
+	}
+}
