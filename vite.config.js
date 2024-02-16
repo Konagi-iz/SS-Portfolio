@@ -8,16 +8,16 @@ import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 export default defineConfig({
 	plugins: [
 		vue(),
-		// UnFonts({
-		// 	google: {
-		// 		families: [
-		// 			{
-		// 				name: 'Arial',
-		// 				styles: 'ital,wght@0,400;0,500;0,600;0,700;1,200;1,400;1,500;1,600;1,700',
-		// 			},
-		// 		],
-		// 	},
-		// }),
+		UnFonts({
+			google: {
+				families: [
+					{
+						name: 'Noto Sans JP',
+						styles: 'wght@400,700',
+					},
+				],
+			},
+		}),
 		Icons({
 			customCollections: {
 				svg: FileSystemIconLoader('src/public/assets/svg'),

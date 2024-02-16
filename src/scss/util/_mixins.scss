@@ -11,11 +11,21 @@ mixins
 /*------------------------------------------------
 font
 ------------------------------------------------*/
-@mixin font-family {
-	font-family: 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', '游ゴシック', 'YuGothic', 'メイリオ', 'Meiryo', sans-serif;
+@font-face {
+	font-family: 'Beatrice-Headline';
+	font-display: swap;
+	src: url(../../assets/font/BeatriceHeadline-RegularItalic.woff) format('woff');
 }
-@mixin font-en {
-	font-family: 'Montserrat', sans-serif;
+
+@mixin font-family {
+	font-family: 'Noto Sans JP', 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', '游ゴシック', 'YuGothic', 'メイリオ',
+		'Meiryo', sans-serif;
+}
+@mixin font-family--en {
+	font-family: 'Arial', sans-serif;
+}
+@mixin font-family--dp {
+	font-family: 'Beatrice-Headline', sans-serif;
 }
 
 @mixin txt-basic {
@@ -36,11 +46,10 @@ font
 color
 ---------------------------------------------*/
 $c-white: #ffffff;
-$c-lightgray: #f5f5f5;
-$c-gray: #7c7c7c;
-$c-darkgray: #1e1e1e;
 $c-black: #000000;
-$c-red: #dc1405;
+$c-bg: #101010;
+$c-gray: #383838;
+$c-orange: #ff4b12;
 
 /*---------------------------------------------
 ease
