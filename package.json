@@ -9,10 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@pmndrs/vanilla": "^1.14.3",
     "destyle.css": "^4.0.1",
     "gsap": "^3.12.5",
-    "three": "^0.161.0",
+    "three": "^0.151.0",
     "unplugin-fonts": "^1.1.1",
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"

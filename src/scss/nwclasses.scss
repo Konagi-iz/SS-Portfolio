@@ -12,3 +12,10 @@
 		display: none;
 	}
 }
+
+.font-en {
+	@include font-family--en;
+}
+.font-dp {
+	@include font-family--dp;
+}

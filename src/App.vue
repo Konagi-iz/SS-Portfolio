@@ -3,6 +3,7 @@ import { RouterView, useRoute } from 'vue-router';
 import 'destyle.css';
 import '@/scss/base.scss';
 import '@/scss/nwclasses.scss';
+import BGNoise from '@/components/parts/BGNoise.vue';
 import Header from '@/components/parts/Header.vue';
 import Footer from '@/components/parts/Footer.vue';
 
@@ -25,6 +26,7 @@ window.addEventListener('resize', () => {
 
 <template>
 	<div class="wrapper">
+		<BGNoise :opacity="40"></BGNoise>
 		<Header></Header>
 		<main id="main">
 			<router-view></router-view>
