@@ -83,10 +83,10 @@ const navlist = [
 		transition-delay: 0s;
 	}
 	&.nav-wrp--active .nav {
-		clip-path: inset(0 0 0 0);
+		clip-path: inset(-1% -1% -1% -1%);
 	}
 	&.nav-wrp--active .nav-info {
-		clip-path: inset(0 0 0 0);
+		clip-path: inset(-1% -1% -1% -1%);
 	}
 
 	/* nav ------------ */
@@ -122,7 +122,6 @@ const navlist = [
 		margin-left: 8px;
 		color: $c-white;
 		@include fz(64);
-		font-weight: 600;
 		line-height: 1;
 		letter-spacing: 0.04em;
 	}

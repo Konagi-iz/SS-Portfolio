@@ -6,6 +6,10 @@
 	--fz: 10px;
 	font-size: var(--fz);
 }
+::selection {
+	background: $c-orange;
+	color: $c-white;
+}
 
 body {
 	background: $c-darkgray;

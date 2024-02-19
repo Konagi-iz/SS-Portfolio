@@ -26,11 +26,11 @@ const router = createRouter({
 		// 	component: () => import('@/components/views/404View.vue'),
 		// },
 	],
-	scrollBehavior(to, from, savedPosition) {
-		return {
-			top: 0,
-		};
-	},
+	// scrollBehavior(to, from, savedPosition) {
+	// 	return {
+	// 		top: 0,
+	// 	};
+	// },
 });
 
 /* ページ遷移 前 に行われる処理 ------------ */
@@ -67,11 +67,15 @@ router.afterEach((to, from, next) => {
 		const targets = document.querySelectorAll('.js-txt-span');
 
 		targets.forEach((target) => {
-			const txtContent = target.textContent.trim();
+			const txtContent = target.textContent.trim().replace(/\s/g, '○');
 			let newTxt = '';
 
 			[...txtContent].forEach((char) => {
-				newTxt += `<span>${char}</span>`;
+				if (char === '○') {
+					newTxt += '<br>';
+				} else {
+					newTxt += `<span>${char}</span>`;
+				}
 			});
 
 			target.innerHTML = newTxt;

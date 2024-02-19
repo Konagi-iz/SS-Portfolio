@@ -1,10 +1,13 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import Menu from '@/components/parts/Menu.vue';
 import Nav from '@/components/parts/Nav.vue';
 
 const isHeaderScrolled = ref(false);
 const isBr = ref(false);
+const isMenuScrolled = ref(false);
+
+const menu = ref(null);
 
 /* .header__ttlのbrを遅延して表示させる ------------ */
 watch(isHeaderScrolled, (v) => {
@@ -31,6 +34,22 @@ function onHeaderScrolled() {
 		}
 	});
 }
+
+onMounted(() => {
+	setMenuSticky();
+});
+function setMenuSticky() {
+	const pos = menu.value.getBoundingClientRect().top;
+	window.addEventListener('scroll', () => {
+		const scroll = window.scrollY;
+
+		if (scroll > pos) {
+			isMenuScrolled.value = true;
+		} else {
+			isMenuScrolled.value = false;
+		}
+	});
+}
 </script>
 
 <template>
@@ -50,7 +69,7 @@ function onHeaderScrolled() {
 			<p class="header__txt header__txt--r font-en">2024</p>
 		</div>
 		<!-- .header__in -->
-		<div class="header__menu">
+		<div ref="menu" class="header__menu" :class="{ 'header__menu--fixed': isMenuScrolled }">
 			<Menu></Menu>
 		</div>
 		<!-- .header__menu -->
@@ -123,9 +142,14 @@ function onHeaderScrolled() {
 	/* menu ------------ */
 	.header__menu {
 		z-index: 999;
-		position: fixed;
-		bottom: 10px;
+		position: absolute;
+		top: calc(100vh - 66px - 20px);
 		right: 10px;
+		padding-top: 10px;
+	}
+	.header__menu--fixed {
+		position: fixed;
+		top: 0;
 	}
 
 	/* .header--scrolled ------------ */
