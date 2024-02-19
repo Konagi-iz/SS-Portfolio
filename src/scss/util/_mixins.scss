@@ -28,6 +28,25 @@ font
 	font-family: 'Beatrice-Headline', sans-serif;
 }
 
+@mixin ttl-display {
+	@include fz(128);
+	line-height: 1.2;
+	@include media_narrow {
+		@include fz(52);
+	}
+}
+
+@mixin ttl-basic {
+	@include fz(72);
+	font-weight: 700;
+	line-height: 1.7;
+	letter-spacing: 0.04em;
+	@include media_narrow {
+		@include fz(29);
+		line-height: 2;
+	}
+}
+
 @mixin txt-basic {
 	@include fz(14);
 	font-weight: 400;
@@ -57,6 +76,7 @@ $c-orange: #ff4b12;
 ease
 ---------------------------------------------*/
 $e-out: cubic-bezier(0.7, 0, 0.1, 1);
+$e-out2: cubic-bezier(0.19, 1, 0.22, 1);
 $e-inOut: cubic-bezier(0.9, 0, 0.1, 1);
 
 /*------------------------------------------------

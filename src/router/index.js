@@ -40,6 +40,11 @@ router.beforeEach((to, from, next) => {
 
 /* ページ遷移 後 に行われる処理 ------------ */
 router.afterEach((to, from, next) => {
+	nextTick(() => {
+		scrollAnimation();
+		txtSpan();
+	});
+
 	/* Scroll animation ------------ */
 	function scrollAnimation() {
 		const targets = document.querySelectorAll('.scr-anin');
@@ -56,9 +61,22 @@ router.afterEach((to, from, next) => {
 			});
 		});
 	}
-	nextTick(() => {
-		scrollAnimation();
-	});
+
+	/* テキストを分割してspanで囲む ------------ */
+	function txtSpan() {
+		const targets = document.querySelectorAll('.js-txt-span');
+
+		targets.forEach((target) => {
+			const txtContent = target.textContent.trim();
+			let newTxt = '';
+
+			[...txtContent].forEach((char) => {
+				newTxt += `<span>${char}</span>`;
+			});
+
+			target.innerHTML = newTxt;
+		});
+	}
 });
 
 export default router;

@@ -22,6 +22,7 @@ function updateDate() {
 <template>
 	<section class="lcl-hero">
 		<Canvas></Canvas>
+		<!-- Canvas -->
 		<h2 class="lcl-hero-ttl">
 			<span class="lcl-hero-ttl__txt font-dp">Design.</span>
 			<span class="lcl-hero-ttl__txt font-dp">Cording.</span>
@@ -57,7 +58,6 @@ function updateDate() {
 		</div>
 		<!-- .lcl-hero-frame -->
 	</section>
-	<div class="space"></div>
 </template>
 
 <style scoped lang="scss">
@@ -126,9 +126,5 @@ function updateDate() {
 		line-height: 1.5;
 		letter-spacing: 0.04em;
 	}
-}
-
-.space {
-	height: 100vh;
 }
 </style>

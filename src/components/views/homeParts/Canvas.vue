@@ -180,7 +180,7 @@ const initThreeJS = async () => {
 
 	// ポイントライト
 	const [keyPointLight, frontPointLight, rearPointLight] = [
-		new THREE.PointLight(0xff7e57, 100, 0, 0.1),
+		new THREE.PointLight(0xff7e57, 1000, 0, 0.1),
 		new THREE.PointLight(0xff7e57, 100, 0, 0.01),
 		new THREE.PointLight(0xff4b12, 20000, 0, 0.01),
 	];

@@ -1,5 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue';
+import Menu from '@/components/parts/Menu.vue';
+import Nav from '@/components/parts/Nav.vue';
 
 const isHeaderScrolled = ref(false);
 const isBr = ref(false);
@@ -48,6 +50,11 @@ function onHeaderScrolled() {
 			<p class="header__txt header__txt--r font-en">2024</p>
 		</div>
 		<!-- .header__in -->
+		<div class="header__menu">
+			<Menu></Menu>
+		</div>
+		<!-- .header__menu -->
+		<Nav></Nav>
 	</header>
 </template>
 
@@ -99,7 +106,7 @@ function onHeaderScrolled() {
 		left: 50%;
 		transform: translate(-50%, -50%);
 		width: 100%;
-		color: $c-gray;
+		color: $c-white;
 		@include fz(12);
 		font-weight: 400;
 		line-height: 1.5;
@@ -111,6 +118,14 @@ function onHeaderScrolled() {
 		.br--active {
 			display: block;
 		}
+	}
+
+	/* menu ------------ */
+	.header__menu {
+		z-index: 999;
+		position: fixed;
+		bottom: 10px;
+		right: 10px;
 	}
 
 	/* .header--scrolled ------------ */

@@ -26,7 +26,7 @@ window.addEventListener('resize', () => {
 
 <template>
 	<div class="wrapper">
-		<BGNoise :opacity="40"></BGNoise>
+		<BGNoise :opacity="60"></BGNoise>
 		<Header></Header>
 		<main id="main">
 			<router-view></router-view>
