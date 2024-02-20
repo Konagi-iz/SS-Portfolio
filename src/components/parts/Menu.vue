@@ -21,8 +21,10 @@ watch(isAnimationEnd, () => {
 const toggleNav = () => {
 	if (isNavActive.value) {
 		isNavActive.value = false;
+		document.body.style.overflow = '';
 	} else {
 		isNavActive.value = true;
+		document.body.style.overflow = 'hidden';
 	}
 };
 </script>
