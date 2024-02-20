@@ -1,46 +1,139 @@
 <script setup>
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Autoplay, EffectFade, Pagination } from 'swiper/modules';
+import { ref } from 'vue';
+import IconAngleRight from '~icons/svg/ico-angle-right';
 
-const modules = [Autoplay, EffectFade, Pagination];
+const currentIndex = ref(0);
+const currentRotate = ref(0);
+
+const slidePrev = () => {
+	currentRotate.value += 45;
+	if (currentIndex.value === 0) {
+		currentIndex.value = 7;
+	} else {
+		currentIndex.value--;
+	}
+	console.log(currentIndex.value);
+};
+const slideNext = () => {
+	currentRotate.value -= 45;
+	if (currentIndex.value === 7) {
+		currentIndex.value = 0;
+	} else {
+		currentIndex.value++;
+	}
+	console.log(currentIndex.value);
+};
 </script>
 
 <template>
 	<div class="lcl-slider">
-		<Swiper
-			class="lcl-slider__slider"
-			:modules="modules"
-			:loop="true"
-			:loop-additional-slides="1"
-			:pagination="{ clickable: true }"
-			:speed="600"
-			slidesPerView="auto"
-		>
-			<SwiperSlide v-for="(item, index) in 8" :key="index" class="lcl-slider__slide" :style="`--index: ${index};`">
-				<img class="lcl-slider__img" :src="`/assets/img/home/photo/PC/img_0${index + 1}.png`" alt="" width="558" height="558" loading="lazy" />
-			</SwiperSlide>
-		</Swiper>
+		<div class="lcl-slider__slider">
+			<div class="lcl-slider__wrapper" :style="`rotate: ${currentRotate}deg`">
+				<div
+					v-for="(item, index) in 8"
+					:key="index"
+					class="lcl-slider__slide"
+					:class="{ 'lcl-slider__slide--active': currentIndex == index }"
+					:style="`--index: ${index};`"
+				>
+					<img
+						class="lcl-slider__img"
+						:src="`/assets/img/home/photo/PC/img_0${index + 1}.png`"
+						alt=""
+						width="558"
+						height="558"
+						loading="lazy"
+					/>
+				</div>
+				<!-- .lcl-slider__slide -->
+			</div>
+			<!-- .lcl-slider__wrapper -->
+			<button @click="slidePrev" class="lcl-slider__btn lcl-slider__btn--prev">
+				<IconAngleRight></IconAngleRight>
+			</button>
+			<!-- .lcl-slider__btn -->
+			<button @click="slideNext" class="lcl-slider__btn lcl-slider__btn--next">
+				<IconAngleRight></IconAngleRight>
+			</button>
+			<!-- .lcl-slider__btn -->
+		</div>
+		<!-- .lcl-slider__slider -->
 	</div>
 </template>
 
 <style scoped lang="scss">
 .lcl-slider {
+	overflow: hidden;
 	.lcl-slider__slider {
 		position: relative;
+		margin-top: max(minpx(90), pcvw(90));
 		width: 100%;
-		height: max(minpx(1854), pcvw(1854));
+		height: max(minpx(809), pcvw(809));
+		&::after {
+			content: '';
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			height: max(minpx(269), pcvw(269));
+			background: linear-gradient(180deg, rgba(226, 226, 226, 0) 0%, #e2e2e2 69.27%);
+			/*---------------- after */
+		}
+	}
+	.lcl-slider__wrapper {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		translate: -50% 0;
+		width: max(minpx(2278), pcvw(2278));
+		height: max(minpx(2278), pcvw(2278));
+		transition: rotate 1.2s $e-out2;
 	}
 	.lcl-slider__slide {
-		--angle: calc(360deg / 8 * var(--index));
-		--x: calc(cos(var(--angle)) * (max(#{minpx(558)}, #{pcvw(558)}) / 2));
-		--y: calc(sin(var(--angle)) * (max(#{minpx(558)}, #{pcvw(558)}) / 2));
+		--angle: calc(360deg / 8 * var(--index) - 90deg);
+		--x: calc(cos(var(--angle)) * (max(#{minpx(926.5)}, #{pcvw(926.5)})));
+		--y: calc(sin(var(--angle)) * (max(#{minpx(926.5)}, #{pcvw(926.5)})));
 		position: absolute;
 		top: 50%;
 		left: 50%;
 		translate: calc(var(--x) - 50%) calc(var(--y) - 50%);
-		width: fit-content;
+		rotate: calc(45deg * var(--index));
+		width: max(minpx(425), pcvw(425));
+		height: max(minpx(425), pcvw(425));
+		transition: scale 0.7s $e-out2;
+	}
+	.lcl-slider__slide--active {
+		scale: 1.3;
 	}
 	.lcl-slider__img {
+		width: 100%;
+		height: 100%;
+	}
+
+	/* button ------------ */
+	.lcl-slider__btn {
+		position: absolute;
+		top: max(minpx(175.5), pcvw(175.5));
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		width: max(minpx(73), pcvw(73));
+		height: max(minpx(73), pcvw(73));
+		background: $c-orange;
+	}
+	.lcl-slider__btn--prev {
+		left: #{max(minpx(268), pcvw(268))};
+		.ico-angle-right {
+			transform: scaleX(-1);
+		}
+	}
+	.lcl-slider__btn--next {
+		left: #{max(minpx(959), pcvw(959))};
+	}
+	.ico-angle-right {
+		width: 44px;
+		height: auto;
 	}
 }
 </style>

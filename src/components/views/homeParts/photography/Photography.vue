@@ -41,10 +41,11 @@ import Slider from '@/components/views/homeParts/photography/Slider.vue';
 <style scoped lang="scss">
 .lcl-photo {
 	position: relative;
-	padding-top: 483px;
+	padding-block: 439px 202px;
 	width: 100%;
 	background: $c-offwhite;
 	.lcl-photo-ttl {
+		z-index: 1;
 		position: absolute;
 		top: 176px;
 		left: calc((100% - 1000px) / 2);
