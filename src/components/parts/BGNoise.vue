@@ -16,6 +16,7 @@ const props = defineProps({ opacity: Number });
 	left: 0;
 	background: url(/assets/img/common/img_bg-noise.png) repeat 0 0 / 200px;
 	animation: bg-noise 0.2s linear infinite;
+	pointer-events: none;
 }
 
 @keyframes bg-noise {

@@ -1,9 +1,28 @@
 <script setup>
+import { ref, onMounted } from 'vue';
+import { gsap } from 'gsap';
 import Slider from '@/components/views/homeParts/photography/Slider.vue';
+import Button01 from '@/components/parts/Button01.vue';
+
+const section = ref(null);
+
+/* 背景色の切り替えアニメーション ------------ */
+onMounted(() => {
+	const bg = document.querySelector('.background');
+	gsap.to(bg, {
+		background: '#e2e2e2',
+		scrollTrigger: {
+			trigger: section.value,
+			start: 'top center',
+			end: 'top top',
+			scrub: 1,
+		},
+	});
+});
 </script>
 
 <template>
-	<section class="lcl-photo">
+	<section ref="section" class="lcl-photo">
 		<div class="lcl-photo-ttl">
 			<img class="lcl-photo__icon" src="/assets/img/home/photo/PC/ico-photo.svg" alt="" width="142" height="142" loading="lazy" />
 			<h2 class="lcl-photo-ttl__txt">
@@ -35,6 +54,14 @@ import Slider from '@/components/views/homeParts/photography/Slider.vue';
 		</div>
 		<!-- .lcl-photo-desc -->
 		<Slider></Slider>
+		<Button01
+			class="lcl-photo__link"
+			v-bind="{
+				isBig: true,
+				color: 'orange',
+				txt: 'VIEW MORE<br>PHOTO',
+			}"
+		></Button01>
 	</section>
 </template>
 
@@ -43,7 +70,8 @@ import Slider from '@/components/views/homeParts/photography/Slider.vue';
 	position: relative;
 	padding-block: 439px 202px;
 	width: 100%;
-	background: $c-offwhite;
+
+	/* ttl ------------ */
 	.lcl-photo-ttl {
 		z-index: 1;
 		position: absolute;
@@ -69,6 +97,8 @@ import Slider from '@/components/views/homeParts/photography/Slider.vue';
 		@include fz(187);
 		line-height: 0.75;
 	}
+
+	/* desc ------------ */
 	.lcl-photo-desc {
 		position: absolute;
 		top: 429px;
@@ -83,6 +113,14 @@ import Slider from '@/components/views/homeParts/photography/Slider.vue';
 		@include fz(12);
 		font-weight: 700;
 		line-height: 1.9;
+	}
+
+	/* link ------------ */
+	.lcl-photo__link {
+		position: absolute;
+		bottom: 183px;
+		left: 50%;
+		transform: translateX(-50%);
 	}
 }
 </style>
