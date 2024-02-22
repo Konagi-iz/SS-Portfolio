@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import HomeView from '@/components/views/HomeView.vue';
 import { nextTick } from 'vue';
+import HomeView from '@/components/views/HomeView.vue';
+import { isRouterViewLoaded } from '@/store';
 
 const router = createRouter({
 	history: createWebHashHistory(),
@@ -35,6 +36,7 @@ const router = createRouter({
 
 /* ページ遷移 前 に行われる処理 ------------ */
 router.beforeEach((to, from, next) => {
+	isRouterViewLoaded.value = false;
 	next();
 });
 

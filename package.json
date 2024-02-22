@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@studio-freight/lenis": "^1.0.36",
     "destyle.css": "^4.0.1",
     "gsap": "^3.12.5",
     "swiper": "^11.0.6",

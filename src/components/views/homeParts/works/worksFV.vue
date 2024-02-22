@@ -23,12 +23,13 @@ onMounted(() => {
 			end: 'bottom top',
 			pin: ttl.value,
 			pinSpacing: false,
-			scrub: true,
+			scrub: 1,
 		},
 	});
 	gsap.from(angle.value, {
-		opacity: 0,
-		yPercent: -10,
+		yPercent: -200,
+		duration: 1.2,
+		ease: 'expo',
 		scrollTrigger: {
 			trigger: second.value,
 			start: 'bottom bottom',
@@ -59,8 +60,10 @@ onMounted(() => {
 		<div ref="second" class="lcl-works-fv__second">
 			<BGNoise :opacity="5"></BGNoise>
 			<WorksFVList></WorksFVList>
-			<div ref="angle" class="lcl-works__angle">
-				<IconAngleRight></IconAngleRight>
+			<div class="lcl-works__angle-wrp">
+				<div ref="angle" class="lcl-works__angle">
+					<IconAngleRight></IconAngleRight>
+				</div>
 			</div>
 		</div>
 		<!-- .lcl-works-fv__second -->
@@ -122,10 +125,13 @@ onMounted(() => {
 	.works-fv {
 		margin-inline: auto 0;
 	}
-	.lcl-works__angle {
+	.lcl-works__angle-wrp {
 		position: absolute;
 		bottom: max(minpx(26), pcvw(26));
 		left: max(minpx(232), pcvw(232));
+		overflow: hidden;
+	}
+	.lcl-works__angle {
 	}
 	.ico-angle-right {
 		transform: rotate(90deg);

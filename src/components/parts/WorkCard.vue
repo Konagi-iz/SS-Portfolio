@@ -26,13 +26,15 @@ const props = defineProps({
 				<!-- .workcard-info -->
 			</div>
 			<!-- .workcard-txt__main -->
-			<Button01
-				v-bind="{
-					isBig: false,
-					color: 'orange',
-					txt: 'VIEW DETAIL',
-				}"
-			></Button01>
+			<router-link to="" class="workcard-link">
+				<Button01
+					v-bind="{
+						isBig: false,
+						color: 'orange',
+						txt: 'VIEW DETAIL',
+					}"
+				></Button01>
+			</router-link>
 		</div>
 		<!-- .workcard-txt -->
 		<div class="workcard-video">
@@ -89,15 +91,18 @@ const props = defineProps({
 		font-weight: 400;
 		line-height: 1.2;
 	}
+  .workcard-link {
+    width: fit-content;
+  }
 
 	/* video ------------ */
 	.workcard-video {
-    width: 540px;
+		width: 540px;
 		height: 100%;
 		object-fit: cover;
 	}
 	.workcard-video__item {
-    border-radius: 8px;
+		border-radius: 8px;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;

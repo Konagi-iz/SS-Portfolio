@@ -6,8 +6,8 @@ import Button01 from '@/components/parts/Button01.vue';
 
 const section = ref(null);
 
-/* 背景色の切り替えアニメーション ------------ */
 onMounted(() => {
+	/* 背景色の切り替えアニメーション ------------ */
 	const bg = document.querySelector('.background');
 	gsap.to(bg, {
 		background: '#e2e2e2',

@@ -12,8 +12,8 @@ export default defineConfig({
 			google: {
 				families: [
 					{
-						name: 'Noto Sans JP',
-						styles: 'wght@400,700',
+						name: 'Noto+Sans+JP',
+						styles: 'wght@400;700',
 					},
 				],
 			},

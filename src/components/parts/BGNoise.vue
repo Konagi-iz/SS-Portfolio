@@ -3,11 +3,11 @@ const props = defineProps({ opacity: Number });
 </script>
 
 <template>
-	<div class="BG-noise" :style="`opacity: ${opacity / 100};`"></div>
+	<div class="bg-noise" :style="`opacity: ${opacity / 100};`"></div>
 </template>
 
 <style scoped lang="scss">
-.BG-noise {
+.bg-noise {
 	z-index: -1;
 	position: absolute;
 	top: 0;
