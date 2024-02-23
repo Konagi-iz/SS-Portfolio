@@ -1,6 +1,8 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { isNavActive } from '@/store/index.js';
+import { lenis } from '@/main';
+
 
 const props = defineProps({ isNavMenu: Boolean });
 const emits = defineEmits(['isNavActive']);
@@ -21,10 +23,10 @@ watch(isAnimationEnd, () => {
 const toggleNav = () => {
 	if (isNavActive.value) {
 		isNavActive.value = false;
-		document.body.style.overflow = '';
+		lenis.start();
 	} else {
 		isNavActive.value = true;
-		document.body.style.overflow = 'hidden';
+		lenis.stop();
 	}
 };
 </script>
@@ -46,6 +48,10 @@ const toggleNav = () => {
 	height: 66px;
 	background: $c-darkgray;
 	transition: background 0.25s ease, border-color 0.25s ease;
+	@include media_narrow {
+		width: vw(46);
+		height: vw(46);
+	}
 	@include media_hover {
 		&:hover {
 			border-color: $c-black;
@@ -62,16 +68,30 @@ const toggleNav = () => {
 		height: 2px;
 		background: $c-white;
 		transition: background 0.25s ease;
+		@include media_narrow {
+			left: vw(12);
+			width: vw(20);
+			height: vw(2);
+		}
 		&:nth-of-type(1) {
 			top: 25px;
+			@include media_narrow {
+				top: vw(16);
+			}
 		}
 		&:nth-of-type(2) {
 			top: 32px;
 			animation-delay: 0.1s !important;
+			@include media_narrow {
+				top: vw(21);
+			}
 		}
 		&:nth-of-type(3) {
 			top: 39px;
 			animation-delay: 0.2s !important;
+			@include media_narrow {
+				top: vw(26);
+			}
 		}
 	}
 	&.menu--hover:not(.menu--nav) .menu__line {
@@ -83,6 +103,9 @@ const toggleNav = () => {
 		&:nth-of-type(1) {
 			top: 32px;
 			transform: rotate(45deg);
+			@include media_narrow {
+				top: vw(21);
+			}
 		}
 		&:nth-of-type(2) {
 			opacity: 0;
@@ -90,6 +113,9 @@ const toggleNav = () => {
 		&:nth-of-type(3) {
 			top: 32px;
 			transform: rotate(-45deg);
+			@include media_narrow {
+				top: vw(21);
+			}
 		}
 	}
 }

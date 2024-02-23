@@ -62,12 +62,12 @@ onMounted(() => {
 	ScrollTrigger.create({
 		trigger: card.value[card.value.length - 1],
 		start: 'top top',
-		end: '100% top',
+		end: '90% top',
 		pin: '.lcl-works-list',
 		anticipatePin: true,
 	});
 	gsap.to('.lcl-works-list__in', {
-		opacity: 0.2,
+		opacity: 0.1,
 		ease: 'none',
 		scrollTrigger: {
 			trigger: card.value[card.value.length - 1],
@@ -84,7 +84,7 @@ onMounted(() => {
 		scrollTrigger: {
 			trigger: card.value[card.value.length - 1],
 			start: '0% 1%',
-			end: '30% 1%',
+			end: '50% 1%',
 			scrub: 0.5,
 			pinnedContainer: '.lcl-works-list',
 			toggleActions: 'play none none reverse',
@@ -143,6 +143,10 @@ onMounted(() => {
 		display: flex;
 		align-items: center;
 		height: max(730px, 100vh);
+		@include media_narrow {
+			justify-content: center;
+			height: 100lvh;
+		}
 	}
 	.workcard {
 		box-shadow: 0px 0px 35px rgba(0, 0, 0, 0.15);
@@ -158,6 +162,10 @@ onMounted(() => {
 		justify-content: center;
 		width: 100%;
 		height: max(730px, 100vh);
+		@include media_narrow {
+			transform: scale(1.5);
+			height: 100lvh;
+		}
 	}
 	.lcl-works-list-more__in {
 		clip-path: inset(-5% -5% -5% -5%);

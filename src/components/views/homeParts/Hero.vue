@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import Canvas from '@/components/views/homeParts/Canvas.vue';
 
 const date = ref({});
@@ -20,7 +20,7 @@ function updateDate() {
 </script>
 
 <template>
-	<section class="lcl-hero">
+	<section class="lcl-hero" id="top">
 		<Canvas></Canvas>
 		<!-- Canvas -->
 		<h2 class="lcl-hero-ttl">
@@ -67,6 +67,10 @@ function updateDate() {
 	padding-top: 88px;
 	width: 100%;
 	height: max(minpx(730), pcvw(730));
+	@include media_narrow {
+		padding-top: vw(58);
+		height: 100lvh;
+	}
 
 	/* hero-ttl ------------ */
 	.lcl-hero-ttl {
@@ -84,6 +88,10 @@ function updateDate() {
 		font-size: max(minpx(228), pcvw(228));
 		line-height: 0.94;
 		letter-spacing: 0.04em;
+		@include media_narrow {
+			@include fz(82);
+			line-height: 1.2;
+		}
 	}
 
 	/* hero-frame ------------ */
@@ -94,11 +102,19 @@ function updateDate() {
 		margin-inline: auto;
 		width: calc(100% - 40px);
 		height: calc(100% - 20px);
+		@include media_narrow {
+			width: calc(100% - vw(16));
+			height: calc(100% - vw(8));
+		}
 	}
 	.lcl-hero-frame__time {
 		position: absolute;
 		top: 11px;
 		left: 16px;
+		@include media_narrow {
+			top: vw(9);
+			left: vw(11);
+		}
 	}
 	.lcl-hero-frame__labels {
 		position: absolute;
@@ -108,16 +124,28 @@ function updateDate() {
 		flex-direction: column;
 		align-items: flex-end;
 		gap: 8px;
+		@include media_narrow {
+			top: vw(8);
+			right: vw(8);
+			gap: vw(6);
+		}
 	}
 	.lcl-hero-frame__label {
 		border: 1px solid $c-gray;
 		border-radius: 999px;
 		padding: 5px 13px;
+		@include media_narrow {
+			padding: vw(3) vw(11);
+		}
 	}
 	.lcl-hero-frame__ttl {
 		position: absolute;
 		bottom: 11px;
 		left: 16px;
+		@include media_narrow {
+			bottom: vw(7);
+			left: vw(11);
+		}
 	}
 	.lcl-hero-frame__txt {
 		display: block;

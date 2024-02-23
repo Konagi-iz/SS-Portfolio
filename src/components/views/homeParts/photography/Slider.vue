@@ -138,6 +138,10 @@ const onTransitionEnd = () => {
 		margin-top: max(minpx(90), pcvw(90));
 		width: 100%;
 		height: max(minpx(809), pcvw(809));
+		@include media_narrow {
+			margin-top: vw(80);
+			height: vw(243);
+		}
 		&::after {
 			content: '';
 			position: absolute;
@@ -146,6 +150,9 @@ const onTransitionEnd = () => {
 			width: 100%;
 			height: max(minpx(269), pcvw(269));
 			background: linear-gradient(180deg, rgba(226, 226, 226, 0) 0%, #e2e2e2 69.27%);
+			@include media_narrow {
+				height: vw(54);
+			}
 			/*---------------- after */
 		}
 	}
@@ -157,6 +164,10 @@ const onTransitionEnd = () => {
 		width: max(minpx(2278), pcvw(2278));
 		height: max(minpx(2278), pcvw(2278));
 		transition-timing-function: cubic-bezier(0.22, 1, 0.48, 1);
+		@include media_narrow {
+			width: vw(872);
+			height: vw(872);
+		}
 	}
 	.lcl-slider__slide {
 		--angle: calc(360deg / 8 * var(--index) - 90deg);
@@ -169,7 +180,13 @@ const onTransitionEnd = () => {
 		rotate: calc(45deg * var(--index));
 		width: max(minpx(425), pcvw(425));
 		height: max(minpx(425), pcvw(425));
-		transition: scale 0.9s $e-out2;
+		transition: scale 0.9s $e-out-expo;
+		@include media_narrow {
+			--x: calc(cos(var(--angle)) * #{vw(355)});
+			--y: calc(sin(var(--angle)) * #{vw(355)});
+			width: vw(162);
+			height: vw(162);
+		}
 	}
 	.lcl-slider__slide--active {
 		scale: 1.3;
@@ -190,10 +207,18 @@ const onTransitionEnd = () => {
 		width: max(minpx(73), pcvw(73));
 		height: max(minpx(73), pcvw(73));
 		background: $c-orange;
-		transition: background 0.4s $e-out2;
+		transition: background 0.4s $e-out-expo;
+		@include media_narrow {
+			top: vw(62);
+			width: vw(38);
+			height: vw(38);
+		}
 		@include media_hover {
 			&:hover {
 				background: $c-white;
+			}
+			&:hover .ico-angle-right {
+				scale: 0.6;
 			}
 			&:hover :deep(.ico-angle-right__path) {
 				stroke: $c-orange;
@@ -202,29 +227,43 @@ const onTransitionEnd = () => {
 	}
 	.lcl-slider__btn--prev {
 		left: max(minpx(268), pcvw(268));
+		@include media_narrow {
+			left: vw(21);
+		}
 		.ico-angle-right {
 			transform: scaleX(-1);
 		}
 	}
 	.lcl-slider__btn--next {
 		left: max(minpx(959), pcvw(959));
+		@include media_narrow {
+			left: vw(316);
+		}
 	}
 	.ico-angle-right {
 		width: max(minpx(44), pcvw(44));
 		height: auto;
+		transition: scale 0.6s $e-out-expo;
+		@include media_narrow {
+			width: vw(24);
+		}
 	}
 	:deep(.ico-angle-right__path) {
-		transition: stroke 0.4s $e-out2;
+		transition: stroke 0.4s $e-out-expo;
 	}
 
 	/* pagination ------------ */
 	.lcl-slider__pagination {
+		z-index: 1;
 		position: absolute;
 		top: max(minpx(511), pcvw(511));
 		left: 50%;
 		transform: translateX(-50%);
 		display: flex;
 		width: fit-content;
+		@include media_narrow {
+			top: vw(200);
+		}
 	}
 	.lcl-slider__bullet {
 		position: relative;
@@ -232,8 +271,13 @@ const onTransitionEnd = () => {
 		padding: max(minpx(3), pcvw(3));
 		width: max(minpx(8), pcvw(8));
 		height: max(minpx(8), pcvw(8));
-		transition: transform 0.4s ease-out, width 1.2s $e-out2;
+		transition: transform 0.4s ease-out, width 1.2s $e-out-expo;
 		cursor: pointer;
+		@include media_narrow {
+			padding: vw(3);
+			width: vw(7);
+			height: vw(7);
+		}
 		@include media_hover {
 			&:hover:not(.lcl-slider__bullet--active) {
 				transform: scale(1.3);
@@ -251,12 +295,15 @@ const onTransitionEnd = () => {
 			height: 100%;
 			border-radius: 999px;
 			background: $c-lightgray;
-			transition: background 1.2s $e-out2;
+			transition: background 1.2s $e-out-expo;
 			/*---------------- after */
 		}
 	}
 	.lcl-slider__bullet--active {
 		width: max(minpx(38), pcvw(38));
+		@include media_narrow {
+			width: vw(30);
+		}
 		&::after {
 			background: $c-orange;
 			/*---------------- after */

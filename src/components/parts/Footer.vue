@@ -9,13 +9,12 @@ watch(isRouterViewLoaded, (val) => {
 		/* 背景色を切り替えるアニメーション ------------ */
 		const body = document.body;
 		gsap.to(body, {
-			background: '#ff4b12',
+			background: '#FF2E12',
 			scrollTrigger: {
 				trigger: '.footer__spacer',
 				start: 'top top',
 				end: 'bottom top',
 				scrub: 1,
-				pinnedContainer: '.lcl-works-list__in',
 				toggleActions: 'play none no0ne reverse',
 			},
 		});
@@ -27,7 +26,6 @@ watch(isRouterViewLoaded, (val) => {
 				start: 'top top',
 				end: 'bottom top',
 				scrub: 1,
-				pinnedContainer: '.lcl-works-list__in',
 				toggleActions: 'play none no0ne reverse',
 			},
 		});
@@ -43,7 +41,8 @@ watch(isRouterViewLoaded, (val) => {
 				<p class="footer-mail__txt font-en">contact me</p>
 				<IconAngleRight></IconAngleRight>
 				<a class="footer-mail__adress" href="mail:shimakawashodai@gmail.com">
-					<span class="font-dp">shimakawashodai</span>
+					<!-- prettier-ignore -->
+					<span class="font-dp">shimakawa<br class="dn-w" />shodai</span>
 					<span class="font-en">@gmail.com</span>
 				</a>
 				<!-- .footer-mail__adress -->
@@ -53,7 +52,7 @@ watch(isRouterViewLoaded, (val) => {
 				<small class="footer-btm__copyright font-en">&copy;SS PORTFOLIO 2024</small>
 				<ul class="footer-nav">
 					<li v-for="(item, index) in ['HOME', 'ABOUT ME', 'WORKS', 'PHOTOGRAPHY']" :key="index" class="footer-nav__item">
-						<router-link to="" class="footer-nav__link font-en">{{ item }}</router-link>
+						<router-link to="" class="footer-nav__link font-en hv-txt">{{ item }}</router-link>
 					</li>
 				</ul>
 				<!-- .footer-nav -->
@@ -71,11 +70,17 @@ watch(isRouterViewLoaded, (val) => {
 	.footer__spacer {
 		width: 100%;
 		height: 600px;
+		@include media_narrow {
+			height: vw(600);
+		}
 	}
 	.footer__main {
 		position: relative;
 		width: 100%;
 		height: max(730px, 100vh);
+		@include media_narrow {
+			height: 100dvh;
+		}
 	}
 	.footer-mail {
 		position: absolute;
@@ -85,6 +90,9 @@ watch(isRouterViewLoaded, (val) => {
 		display: flex;
 		align-items: center;
 		flex-direction: column;
+		@include media_narrow {
+			bottom: vw(177);
+		}
 	}
 	.footer-mail__txt {
 		@include fz(16);
@@ -96,6 +104,10 @@ watch(isRouterViewLoaded, (val) => {
 		margin-top: 5px;
 		width: 18px;
 		height: auto;
+		@include media_narrow {
+			margin-top: vw(3);
+			width: vw(18);
+		}
 	}
 	:deep(.ico-angle-right__path) {
 		stroke: $c-black;
@@ -104,6 +116,12 @@ watch(isRouterViewLoaded, (val) => {
 		margin-top: 3px;
 		@include fz(64);
 		line-height: 0.9;
+		text-align: center;
+		white-space: nowrap;
+		@include media_narrow {
+			margin-top: vw(7);
+			@include fz(48);
+		}
 	}
 
 	/* footer-mail ------------ */
@@ -118,6 +136,10 @@ watch(isRouterViewLoaded, (val) => {
 		padding-inline: 35px;
 		padding-bottom: 35px;
 		width: 100%;
+		@include media_narrow {
+			padding-inline: vw(15);
+			padding-bottom: vw(15);
+		}
 	}
 	.footer-btm__copyright {
 		@include fz(10);
@@ -126,15 +148,38 @@ watch(isRouterViewLoaded, (val) => {
 	}
 	.footer-nav {
 		display: flex;
-		gap: 22px;
+		gap: 16px;
+		@include media_narrow {
+			position: absolute;
+			bottom: vw(43);
+			left: 50%;
+			transform: translateX(-50%);
+			align-items: center;
+			flex-direction: column;
+			gap: 0;
+		}
 	}
 	.footer-nav__item {
 	}
 	.footer-nav__link {
+		position: relative;
+		padding: 3px;
 		@include fz(14);
 		font-weight: 400;
 		line-height: 1.5;
 		letter-spacing: 0.05em;
+		@include media_narrow {
+			padding: vw(3);
+		}
+		&::before {
+			background: $c-black;
+			/*---------------- before */
+		}
+		@include media_hover {
+			&:hover {
+				color: $c-orange !important;
+			}
+		}
 	}
 	.footer-pagetop {
 		@include fz(10);

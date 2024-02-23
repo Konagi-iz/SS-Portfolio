@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -12,22 +12,28 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { ClearPass } from 'three/examples/jsm/postprocessing/ClearPass.js';
-// import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { MaskPass, ClearMaskPass } from 'three/examples/jsm/postprocessing/MaskPass.js';
 import { CopyShader } from 'three/examples/jsm/shaders/CopyShader.js';
+import { media } from '@/store';
 
 /*---------------------------------------------
 fv 3D
 ---------------------------------------------*/
 let w = window.innerWidth;
 let h = window.innerHeight;
+let canvasW;
+let canvasH;
+const viewport = media.value === 'PC' ? 1300 : 375;
+
+let renderer;
 
 const container = ref(null);
 
-let canvasW;
-let canvasH;
+onUnmounted(() => {
+	// コンテキストを破棄
+	// renderer.dispose();
+});
 
-/* マウントされた時 ------------ */
 onMounted(() => {
 	canvasW = container.value.clientWidth;
 	canvasH = container.value.clientHeight;
@@ -36,7 +42,7 @@ onMounted(() => {
 
 const initThreeJS = async () => {
 	// レンダラー
-	const renderer = new THREE.WebGLRenderer({
+	renderer = new THREE.WebGLRenderer({
 		alpha: true,
 		antialias: true,
 	});
@@ -72,8 +78,6 @@ const initThreeJS = async () => {
 
 	// モデルの設定
 	const diamond = gltfScene.getObjectByName('diamond');
-	// const box = new THREE.TorusGeometry(0.3, 0.2);
-	// const diamond = new THREE.Mesh(box);
 	diamond.material = Object.assign(new MeshTransmissionMaterial(10), {
 		clearcoat: 1,
 		clearcoatRoughness: 0,
@@ -84,20 +88,12 @@ const initThreeJS = async () => {
 		thickness: 1.5,
 		ior: 1.5,
 		distortion: 0.3,
-		distortionScale: 0.002,
+		distortionScale: (0.002 * viewport) / w,
 		temporalDistortion: 0.05,
 		envMapIntensity: 0.35,
 		backside: true,
 		backsideThickness: 0.5,
 	});
-	// diamond.material = Object.assign(new THREE.MeshPhysicalMaterial(10), {
-	// 	transmission: 1,
-	// 	roughness: 0,
-	// 	thickness: 1.5,
-	// 	ior: 1.9,
-	// 	envMapIntensity: 0.15,
-	// });
-	diamond.scale.set(600, 600, 600);
 
 	const mask = diamond.clone();
 
@@ -163,10 +159,9 @@ const initThreeJS = async () => {
 	// }
 	// scene.add(txtGroup);
 
-	const texture = new THREE.TextureLoader().load('/assets/img/home/hero/PC/img_hero.jpg', (tex) => {
-		// 読み込み完了時
+	const texture = new THREE.TextureLoader().load(`/assets/img/home/hero/${media.value}/img_hero.jpg`, (tex) => {
 		// 縦横比を保って適当にリサイズ
-		const imgW = 1300 * 1.05;
+		const imgW = w * 1.05;
 		const imgH = tex.image.height / (tex.image.width / imgW);
 
 		// 平面
@@ -179,21 +174,23 @@ const initThreeJS = async () => {
 	});
 
 	// ポイントライト
+	const pointLightIntensity = [media.value === 'PC' ? 1000 : 20, media.value === 'PC' ? 100 : 10, media.value === 'PC' ? 20000 : 2000];
 	const [keyPointLight, frontPointLight, rearPointLight] = [
-		new THREE.PointLight(0xff7e57, 1000, 0, 0.1),
-		new THREE.PointLight(0xff7e57, 100, 0, 0.01),
-		new THREE.PointLight(0xff4b12, 20000, 0, 0.01),
+		new THREE.PointLight(0xff7e57, pointLightIntensity[0], 0, 0.1),
+		new THREE.PointLight(0xff7e57, pointLightIntensity[1], 0, 0.01),
+		new THREE.PointLight(0xff4b12, pointLightIntensity[2], 0, 0.01),
 	];
-	keyPointLight.position.set(0, 200, 0);
-	frontPointLight.position.set(0, 0, 2000);
-	rearPointLight.position.set(0, 0, -2000);
+	keyPointLight.position.set(150, 350, 0);
+	frontPointLight.position.set(0, -400, 2000);
+	rearPointLight.position.set(-400, 400, -2000);
 	scene.add(keyPointLight, frontPointLight, rearPointLight);
 
-	const [frontPointLightHelper, rearPointLightHelper] = [
-		new THREE.PointLightHelper(frontPointLight, 100),
-		new THREE.PointLightHelper(rearPointLight, 200),
-	];
-	// scene.add(frontPointLightHelper, rearPointLightHelper);
+	// const [keyPointLightHelper, frontPointLightHelper, rearPointLightHelper] = [
+	// 	new THREE.PointLightHelper(keyPointLight, 100),
+	// 	new THREE.PointLightHelper(frontPointLight, 100),
+	// 	new THREE.PointLightHelper(rearPointLight, 200),
+	// ];
+	// scene.add(keyPointLightHelper, frontPointLightHelper, rearPointLightHelper);
 
 	// ライトをカーソルに追従させるカーソル
 	const mouse = {
@@ -206,13 +203,14 @@ const initThreeJS = async () => {
 		mouse.currentX = (x - w / 2) * 2;
 		mouse.currentY = (-y + w / 3) * 2;
 	}
+	// multiplierを小さくするほど補間が強くなる
 	function lerp(start, end, multiplier) {
 		return start * (1 - multiplier) + end * multiplier;
 	}
 	function onRaf() {
-		mouse.x = lerp(mouse.x, mouse.currentX, 0.04);
-		mouse.y = lerp(mouse.y, mouse.currentY, 0.04);
-		// pointLightの位置を移動
+		mouse.x = lerp(mouse.x, mouse.currentX, 0.015);
+		mouse.y = lerp(mouse.y, mouse.currentY, 0.015);
+		// pointLightの位置をカーソルに応じて移動
 		gsap.set(frontPointLight.position, {
 			x: mouse.x,
 			y: mouse.y,
@@ -221,10 +219,10 @@ const initThreeJS = async () => {
 			x: -mouse.x,
 			y: -mouse.y,
 		});
-		// モデルの位置を移動
+		// モデルの位置をカーソルに応じて移動
 		gsap.set([diamond.position, mask.position], {
-			x: mouse.x * 0.02,
-			y: mouse.y * 0.02,
+			x: mouse.x * 0.04,
+			y: mouse.y * 0.04,
 		});
 	}
 	container.value.parentElement.addEventListener('mousemove', (e) => {
@@ -237,7 +235,6 @@ const initThreeJS = async () => {
 	const renderPass = new RenderPass(scene, camera);
 	renderPass.clear = false;
 	const clearMaskPass = new ClearMaskPass();
-	// const tonePass = new OutputPass();
 	const outputPass = new ShaderPass(CopyShader);
 	outputPass.renderToScreen = true;
 
@@ -254,7 +251,6 @@ const initThreeJS = async () => {
 	composer.addPass(clearPass);
 	composer.addPass(maskPass);
 	composer.addPass(renderPass);
-	// composer.addPass(tonePass);
 	composer.addPass(clearMaskPass);
 	composer.addPass(outputPass);
 
@@ -269,7 +265,9 @@ const initThreeJS = async () => {
 			obj.rotation.y = sec * (Math.PI / 10);
 		});
 
-		onRaf();
+		if (media.value === 'PC') {
+			onRaf();
+		}
 		// renderer.render(scene, camera);
 		renderer.clear();
 		composer.render();
@@ -284,6 +282,11 @@ const initThreeJS = async () => {
 		h = window.innerHeight;
 		canvasW = container.value.clientWidth;
 		canvasH = container.value.clientHeight;
+
+		const diaScale = ((media.value === 'PC' ? 600 : 300) / viewport) * w;
+		[diamond, mask].forEach((obj) => {
+			obj.scale.set(diaScale, diaScale, diaScale);
+		});
 
 		renderer.setPixelRatio(window.devicePixelRatio);
 		renderer.setSize(canvasW, canvasH);

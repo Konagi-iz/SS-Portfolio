@@ -8,6 +8,14 @@ mixins
 	font-size: math.div($font-size, 10) * 1rem;
 }
 
+@mixin delay($length, $delay: 0.05) {
+	@for $i from 1 through $length {
+		&:nth-of-type(#{$i}) {
+			transition-delay: #{$delay * ($i - 1)}s;
+		}
+	}
+}
+
 /*------------------------------------------------
 font
 ------------------------------------------------*/
@@ -52,7 +60,7 @@ font
 	font-weight: 400;
 	line-height: 1.9;
 	@include media_narrow {
-		@include fz(13);
+		@include fz(12);
 	}
 }
 
@@ -70,13 +78,14 @@ $c-lightgray: #c9c9c9;
 $c-gray: #383838;
 $c-darkgray: #101010;
 $c-black: #000000;
-$c-orange: #ff4b12;
+$c-orange: #ff2e12;
 
 /*---------------------------------------------
 ease
 ---------------------------------------------*/
 $e-out: cubic-bezier(0.7, 0, 0.1, 1);
-$e-out2: cubic-bezier(0.19, 1, 0.22, 1);
+$e-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+$e-out-circ: cubic-bezier(0, 0.07, 0.02, 0.83);
 $e-inOut: cubic-bezier(0.9, 0, 0.1, 1);
 
 /*------------------------------------------------

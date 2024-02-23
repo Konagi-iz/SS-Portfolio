@@ -27,17 +27,38 @@ const router = createRouter({
 		// 	component: () => import('@/components/views/404View.vue'),
 		// },
 	],
-	// scrollBehavior(to, from, savedPosition) {
-	// 	return {
-	// 		top: 0,
-	// 	};
-	// },
+	scrollBehavior: async (to, from, savedPosition) => {
+		const findEl = async (hash) => {
+			const el = document.querySelector(hash);
+			if (el) {
+				return el;
+			} else {
+				return new Promise((resolve) => {
+					setTimeout(() => {
+						resolve(findEl(hash));
+					}, 100);
+				});
+			}
+		};
+
+		if (to.hash) {
+			const el = await findEl(to.hash);
+			console.log(el);
+			if (el) {
+				return window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
+			}
+		}
+		return { x: 0, y: 0 };
+	},
 });
 
 /* ページ遷移 前 に行われる処理 ------------ */
 router.beforeEach((to, from, next) => {
 	isRouterViewLoaded.value = false;
-	next();
+
+	setTimeout(() => {
+		next();
+	}, 1000);
 });
 
 /* ページ遷移 後 に行われる処理 ------------ */
@@ -76,7 +97,7 @@ router.afterEach((to, from, next) => {
 				if (char === '○') {
 					newTxt += '<br>';
 				} else {
-					newTxt += `<span>${char}</span>`;
+					newTxt += `<span class="split-span">${char}</span>`;
 				}
 			});
 

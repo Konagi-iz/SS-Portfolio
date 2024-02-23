@@ -12,30 +12,43 @@ const second = ref(null);
 const angle = ref(null);
 
 onMounted(() => {
-	gsap.to(ttl.value, {
-		scale: 0.3007209063,
-		xPercent: -100,
-		yPercent: 10,
-		color: '#ff4b12',
-		scrollTrigger: {
-			trigger: first.value,
-			start: 'top top',
-			end: 'bottom top',
-			pin: ttl.value,
-			pinSpacing: false,
-			scrub: 1,
+	const mm = gsap.matchMedia();
+	const breakPoint = 678;
+
+	mm.add(
+		{
+			isPC: `(min-width: ${breakPoint}px)`,
+			isSP: `(max-width: ${breakPoint - 1}px)`,
 		},
-	});
-	gsap.from(angle.value, {
-		yPercent: -200,
-		duration: 1.2,
-		ease: 'expo',
-		scrollTrigger: {
-			trigger: second.value,
-			start: 'bottom bottom',
-			toggleActions: 'play none none reverse',
-		},
-	});
+		(context) => {
+			let { isPC, isSP } = context.conditions;
+
+			gsap.to(ttl.value, {
+				scale: isPC ? 0.3007209063 : 0.7965116279,
+				xPercent: isPC ? -100 : -60,
+				yPercent: isPC ? 10 : 127,
+				color: '#FF2E12',
+				scrollTrigger: {
+					trigger: first.value,
+					start: 'top top',
+					end: 'bottom top',
+					pin: ttl.value,
+					pinSpacing: false,
+					scrub: 1,
+				},
+			});
+			gsap.from(angle.value, {
+				yPercent: -200,
+				duration: 1.2,
+				ease: 'expo',
+				scrollTrigger: {
+					trigger: second.value,
+					start: 'bottom bottom',
+					toggleActions: 'play none none reverse',
+				},
+			});
+		}
+	);
 });
 </script>
 
@@ -81,6 +94,11 @@ onMounted(() => {
 		width: 100%;
 		height: max(minpx(730), pcvw(730));
 		background: $c-orange;
+		@include media_narrow {
+			border-top-left-radius: vw(16);
+			border-top-right-radius: vw(16);
+			height: 100lvh;
+		}
 	}
 	.BG-noise {
 		z-index: 1;
@@ -91,15 +109,22 @@ onMounted(() => {
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
+		width: fit-content;
 		color: $c-black;
 	}
 	.lcl-works-ttl__txt {
 		font-size: max(minpx(208), pcvw(208));
 		line-height: 0.9;
+		@include media_narrow {
+			@include fz(74);
+		}
 	}
 	.lcl-works-ttl__dp {
 		&:nth-of-type(1) {
 			margin-left: max(minpx(121), pcvw(121));
+			@include media_narrow {
+				margin-left: vw(42);
+			}
 		}
 	}
 	.lcl-works-ttl__en {
@@ -110,6 +135,11 @@ onMounted(() => {
 		left: max(minpx(30), pcvw(30));
 		width: max(minpx(50), pcvw(50));
 		height: auto;
+		@include media_narrow {
+			top: vw(25);
+			left: vw(11);
+			width: vw(18);
+		}
 	}
 	:deep(.ico-star__path) {
 		fill: currentColor;
@@ -120,7 +150,25 @@ onMounted(() => {
 		position: relative;
 		width: 100%;
 		height: max(minpx(730), pcvw(730));
-		background: linear-gradient(180deg, #ff4b12 0%, #101010 100%);
+		background: linear-gradient(180deg, #ff2e12 0%, #101010 100%);
+		@include media_narrow {
+			height: 100lvh;
+		}
+		&::before {
+			content: '';
+			z-index: 1;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			transform: translateY(100%);
+			width: 100%;
+			height: max(minpx(70), pcvw(70));
+			background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, #101010 70%);
+			@include media_narrow {
+				height: vw(70);
+			}
+			/*---------------- before */
+		}
 	}
 	.works-fv {
 		margin-inline: auto 0;
@@ -128,8 +176,14 @@ onMounted(() => {
 	.lcl-works__angle-wrp {
 		position: absolute;
 		bottom: max(minpx(26), pcvw(26));
-		left: max(minpx(232), pcvw(232));
 		overflow: hidden;
+		@include media_wide {
+			left: max(minpx(232), pcvw(232));
+		}
+		@include media_narrow {
+			bottom: vw(15);
+			right: vw(3);
+		}
 	}
 	.lcl-works__angle {
 	}
@@ -137,6 +191,9 @@ onMounted(() => {
 		transform: rotate(90deg);
 		width: max(minpx(97), pcvw(97));
 		height: auto;
+		@include media_narrow {
+			width: vw(97);
+		}
 	}
 	:deep(.ico-angle-right__path) {
 		stroke: $c-orange;

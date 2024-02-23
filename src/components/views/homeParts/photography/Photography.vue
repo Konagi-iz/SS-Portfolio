@@ -54,14 +54,15 @@ onMounted(() => {
 		</div>
 		<!-- .lcl-photo-desc -->
 		<Slider></Slider>
-		<Button01
-			class="lcl-photo__link"
-			v-bind="{
-				isBig: true,
-				color: 'orange',
-				txt: 'VIEW MORE<br>PHOTO',
-			}"
-		></Button01>
+		<router-link to="/" class="lcl-photo__link">
+			<Button01
+				v-bind="{
+					isBig: true,
+					color: 'orange',
+					txt: 'VIEW MORE<br>PHOTO',
+				}"
+			></Button01>
+		</router-link>
 	</section>
 </template>
 
@@ -70,6 +71,9 @@ onMounted(() => {
 	position: relative;
 	padding-block: 439px 202px;
 	width: 100%;
+	@include media_narrow {
+		padding-block: vw(439) vw(118);
+	}
 
 	/* ttl ------------ */
 	.lcl-photo-ttl {
@@ -78,10 +82,18 @@ onMounted(() => {
 		top: 176px;
 		left: calc((100% - 1000px) / 2);
 		display: flex;
+		align-items: flex-start;
+		@include media_narrow {
+			top: vw(76);
+			left: vw(17);
+		}
 	}
 	.lcl-photo__icon {
 		width: 142px;
-		height: 142px;
+		height: auto;
+		@include media_narrow {
+			width: vw(52);
+		}
 	}
 	.lcl-photo-ttl__txt {
 		color: $c-orange;
@@ -90,12 +102,19 @@ onMounted(() => {
 		display: block;
 		@include fz(195);
 		line-height: 0.75;
+		@include media_narrow {
+			@include fz(70);
+		}
 	}
 	.lcl-photo-ttl__dp {
 		display: block;
 		margin-left: 157px;
 		@include fz(187);
 		line-height: 0.75;
+		@include media_narrow {
+			margin-left: vw(50);
+			@include fz(70);
+		}
 	}
 
 	/* desc ------------ */
@@ -104,6 +123,10 @@ onMounted(() => {
 		top: 429px;
 		left: calc((100% - 1000px) / 2);
 		color: $c-orange;
+		@include media_narrow {
+			top: vw(242);
+			left: vw(44);
+		}
 	}
 	.lcl-photo-desc__jp {
 		@include txt-basic--bold;
@@ -113,6 +136,9 @@ onMounted(() => {
 		@include fz(12);
 		font-weight: 700;
 		line-height: 1.9;
+		@include media_narrow {
+			margin-top: vw(28);
+		}
 	}
 
 	/* link ------------ */
@@ -121,6 +147,9 @@ onMounted(() => {
 		bottom: 183px;
 		left: 50%;
 		transform: translateX(-50%);
+		@include media_narrow {
+			bottom: vw(63);
+		}
 	}
 }
 </style>

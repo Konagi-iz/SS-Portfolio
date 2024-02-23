@@ -56,7 +56,7 @@ function setMenuSticky() {
 	<header id="header" :class="{ 'header--scrolled': isHeaderScrolled }">
 		<div class="header__in">
 			<p class="header__txt header__txt--l font-en">S.S</p>
-			<router-link :to="{ name: 'home' }" class="header__link">
+			<router-link :to="{ name: 'about' }" class="header__link">
 				<h1 class="header__ttl font-en">
 					SHIMAKAWA
 					<br class="br" :class="{ 'br--active': isBr }" />
@@ -85,6 +85,9 @@ function setMenuSticky() {
 	left: 0;
 	width: 100%;
 	height: 68px;
+	@include media_narrow {
+		height: vw(50);
+	}
 	.header__in {
 		display: flex;
 		justify-content: space-between;
@@ -101,6 +104,10 @@ function setMenuSticky() {
 		@include fz(14);
 		font-weight: 400;
 		line-height: 1.5;
+		@include media_narrow {
+			width: vw(50);
+			@include fz(12);
+		}
 	}
 	.header__txt--l {
 		border-right: 1px solid $c-gray;
@@ -114,16 +121,18 @@ function setMenuSticky() {
 		left: 50%;
 		transform: translateX(-50%);
 		width: 235px;
-		height: 68px;
-		transition-property: left, transform, width;
+		transition-property: top, left, transform, width;
 		transition-duration: 0.7s;
 		transition-timing-function: $e-inOut;
+		@include media_wide {
+			height: 68px;
+		}
+		@include media_narrow {
+			top: vw(17.5);
+			width: vw(196);
+		}
 	}
 	.header__ttl {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
 		width: 100%;
 		color: $c-white;
 		@include fz(12);
@@ -131,6 +140,15 @@ function setMenuSticky() {
 		line-height: 1.5;
 		letter-spacing: 0.13em;
 		word-break: break-all;
+		@include media_wide {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+		@include media_narrow {
+			@include fz(10);
+		}
 		.br {
 			display: none;
 		}
@@ -146,6 +164,11 @@ function setMenuSticky() {
 		top: calc(100vh - 66px - 20px);
 		right: 10px;
 		padding-top: 10px;
+		@include media_narrow {
+			top: calc(100vh - vw(46) - vw(30));
+			right: vw(15);
+			padding-top: vw(15);
+		}
 	}
 	.header__menu--fixed {
 		position: fixed;
@@ -157,6 +180,11 @@ function setMenuSticky() {
 		left: 15px;
 		transform: translateX(0);
 		width: 87px;
+		@include media_narrow {
+			top: vw(15);
+			left: vw(15);
+			width: vw(74);
+		}
 	}
 }
 </style>

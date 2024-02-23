@@ -33,9 +33,9 @@ const props = defineProps({
 		@include fz(18);
 		font-weight: 400;
 		line-height: 1.5;
-    @include media_narrow {
-      @include fz(14);
-}
+		@include media_narrow {
+			@include fz(14);
+		}
 	}
 	.btn-01__icon {
 		position: relative;
@@ -43,7 +43,7 @@ const props = defineProps({
 	.btn-01-circle__back {
 		width: 30px;
 		height: auto;
-		transition: transform 0.9s $e-out2, opacity 0.9s $e-out2;
+		transition: transform 0.9s $e-out-expo, opacity 0.9s $e-out-expo;
 		@include media_narrow {
 			width: vw(20);
 		}
@@ -69,7 +69,7 @@ const props = defineProps({
 			stroke: $c-orange;
 			stroke-width: 3px;
 			stroke-dasharray: 0 218;
-			transition: stroke-dasharray 0.9s $e-out2;
+			transition: stroke-dasharray 0.9s $e-out-expo;
 			@include media_narrow {
 				stroke-width: vw(3);
 			}
