@@ -22,8 +22,8 @@ function lerp(start, end, multiplier) {
 }
 
 function onRaf() {
-	mouse.x = lerp(mouse.x, mouse.currentX, 0.08);
-	mouse.y = lerp(mouse.y, mouse.currentY, 0.08);
+	mouse.x = lerp(mouse.x, mouse.currentX, 0.1);
+	mouse.y = lerp(mouse.y, mouse.currentY, 0.1);
 
 	gsap.set('.stalker', {
 		x: mouse.x,

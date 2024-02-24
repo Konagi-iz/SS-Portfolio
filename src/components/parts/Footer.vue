@@ -10,7 +10,6 @@ const mail1 = ref(null);
 const mail2 = ref(null);
 const mail3 = ref(null);
 
-
 // Footerより前にあるPinでズレるのを防ぐ為、router-view以下がマウントされてから実行
 watch(isRouterViewLoaded, (val) => {
 	if (val) {
@@ -60,7 +59,7 @@ watch(isRouterViewLoaded, (val) => {
 				<IconAngleRight></IconAngleRight>
 				<!-- prettier-ignore -->
 				<a class="footer-mail__adress" href="mail:shimakawashodai@gmail.com">
-					<span class="font-dp"><TextSplit ref="mail1" text="shimakawa"></TextSplit><br class="dn-w" /><TextSplit ref="mail2" text="shodai"></TextSplit></span><br class="dn-w"><span class="font-en"><TextSplit ref="mail3" text="@gmail.com"></TextSplit></span>
+					<span class="footer-mail__in font-dp"><TextSplit ref="mail1" text="shimakawa"></TextSplit></span><br class="dn-w"><span class="footer-mail__in font-dp"><TextSplit ref="mail2" text="shodai"></TextSplit></span><br class="dn-w"><span class="footer-mail__in font-en"><TextSplit ref="mail3" text="@gmail.com"></TextSplit></span>
 				</a>
 				<!-- .footer-mail__adress -->
 			</div>
@@ -84,6 +83,8 @@ watch(isRouterViewLoaded, (val) => {
 #footer {
 	width: 100%;
 	color: $c-black;
+
+	/* spacer ------------ */
 	.footer__spacer {
 		width: 100%;
 		height: 600px;
@@ -91,6 +92,8 @@ watch(isRouterViewLoaded, (val) => {
 			height: vw(600);
 		}
 	}
+
+	/* main ------------ */
 	.footer__main {
 		position: relative;
 		width: 100%;
@@ -130,8 +133,6 @@ watch(isRouterViewLoaded, (val) => {
 		stroke: $c-black;
 	}
 	.footer-mail__adress {
-		clip-path: inset(0 0 -10% 0);
-		display: inline-block;
 		margin-top: 3px;
 		text-align: center;
 		white-space: nowrap;
@@ -146,8 +147,12 @@ watch(isRouterViewLoaded, (val) => {
 			}
 		}
 	}
+	.footer-mail__in {
+		clip-path: inset(0 0 -10% 0);
+		display: inline-block;
+	}
 
-	/* footer-mail ------------ */
+	/* bottom ------------ */
 	.footer-btm {
 		position: absolute;
 		bottom: 0;

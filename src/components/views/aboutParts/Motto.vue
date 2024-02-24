@@ -32,6 +32,11 @@ import TextSplit from '@/components/parts/TextSplit.vue';
 <style scoped lang="scss">
 .lcl-motto {
 	margin-top: 127px;
+	@include media_narrow {
+		margin-top: vw(95);
+	}
+
+	/* main ------------ */
 	.lcl-motto__main {
 		display: flex;
 		flex-direction: column;
@@ -46,28 +51,48 @@ import TextSplit from '@/components/parts/TextSplit.vue';
 		}
 		&:nth-of-type(1) {
 			transform: translateX(-130px);
+			@include media_narrow {
+				transform: translateX(vw(-44));
+			}
 		}
 		&:nth-of-type(2) {
 			transform: translateX(86px);
+			@include media_narrow {
+				transform: translateX(vw(12));
+			}
 		}
 		&:nth-of-type(3) {
 			transform: translateX(-265px);
+			@include media_narrow {
+				transform: translateX(vw(-85));
+			}
 		}
 		&:nth-of-type(4) {
 			transform: translateX(14px);
+			@include media_narrow {
+				transform: translateX(vw(14));
+			}
 		}
 		:deep(.split-span) {
 			color: $c-orange;
 			@include fz(148);
 			line-height: 1;
 			@include delay(8);
+			@include media_narrow {
+				@include fz(60);
+			}
 		}
 	}
+
+	/* txt ------------ */
 	.lcl-motto-txt {
 		margin-top: 63px;
 		margin-inline: auto;
 		width: fit-content;
 		text-align: center;
+		@include media_narrow {
+			margin-top: vw(63);
+		}
 		&.scr-anin--on .lcl-motto-txt__txt {
 			transform: translateY(0);
 		}
@@ -89,6 +114,9 @@ import TextSplit from '@/components/parts/TextSplit.vue';
 		@include fz(16);
 		line-height: 2.2;
 		transition: transform 1s $e-out-circ;
+		@include media_narrow {
+			@include fz(12);
+		}
 	}
 }
 </style>

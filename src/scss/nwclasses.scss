@@ -56,7 +56,7 @@
 	white-space: nowrap;
 }
 
-.fade-in-txt {
+.fade-in-btm {
 	opacity: 0;
 	transform: translateY(100px) rotate(-2deg);
 	transition: transform 1.2s $e-out-circ, opacity 1.2s $e-out-circ;

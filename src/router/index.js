@@ -22,7 +22,7 @@ const router = createRouter({
 			component: () => import('@/components/views/WorksView.vue'),
 		},
 		{
-			path: '/photo',
+			path: '/photography',
 			name: 'photo',
 			component: () => import('@/components/views/PhotographyView.vue'),
 		},

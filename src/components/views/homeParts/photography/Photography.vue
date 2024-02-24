@@ -39,7 +39,7 @@ onMounted(() => {
 		<!-- .lcl-photo-ttl -->
 		<div class="lcl-photo-desc">
 			<!-- prettier-ignore -->
-			<p class="lcl-photo-desc__jp fade-in-txt scr-anin">
+			<p class="lcl-photo-desc__jp fade-in-btm scr-anin">
 				カメラが好きです。<br />
 				写真を撮ります。<br />
 				風景スナップや<br />
@@ -48,7 +48,7 @@ onMounted(() => {
 			</p>
 			<!-- .lcl-photo-desc__jp -->
 			<!-- prettier-ignore -->
-			<p class="lcl-photo-desc__en font-en fade-in-txt scr-anin">
+			<p class="lcl-photo-desc__en font-en fade-in-btm scr-anin">
 				Camera : Fujifilm X-T5<br />
 				Lens : Sigma 18-50mm F2.8
 			</p>

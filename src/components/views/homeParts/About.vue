@@ -115,7 +115,7 @@ onMounted(() => {
 				<img
 					class="lcl-about-top__img"
 					src="/assets/img/home/about/PC/img_prof.jpg"
-					alt="カメラを構えている私の写真"
+					alt="私のプロフィール写真"
 					width="424"
 					height="555"
 					loading="lazy"
@@ -131,7 +131,7 @@ onMounted(() => {
 					<TextSplit text="初めまして！"></TextSplit>
 				</p>
 				<!-- prettier-ignore -->
-				<p class="lcl-about-top__txt fade-in-txt scr-anin">
+				<p class="lcl-about-top__txt fade-in-btm scr-anin">
 					初めまして、島川昌大と申します。<br />
 					学校でグラフィックデザインを学ぶ中でコーディングと出会い、<br />
 					文字を打ってデザインを組み上げていく面白さを知りました。<br />
@@ -213,14 +213,14 @@ onMounted(() => {
 			</p>
 			<!-- .lcl-about-btm__jp-big -->
 			<!-- prettier-ignore -->
-			<p v-if="media === 'PC'" class="lcl-about-btm__txt fade-in-txt scr-anin">
+			<p v-if="media === 'PC'" class="lcl-about-btm__txt fade-in-btm scr-anin">
 				デザインだけ、コーディングだけではなく、<br />
 				そのどちらもできる人になりたいと考えています。<br />
 				デザインが分かるからこそできるコーディング、その逆も然り、<br />
 				デザイナーとエンジニアの橋渡し役のような存在こそ私の目指す所です。
 			</p>
 			<!-- prettier-ignore -->
-			<p v-if="media === 'SP'" class="lcl-about-btm__txt fade-in-txt scr-anin">
+			<p v-if="media === 'SP'" class="lcl-about-btm__txt fade-in-btm scr-anin">
 				デザインだけ、コーディングだけではなく、<br />
 				そのどちらもできる人になりたいと考えています。<br />
 				デザインが分かるからこそできるコーディング、その逆も然り、<br />
@@ -228,7 +228,7 @@ onMounted(() => {
 				私の目指す所です。
 			</p>
 			<!-- .lcl-about-btm__txt -->
-			<router-link :to="{ name: 'about' }" class="lcl-about-btm__link fade-in-txt scr-anin">
+			<router-link :to="{ name: 'about' }" class="lcl-about-btm__link fade-in-btm scr-anin">
 				<Button01 v-bind="{ isBig: true, color: 'white', txt: 'ABOUT ME' }"></Button01>
 			</router-link>
 		</div>

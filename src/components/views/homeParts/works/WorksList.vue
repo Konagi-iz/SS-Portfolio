@@ -79,7 +79,7 @@ onMounted(() => {
 		},
 	});
 	gsap.from('.lcl-works-list-more__link', {
-		yPercent: 100,
+		yPercent: 120,
 		ease: 'none',
 		scrollTrigger: {
 			trigger: card.value[card.value.length - 1],
@@ -161,6 +161,7 @@ onMounted(() => {
 		justify-content: center;
 		width: 100%;
 		height: max(730px, 100vh);
+		pointer-events: none;
 		@include media_narrow {
 			transform: scale(1.5);
 			height: 100lvh;
@@ -171,6 +172,7 @@ onMounted(() => {
 	}
 	.lcl-works-list-more__link {
 		display: inline-block;
+		pointer-events: all;
 	}
 }
 </style>
