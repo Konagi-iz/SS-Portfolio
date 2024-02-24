@@ -132,7 +132,6 @@ onMounted(() => {
 .lcl-works-list {
 	position: relative;
 	margin-inline: auto;
-	width: fit-content;
 	.lcl-works-list__in {
 		position: relative;
 	}
@@ -142,9 +141,9 @@ onMounted(() => {
 		left: 0;
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		height: max(730px, 100vh);
 		@include media_narrow {
-			justify-content: center;
 			height: 100lvh;
 		}
 	}

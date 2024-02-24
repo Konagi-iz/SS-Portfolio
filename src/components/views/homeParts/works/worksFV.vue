@@ -6,11 +6,14 @@ import WorksFVList from '@/components/parts/WorksFVList.vue';
 import IconAngleRight from '~icons/svg/ico-angle-right';
 import IconStar from '~icons/svg/ico-star';
 
+const ttlContainer = ref(null);
 const ttl = ref(null);
+const char = ref(null);
 const first = ref(null);
 const firstBG = ref(null);
 const second = ref(null);
 const angle = ref(null);
+const fvList = ref(null);
 
 onMounted(() => {
 	const mm = gsap.matchMedia();
@@ -24,35 +27,58 @@ onMounted(() => {
 		(context) => {
 			let { isPC, isSP } = context.conditions;
 
-			/* Selected Works ------------ */
+			/* Selected Works Title Pin & Scale ------------ */
 			gsap.to(ttl.value, {
 				scale: isPC ? 0.3007209063 : 0.7965116279,
-				xPercent: isPC ? -100 : -60,
-				yPercent: isPC ? 10 : 127,
+				xPercent: isPC ? -50 : -10,
+				yPercent: isPC ? 60 : 180,
 				color: '#FF2E12',
 				scrollTrigger: {
 					trigger: first.value,
 					start: 'top top',
 					end: 'bottom top',
-					pin: ttl.value,
+					pin: ttlContainer.value,
 					pinSpacing: false,
 					scrub: 1,
 					invalidateOnRefresh: true,
 				},
 			});
-			gsap.from(angle.value, {
-				yPercent: -200,
-				duration: 1.2,
-				ease: 'expo',
-				scrollTrigger: {
-					trigger: second.value,
-					start: 'bottom bottom',
-					toggleActions: 'play none none reverse',
-				},
-			});
 		}
 	);
 
+	const tl = gsap.timeline({
+		scrollTrigger: {
+			trigger: first.value,
+			start: 'top center',
+			end: '30% top',
+			scrub: 1,
+			ease: 'none',
+		},
+	});
+	tl.from('.lcl-works-ttl__in .ico-star', {
+		xPercent: 900,
+		scale: 3,
+	}).from(
+		char.value,
+		{
+			yPercent: 105,
+			stagger: { each: 0.1 },
+		},
+		'<'
+	);
+
+	gsap.from(angle.value, {
+		yPercent: -200,
+		duration: 1.2,
+		ease: 'expo',
+		scrollTrigger: {
+			trigger: second.value,
+			start: 'bottom bottom',
+			toggleActions: 'play none none reverse',
+		},
+	});
+
+	/* first Background ------------ */
 	gsap.from(firstBG.value, {
 		scale: 0.8,
 		scrollTrigger: {
@@ -60,7 +86,19 @@ onMounted(() => {
 			start: 'top bottom',
 			end: 'top top',
 			scrub: 1,
-			markers: true,
+		},
+	});
+
+	/* WorksFVList ------------ */
+	gsap.from(fvList.value.listitem, {
+		yPercent: 50,
+		opacity: 0,
+		stagger: { each: 0.1 },
+		scrollTrigger: {
+			trigger: second.value,
+			start: 'top 80%',
+			end: 'top top',
+			scrub: 1,
 		},
 	});
 });
@@ -72,23 +110,46 @@ onMounted(() => {
 			<div ref="firstBG" class="lcl-works-fv__first-bg">
 				<BGNoise :opacity="5"></BGNoise>
 			</div>
-			<div ref="ttl" class="lcl-works-ttl">
-				<IconStar></IconStar>
-				<h2 class="lcl-works-ttl__txt">
-					<span class="lcl-works-ttl__dp font-dp">Select</span>
-					<span class="lcl-works-ttl__en font-en">ed</span>
-					<br />
-					<span class="lcl-works-ttl__en font-en">Wo</span>
-					<span class="lcl-works-ttl__dp font-dp">rks</span>
-				</h2>
-				<!-- .lcl-works-ttl__txt -->
+			<div ref="ttlContainer" class="lcl-works-ttl-container">
+				<div class="lcl-works-ttl">
+					<div ref="ttl" class="lcl-works-ttl__in">
+						<IconStar></IconStar>
+						<h2 class="lcl-works-ttl__txt">
+							<span class="lcl-works-ttl__row">
+								<span
+									v-for="(char, index) in ['S', 'e', 'l', 'e', 'c', 't', 'e', 'd']"
+									:key="index"
+									ref="char"
+									class="lcl-works-ttl__char"
+									:class="index === 6 || index === 7 ? 'font-dp' : 'font-en'"
+								>
+									{{ char }}
+								</span>
+							</span>
+							<br />
+							<span class="lcl-works-ttl__row">
+								<span
+									v-for="(char, index) in ['W', 'o', 'r', 'k', 's']"
+									:key="index"
+									ref="char"
+									class="lcl-works-ttl__char"
+									:class="index === 0 || index === 1 ? 'font-en' : 'font-dp'"
+								>
+									{{ char }}
+								</span>
+							</span>
+						</h2>
+						<!-- .lcl-works-ttl__txt -->
+					</div>
+				</div>
+				<!-- .lcl-works-ttl -->
 			</div>
-			<!-- .lcl-works-ttl -->
+			<!-- .lcl-works-ttl-container -->
 		</div>
 		<!-- .lcl-works-fv__first -->
 		<div ref="second" class="lcl-works-fv__second">
 			<BGNoise :opacity="5"></BGNoise>
-			<WorksFVList></WorksFVList>
+			<WorksFVList ref="fvList"></WorksFVList>
 			<div class="lcl-works__angle-wrp">
 				<div ref="angle" class="lcl-works__angle">
 					<IconAngleRight></IconAngleRight>
@@ -106,7 +167,7 @@ onMounted(() => {
 	.lcl-works-fv__first {
 		position: relative;
 		width: 100%;
-		height: max(minpx(730), pcvw(730));
+		height: max(minpx(730 * 2), pcvw(730 * 2));
 		@include media_narrow {
 			height: 100lvh;
 		}
@@ -131,23 +192,30 @@ onMounted(() => {
 	.BG-noise {
 		z-index: 1;
 	}
-	.lcl-works-ttl {
+	.lcl-works-ttl-container {
 		z-index: 1;
+		position: relative;
+		width: 100%;
+		height: 50%;
+		@include media_narrow {
+			height: 100%;
+		}
+	}
+	.lcl-works-ttl {
 		position: absolute;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
 		width: fit-content;
+	}
+	.lcl-works-ttl__in {
+		position: relative;
 		color: $c-black;
 	}
-	.lcl-works-ttl__txt {
-		font-size: max(minpx(208), pcvw(208));
-		line-height: 0.9;
-		@include media_narrow {
-			@include fz(74);
-		}
-	}
-	.lcl-works-ttl__dp {
+	.lcl-works-ttl__row {
+		display: inline-block;
+		overflow: hidden;
+		white-space: nowrap;
 		&:nth-of-type(1) {
 			margin-left: max(minpx(121), pcvw(121));
 			@include media_narrow {
@@ -155,7 +223,14 @@ onMounted(() => {
 			}
 		}
 	}
-	.lcl-works-ttl__en {
+	.lcl-works-ttl__char {
+		transform: translateY(0);
+		display: inline-block;
+		font-size: max(minpx(208), pcvw(208));
+		line-height: 0.9;
+		@include media_narrow {
+			@include fz(74);
+		}
 	}
 	.ico-star {
 		position: absolute;

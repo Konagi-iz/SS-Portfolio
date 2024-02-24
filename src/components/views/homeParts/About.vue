@@ -287,14 +287,14 @@ onMounted(() => {
 	.lcl-about-top-ttl {
 		position: absolute;
 		top: 68px;
-		left: 50%;
-		transform: translateX(-50%);
+		left: 0;
 		overflow: hidden;
-		white-space: nowrap;
+		width: 100%;
 		color: $c-orange;
 		@include fz(418);
 		font-style: italic;
 		line-height: 1.2;
+		white-space: nowrap;
 		@include delay(7);
 		@include media_narrow {
 			top: vw(78);

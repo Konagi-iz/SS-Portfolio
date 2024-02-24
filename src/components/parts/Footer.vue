@@ -1,9 +1,17 @@
 <script setup>
-import { watch, onMounted } from 'vue';
+import { ref, watch } from 'vue';
 import { gsap } from 'gsap';
+import TextSplit from '@/components/parts/TextSplit.vue';
 import { isRouterViewLoaded } from '@/store';
 import IconAngleRight from '~icons/svg/ico-angle-right';
 
+const main = ref(null);
+const mail1 = ref(null);
+const mail2 = ref(null);
+const mail3 = ref(null);
+
+
+// Footerより前にあるPinでズレるのを防ぐ為、router-view以下がマウントされてから実行
 watch(isRouterViewLoaded, (val) => {
 	if (val) {
 		/* 背景色を切り替えるアニメーション ------------ */
@@ -29,6 +37,16 @@ watch(isRouterViewLoaded, (val) => {
 				toggleActions: 'play none no0ne reverse',
 			},
 		});
+		gsap.to([...mail1.value.char, ...mail2.value.char, ...mail3.value.char], {
+			y: 0,
+			stagger: { each: 0.1 },
+			scrollTrigger: {
+				trigger: main.value,
+				start: 'top 30%',
+				end: 'bottom bottom',
+				scrub: 1,
+			},
+		});
 	}
 });
 </script>
@@ -36,14 +54,13 @@ watch(isRouterViewLoaded, (val) => {
 <template>
 	<footer id="footer">
 		<div class="footer__spacer"></div>
-		<div class="footer__main">
+		<div ref="main" class="footer__main">
 			<div class="footer-mail">
 				<p class="footer-mail__txt font-en">contact me</p>
 				<IconAngleRight></IconAngleRight>
+				<!-- prettier-ignore -->
 				<a class="footer-mail__adress" href="mail:shimakawashodai@gmail.com">
-					<!-- prettier-ignore -->
-					<span class="font-dp">shimakawa<br class="dn-w" />shodai</span>
-					<span class="font-en">@gmail.com</span>
+					<span class="font-dp"><TextSplit ref="mail1" text="shimakawa"></TextSplit><br class="dn-w" /><TextSplit ref="mail2" text="shodai"></TextSplit></span><br class="dn-w"><span class="font-en"><TextSplit ref="mail3" text="@gmail.com"></TextSplit></span>
 				</a>
 				<!-- .footer-mail__adress -->
 			</div>
@@ -113,14 +130,20 @@ watch(isRouterViewLoaded, (val) => {
 		stroke: $c-black;
 	}
 	.footer-mail__adress {
+		clip-path: inset(0 0 -10% 0);
+		display: inline-block;
 		margin-top: 3px;
-		@include fz(64);
-		line-height: 0.9;
 		text-align: center;
 		white-space: nowrap;
 		@include media_narrow {
 			margin-top: vw(7);
-			@include fz(48);
+		}
+		:deep(.split-span) {
+			@include fz(64);
+			line-height: 0.9;
+			@include media_narrow {
+				@include fz(48);
+			}
 		}
 	}
 

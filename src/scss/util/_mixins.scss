@@ -8,10 +8,10 @@ mixins
 	font-size: math.div($font-size, 10) * 1rem;
 }
 
-@mixin delay($length, $delay: 0.05) {
+@mixin delay($length, $delay: 0.05, $offset: 0) {
 	@for $i from 1 through $length {
 		&:nth-of-type(#{$i}) {
-			transition-delay: #{$delay * ($i - 1)}s;
+			transition-delay: #{$delay * ($i - 1) + $offset}s;
 		}
 	}
 }

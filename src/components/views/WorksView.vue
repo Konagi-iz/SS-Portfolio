@@ -1,7 +1,5 @@
 <script setup>
 import { onMounted } from 'vue';
-import FirstView from '@/components/views/aboutParts/FirstView.vue';
-import Motto from '@/components/views/aboutParts/Motto.vue';
 import { isRouterViewLoaded } from '@/store';
 
 /* マウントされたらフラグを有効 ------------ */
@@ -10,9 +8,6 @@ onMounted(() => {
 });
 </script>
 
-<template>
-	<FirstView></FirstView>
-	<Motto></Motto>
-</template>
+<template></template>
 
 <style scoped lang="scss"></style>

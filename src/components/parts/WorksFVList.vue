@@ -1,10 +1,21 @@
 <script setup>
+import { ref } from 'vue';
 import workslist from '@/assets/data/works.json';
+
+const listitem = ref(null);
+
+defineExpose({ listitem });
 </script>
 
 <template>
 	<ul class="works-fv">
-		<li v-for="(item, index) in workslist" :key="index" class="works-fv__item" :class="{ 'works-fv__item--reverse': index % 2 === 0 }">
+		<li
+			ref="listitem"
+			v-for="(item, index) in workslist"
+			:key="index"
+			class="works-fv__item"
+			:class="{ 'works-fv__item--reverse': index % 2 === 0 }"
+		>
 			<picture class="works-fv__pic">
 				<source :srcset="`/assets/img/common/works/SP/img_selected_${item.tag}.jpg`" media="(max-width: 677px)" />
 				<img class="works-fv__img" :src="`/assets/img/common/works/PC/img_selected_${item.tag}.jpg`" alt="" width="177" height="610" />

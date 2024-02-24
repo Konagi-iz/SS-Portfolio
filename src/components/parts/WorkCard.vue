@@ -48,13 +48,15 @@ const props = defineProps({
 <style scoped lang="scss">
 .workcard {
 	display: flex;
+	gap: 95px;
 	border-radius: 16px;
 	padding: 30px;
-	width: 1000px;
+	width: calc(100% - 100px);
 	height: 600px;
 	background: $c-offwhite;
 	@include media_narrow {
 		flex-direction: column-reverse;
+		gap: vw(30);
 		border-radius: vw(12);
 		padding: vw(16);
 		width: vw(360);
@@ -63,17 +65,15 @@ const props = defineProps({
 
 	/* txt ------------ */
 	.workcard-txt {
-		flex: 1;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		padding-top: 32px;
 		height: 100%;
 		@include media_wide {
-			padding-right: 20px;
+			padding-top: 32px;
 		}
 		@include media_narrow {
-			padding-top: vw(30);
+			flex: 1;
 		}
 	}
 	.workcard-txt__main {
@@ -85,6 +85,9 @@ const props = defineProps({
 		font-weight: 400;
 		line-height: 1.2;
 		letter-spacing: 0.03em;
+		@include media_wide {
+			max-width: 300px;
+		}
 		@include media_narrow {
 			margin-bottom: vw(16);
 			@include fz(36);
@@ -123,9 +126,11 @@ const props = defineProps({
 
 	/* video ------------ */
 	.workcard-video {
-		width: 540px;
 		height: 100%;
 		object-fit: cover;
+		@include media_wide {
+			flex: 1;
+		}
 		@include media_narrow {
 			width: 100%;
 			height: vw(285);

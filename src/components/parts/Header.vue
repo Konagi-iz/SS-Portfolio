@@ -1,7 +1,10 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import Menu from '@/components/parts/Menu.vue';
 import Nav from '@/components/parts/Nav.vue';
+
+const route = useRoute();
 
 const isHeaderScrolled = ref(false);
 const isBr = ref(false);
@@ -53,7 +56,7 @@ function setMenuSticky() {
 </script>
 
 <template>
-	<header id="header" :class="{ 'header--scrolled': isHeaderScrolled }">
+	<header id="header" :class="{ 'header--scrolled': isHeaderScrolled, 'header--subpage': route.name !== 'home' }">
 		<div class="header__in">
 			<p class="header__txt header__txt--l font-en">S.S</p>
 			<router-link :to="{ name: 'about' }" class="header__link">
@@ -85,13 +88,14 @@ function setMenuSticky() {
 	left: 0;
 	width: 100%;
 	height: 68px;
+	color: $c-gray;
 	@include media_narrow {
 		height: vw(50);
 	}
 	.header__in {
 		display: flex;
 		justify-content: space-between;
-		border-bottom: 1px solid $c-gray;
+		border-bottom: 1px solid currentColor;
 		height: 100%;
 	}
 	.header__txt {
@@ -100,7 +104,7 @@ function setMenuSticky() {
 		justify-content: center;
 		width: 73px;
 		height: 100%;
-		color: $c-gray;
+		color: currentColor;
 		@include fz(14);
 		font-weight: 400;
 		line-height: 1.5;
@@ -110,10 +114,10 @@ function setMenuSticky() {
 		}
 	}
 	.header__txt--l {
-		border-right: 1px solid $c-gray;
+		border-right: 1px solid currentColor;
 	}
 	.header__txt--r {
-		border-left: 1px solid $c-gray;
+		border-left: 1px solid currentColor;
 	}
 	.header__link {
 		position: fixed;
@@ -185,6 +189,11 @@ function setMenuSticky() {
 			left: vw(15);
 			width: vw(74);
 		}
+	}
+
+	/* header--subpage ------------ */
+	&.header--subpage {
+		color: $c-offwhite;
 	}
 }
 </style>

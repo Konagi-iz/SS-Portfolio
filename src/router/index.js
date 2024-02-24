@@ -16,6 +16,16 @@ const router = createRouter({
 			name: 'about',
 			component: () => import('@/components/views/AboutView.vue'),
 		},
+		{
+			path: '/works',
+			name: 'works',
+			component: () => import('@/components/views/WorksView.vue'),
+		},
+		{
+			path: '/photo',
+			name: 'photo',
+			component: () => import('@/components/views/PhotographyView.vue'),
+		},
 
 		/* 存在しないパスを404にリダイレクト ------------ */
 		// { path: '/:pathMatch(.*)*', redirect: { name: '404' } },

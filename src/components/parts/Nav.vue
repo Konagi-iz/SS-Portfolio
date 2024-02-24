@@ -9,18 +9,22 @@ const navlist = [
 	{
 		en: 'Home',
 		jp: 'ホーム',
+		route: 'home',
 	},
 	{
 		en: 'About me',
 		jp: '私について',
+		route: 'about',
 	},
 	{
 		en: 'Works',
 		jp: '制作実績',
+		route: 'works',
 	},
 	{
 		en: 'Photography',
 		jp: '写真',
+		route: 'photo',
 	},
 ];
 </script>
@@ -34,7 +38,7 @@ const navlist = [
 			<nav class="nav">
 				<ul class="nav-list">
 					<li v-for="(item, index) in navlist" :key="index" class="nav-list__item">
-						<router-link to="" class="nav-list__link hv-txt">
+						<router-link :to="{ name: item.route }" class="nav-list__link hv-txt">
 							<IconStar></IconStar>
 							<span class="nav-list__en font-dp">{{ item.en }}</span>
 							<span class="nav-list__ttl">{{ item.jp }}</span>
