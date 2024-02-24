@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import IconAngleRight from '~icons/svg/ico-angle-right';
 
 const currentIndex = ref(0);
@@ -9,6 +9,18 @@ const isTransitionEnabled = ref(true);
 const slideActiveClassFlag = ref(true);
 const speed = 800;
 const realSpeed = ref(speed);
+
+const rotate = ref(`${currentRotate.value}deg`);
+const transitionProperty = ref(`${isTransitionEnabled.value ? 'rotate' : 'none'}`);
+const transitionDuration = ref(`${isTransitionEnabled.value ? realSpeed.value / 1000 : 0}s`);
+
+watch(currentRotate, () => {
+	rotate.value = `${currentRotate.value}deg`;
+});
+watch(isTransitionEnabled, () => {
+	transitionProperty.value = `${isTransitionEnabled.value ? 'rotate' : 'none'}`;
+	transitionDuration.value = `${isTransitionEnabled.value ? realSpeed.value / 1000 : 0}s`;
+});
 
 const slideToPrev = () => {
 	slideActiveClassFlag.value = false;
@@ -58,7 +70,7 @@ const slideToIndex = (toIndex) => {
 		const rotate = Math.abs(clockwiseGap) < Math.abs(counterclockwiseGap) ? clockwiseGap : counterclockwiseGap;
 
 		//　移動距離に応じて0.23秒ずつspeedを遅くする
-		realSpeed.value = speed + 230 * (Math.abs(rotate) - 1);
+		realSpeed.value.value = speed + 230 * (Math.abs(rotate) - 1);
 
 		currentRotate.value -= 45 * rotate;
 		currentIndex.value = toIndex;
@@ -81,37 +93,34 @@ const onTransitionEnd = () => {
 <template>
 	<div class="lcl-slider">
 		<div class="lcl-slider__slider">
-			<div
-				@transitionend.self="onTransitionEnd"
-				class="lcl-slider__wrapper"
-				:style="`rotate: ${currentRotate}deg; transition-duration: ${isTransitionEnabled ? realSpeed / 1000 : 0}s; transition-property: ${
-					isTransitionEnabled ? 'rotate' : 'none'
-				}`"
-			>
-				<div
-					v-for="(item, index) in 8"
-					:key="index"
-					class="lcl-slider__slide"
-					:class="{ 'lcl-slider__slide--active': slideActiveClassFlag && currentIndex == index }"
-					:style="`--index: ${index};`"
-				>
-					<img
-						class="lcl-slider__img"
-						:src="`/assets/img/home/photo/PC/img_0${index + 1}.png`"
-						alt=""
-						width="558"
-						height="558"
-						loading="lazy"
-					/>
+			<div @transitionend.self="onTransitionEnd" class="lcl-slider__wrapper">
+				<div class="lcl-slider__in scr-anin">
+					<div
+						v-for="(item, index) in 8"
+						:key="index"
+						class="lcl-slider__slide"
+						:class="{ 'lcl-slider__slide--active': slideActiveClassFlag && currentIndex == index }"
+						:style="`--index: ${index};`"
+					>
+						<img
+							class="lcl-slider__img"
+							:src="`/assets/img/home/photo/PC/img_0${index + 1}.png`"
+							alt=""
+							width="558"
+							height="558"
+							loading="lazy"
+						/>
+					</div>
+					<!-- .lcl-slider__slide -->
 				</div>
-				<!-- .lcl-slider__slide -->
+				<!-- .lcl-slider__in -->
 			</div>
 			<!-- .lcl-slider__wrapper -->
-			<button @click="slideToPrev" class="lcl-slider__btn lcl-slider__btn--prev">
+			<button @click="slideToPrev" class="lcl-slider__btn lcl-slider__btn--prev scr-anin">
 				<IconAngleRight></IconAngleRight>
 			</button>
 			<!-- .lcl-slider__btn -->
-			<button @click="slideToNext" class="lcl-slider__btn lcl-slider__btn--next">
+			<button @click="slideToNext" class="lcl-slider__btn lcl-slider__btn--next scr-anin">
 				<IconAngleRight></IconAngleRight>
 			</button>
 			<!-- .lcl-slider__btn -->
@@ -161,12 +170,26 @@ const onTransitionEnd = () => {
 		top: 0;
 		left: 50%;
 		translate: -50% 0;
+		rotate: v-bind(rotate);
 		width: max(minpx(2278), pcvw(2278));
 		height: max(minpx(2278), pcvw(2278));
+		transition-property: v-bind(transitionProperty);
+		transition-duration: v-bind(transitionDuration);
 		transition-timing-function: cubic-bezier(0.22, 1, 0.48, 1);
 		@include media_narrow {
 			width: vw(872);
 			height: vw(872);
+		}
+	}
+	.lcl-slider__in {
+		opacity: 0;
+		rotate: 67.5deg;
+		width: 100%;
+		height: 100%;
+		transition: opacity 2s $e-out-circ, rotate 3s $e-out-expo;
+		&.scr-anin--on {
+			opacity: 1;
+			rotate: 0deg;
 		}
 	}
 	.lcl-slider__slide {
@@ -200,6 +223,7 @@ const onTransitionEnd = () => {
 	.lcl-slider__btn {
 		position: absolute;
 		top: max(minpx(175.5), pcvw(175.5));
+		opacity: 0;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -207,7 +231,7 @@ const onTransitionEnd = () => {
 		width: max(minpx(73), pcvw(73));
 		height: max(minpx(73), pcvw(73));
 		background: $c-orange;
-		transition: background 0.4s $e-out-expo;
+		transition: opacity .8s .2s $e-out-circ, transform .8s .2s $e-out-circ, background 0.4s $e-out-expo;
 		@include media_narrow {
 			top: vw(62);
 			width: vw(38);
@@ -224,9 +248,14 @@ const onTransitionEnd = () => {
 				stroke: $c-orange;
 			}
 		}
+		&.scr-anin--on {
+			opacity: 1;
+			transform: translateX(0);
+		}
 	}
 	.lcl-slider__btn--prev {
 		left: max(minpx(268), pcvw(268));
+		transform: translateX(100%);
 		@include media_narrow {
 			left: vw(21);
 		}
@@ -236,6 +265,7 @@ const onTransitionEnd = () => {
 	}
 	.lcl-slider__btn--next {
 		left: max(minpx(959), pcvw(959));
+		transform: translateX(-100%);
 		@include media_narrow {
 			left: vw(316);
 		}

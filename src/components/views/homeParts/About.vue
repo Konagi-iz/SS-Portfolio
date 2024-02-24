@@ -1,28 +1,100 @@
 <script setup>
-import { onMounted } from 'vue';
+import { ref, nextTick, onMounted } from 'vue';
 import Button01 from '@/components/parts/Button01.vue';
 import { media } from '@/store';
 import gsap from 'gsap';
+import TextSplit from '@/components/parts/TextSplit.vue';
+
+const topTtl = ref(null);
+const topBG = ref(null);
+const primary = ref(null);
+const design = ref(null);
+const coding = ref(null);
+const designIcon = ref(null);
+const codingIcon = ref(null);
+const crossIcon = ref(null);
 
 onMounted(() => {
-	/* パララックス ------------ */
-	gsap.to('.lcl-about-top-ttl', {
-		yPercent: -50,
-		scrollTrigger: {
-			trigger: '.lcl-about-top-ttl',
-			start: 'top bottom',
-			end: 'bottom top',
-			scrub: 1,
-		},
-	});
-	gsap.from('.lcl-about-top__bg', {
-		yPercent: 20,
-		scrollTrigger: {
-			trigger: '.lcl-about-top__bg',
-			start: 'top bottom',
-			end: 'bottom top',
-			scrub: 1,
-		},
+	nextTick(() => {
+		/* パララックス ------------ */
+		gsap.to(topTtl.value, {
+			yPercent: -50,
+			scrollTrigger: {
+				trigger: topTtl.value,
+				start: 'top bottom',
+				end: 'bottom top',
+				scrub: 1,
+			},
+		});
+		gsap.from(topBG.value, {
+			yPercent: 20,
+			scrollTrigger: {
+				trigger: topBG.value,
+				start: 'top bottom',
+				end: 'bottom top',
+				scrub: 1,
+			},
+		});
+
+		/* Design x Coding ------------ */
+		gsap.fromTo(
+			design.value,
+			{ xPercent: -10 },
+			{
+				xPercent: 10,
+				scrollTrigger: {
+					trigger: primary.value,
+					start: 'top bottom',
+					end: 'bottom top',
+					scrub: 1,
+				},
+			}
+		);
+		gsap.fromTo(
+			coding.value,
+			{ xPercent: 10 },
+			{
+				xPercent: -10,
+				scrollTrigger: {
+					trigger: primary.value,
+					start: 'top bottom',
+					end: 'bottom top',
+					scrub: 1,
+				},
+			}
+		);
+		gsap.to(`.${design.value.classList[0]} .split-span`, {
+			y: 0,
+			stagger: { each: 0.05 },
+			scrollTrigger: {
+				trigger: primary.value,
+				start: 'top 80%',
+				end: 'center center',
+				scrub: 1,
+			},
+		});
+		[designIcon.value, codingIcon.value].forEach((icon, i) => {
+			gsap.from(icon, {
+				xPercent: i < 1 ? -50 : 50,
+				opacity: 0,
+				scrollTrigger: {
+					trigger: icon,
+					start: 'top 80%',
+					end: 'center center',
+					scrub: 1,
+				},
+			});
+		});
+		gsap.from(crossIcon.value, {
+			rotate: 90,
+			opacity: 0,
+			scrollTrigger: {
+				trigger: primary.value,
+				start: 'top 80%',
+				end: 'center center',
+				scrub: 1,
+			},
+		});
 	});
 });
 </script>
@@ -30,7 +102,15 @@ onMounted(() => {
 <template>
 	<section class="lcl-about">
 		<div class="lcl-about-top">
-			<img class="lcl-about-top__bg" src="/assets/img/home/about/PC/img_bg.png" alt="" width="1166" height="1858" loading="lazy" />
+			<img
+				ref="topBG"
+				class="lcl-about-top__bg"
+				src="/assets/img/home/about/PC/img_bg.png"
+				alt=""
+				width="1166"
+				height="1858"
+				loading="lazy"
+			/>
 			<div class="lcl-about-top__img-wrp">
 				<img
 					class="lcl-about-top__img"
@@ -42,24 +122,21 @@ onMounted(() => {
 				/>
 			</div>
 			<!-- .lcl-about-top__img-wrp -->
-			<h2 class="lcl-about-top-ttl scr-anin">
-				<span v-for="(word, index) in ['H', 'e', 'l', 'l', 'o', '!', '!']" :key="index" class="lcl-about-top-ttl__word font-dp">
-					{{ word }}
-				</span>
+			<h2 ref="topTtl" class="lcl-about-top-ttl font-dp scr-anin">
+				<TextSplit text="Hello!!"></TextSplit>
 			</h2>
 			<!-- .lcl-about-top-ttl -->
 			<div class="lcl-about-top__prof">
-				<p class="lcl-about-top__big js-txt-span scr-anin">初めまして！</p>
-				<p class="lcl-about-top__txt scr-anin">
-					<span class="lcl-about-top__row">初めまして、島川昌大と申します。</span>
-					<br />
-					<span class="lcl-about-top__row">学校でグラフィックデザインを学ぶ中でコーディングと出会い、</span>
-					<br />
-					<span class="lcl-about-top__row">文字を打ってデザインを組み上げていく面白さを知りました。</span>
-					<br />
-					<span class="lcl-about-top__row">今までデザインを学んできた経験を活かして、</span>
-					<br />
-					<span class="lcl-about-top__row">デザインとコーディングの融合を目指しています！</span>
+				<p class="lcl-about-top__big scr-anin">
+					<TextSplit text="初めまして！"></TextSplit>
+				</p>
+				<!-- prettier-ignore -->
+				<p class="lcl-about-top__txt fade-in-txt scr-anin">
+					初めまして、島川昌大と申します。<br />
+					学校でグラフィックデザインを学ぶ中でコーディングと出会い、<br />
+					文字を打ってデザインを組み上げていく面白さを知りました。<br />
+					今までデザインを学んできた経験を活かして、<br />
+					デザインとコーディングの融合を目指しています！
 				</p>
 			</div>
 			<!-- .lcl-about-top__prof -->
@@ -68,10 +145,13 @@ onMounted(() => {
 
 		<div class="lcl-about-btm">
 			<img class="lcl-about-btm__bg" src="/assets/img/home/about/PC/img_bg.png" alt="" width="1166" height="1858" loading="lazy" />
-			<div class="lcl-about-btm__primary">
-				<div class="lcl-about-btm-big">
-					<p class="lcl-about-btm-big__en font-dp">Design</p>
+			<div ref="primary" class="lcl-about-btm__primary">
+				<div ref="design" class="lcl-about-btm-big lcl-about-btm-big--design">
+					<p class="lcl-about-btm-big__en font-dp">
+						<TextSplit text="Design"></TextSplit>
+					</p>
 					<img
+						ref="designIcon"
 						class="lcl-about-btm-big__icon"
 						src="/assets/img/home/about/PC/ico_design.svg"
 						alt="デザインを模ったアイコン"
@@ -81,10 +161,15 @@ onMounted(() => {
 					/>
 				</div>
 				<!-- .lcl-about-btm-big -->
-				<img class="lcl-about-btm__cross" src="/assets/img/home/about/PC/ico_cross.svg" alt="" />
-				<div class="lcl-about-btm-big lcl-about-btm-big--reverse">
-					<p class="lcl-about-btm-big__en font-dp">Coding</p>
+				<div class="lcl-about-btm__cross-wrp">
+					<img ref="crossIcon" class="lcl-about-btm__cross" src="/assets/img/home/about/PC/ico_cross.svg" alt="" />
+				</div>
+				<div ref="coding" class="lcl-about-btm-big lcl-about-btm-big--coding">
+					<p class="lcl-about-btm-big__en font-dp">
+						<TextSplit text="Coding"></TextSplit>
+					</p>
 					<img
+						ref="codingIcon"
 						class="lcl-about-btm-big__icon"
 						src="/assets/img/home/about/PC/ico_coding.svg"
 						alt="コーディングを模ったアイコン"
@@ -97,37 +182,53 @@ onMounted(() => {
 			</div>
 			<!-- .lcl-about-btm__primary -->
 			<!-- prettier-ignore -->
-			<p v-if="media === 'PC'" class="lcl-about-btm__jp-big">
-				<span class="lcl-about-btm__row js-txt-span">デザインとコーディングを</span><br />
-				<span class="lcl-about-btm__row js-txt-span">通じて見る人の心を動かし、</span><br />
-				<span class="lcl-about-btm__row js-txt-span">ワクワクさせたい。</span>
+			<p v-if="media === 'PC'" class="lcl-about-btm__jp-big scr-anin">
+				<span class="lcl-about-btm__row">
+					<TextSplit text="デザインとコーディングを"></TextSplit>
+				</span><br />
+				<span class="lcl-about-btm__row">
+					<TextSplit text="通じて見る人の心を動かし、"></TextSplit>
+				</span><br />
+				<span class="lcl-about-btm__row">
+					<TextSplit text="ワクワクさせたい。"></TextSplit>
+				</span>
 			</p>
 			<!-- prettier-ignore -->
-			<p v-else-if="media === 'SP'" class="lcl-about-btm__jp-big">
-				<span class="lcl-about-btm__row js-txt-span">デザインと</span><br />
-				<span class="lcl-about-btm__row js-txt-span">コーディングを</span><br />
-				<span class="lcl-about-btm__row js-txt-span">通じて見る人の</span><br />
-				<span class="lcl-about-btm__row js-txt-span">心を動かし、</span><br />
-				<span class="lcl-about-btm__row js-txt-span">ワクワクさせたい。</span>
+			<p v-else-if="media === 'SP'" class="lcl-about-btm__jp-big scr-anin">
+				<span class="lcl-about-btm__row">
+					<TextSplit text="デザインと"></TextSplit>
+				</span><br />
+				<span class="lcl-about-btm__row">
+					<TextSplit text="コーディングを"></TextSplit>
+				</span><br />
+				<span class="lcl-about-btm__row">
+					<TextSplit text="通じて見る人の"></TextSplit>
+				</span><br />
+				<span class="lcl-about-btm__row">
+					<TextSplit text="心を動かし、"></TextSplit>
+				</span><br />
+				<span class="lcl-about-btm__row">
+					<TextSplit text="ワクワクさせたい。"></TextSplit>
+				</span>
 			</p>
 			<!-- .lcl-about-btm__jp-big -->
 			<!-- prettier-ignore -->
-			<p v-if="media === 'PC'" class="lcl-about-btm__txt">
-				<span class="lcl-about-btm__row js-txt-span">デザインだけ、コーディングだけではなく、</span><br />
-				<span class="lcl-about-btm__row js-txt-span">そのどちらもできる人になりたいと考えています。</span><br />
-				<span class="lcl-about-btm__row js-txt-span">デザインが分かるからこそできるコーディング、その逆も然り、</span><br />
-				<span class="lcl-about-btm__row js-txt-span">デザイナーとエンジニアの橋渡し役のような存在こそ私の目指す所です。</span>
+			<p v-if="media === 'PC'" class="lcl-about-btm__txt fade-in-txt scr-anin">
+				デザインだけ、コーディングだけではなく、<br />
+				そのどちらもできる人になりたいと考えています。<br />
+				デザインが分かるからこそできるコーディング、その逆も然り、<br />
+				デザイナーとエンジニアの橋渡し役のような存在こそ私の目指す所です。
 			</p>
 			<!-- prettier-ignore -->
-			<p v-if="media === 'SP'" class="lcl-about-btm__txt">
-				<span class="lcl-about-btm__row js-txt-span">デザインだけ、コーディングだけではなく、</span><br />
-				<span class="lcl-about-btm__row js-txt-span">そのどちらもできる人になりたいと考えています。</span><br />
-				<span class="lcl-about-btm__row js-txt-span">デザインが分かるからこそできるコーディング、その逆も然り、</span><br />
-				<span class="lcl-about-btm__row js-txt-span">デザイナーとエンジニアの橋渡し役のような存在こそ</span><br />
-				<span class="lcl-about-btm__row js-txt-span">私の目指す所です。</span>
+			<p v-if="media === 'SP'" class="lcl-about-btm__txt fade-in-txt scr-anin">
+				デザインだけ、コーディングだけではなく、<br />
+				そのどちらもできる人になりたいと考えています。<br />
+				デザインが分かるからこそできるコーディング、その逆も然り、<br />
+				デザイナーとエンジニアの橋渡し役のような存在こそ<br />
+				私の目指す所です。
 			</p>
 			<!-- .lcl-about-btm__txt -->
-			<router-link :to="{ name: 'about' }" class="lcl-about-btm__link">
+			<router-link :to="{ name: 'about' }" class="lcl-about-btm__link fade-in-txt scr-anin">
 				<Button01 v-bind="{ isBig: true, color: 'white', txt: 'ABOUT ME' }"></Button01>
 			</router-link>
 		</div>
@@ -190,24 +291,21 @@ onMounted(() => {
 		transform: translateX(-50%);
 		overflow: hidden;
 		white-space: nowrap;
-		@include media_narrow {
-			top: vw(78);
-		}
-		&.scr-anin--on .lcl-about-top-ttl__word {
-			transform: translateY(0);
-		}
-	}
-	.lcl-about-top-ttl__word {
-		transform: translateY(100%);
-		display: inline-block;
 		color: $c-orange;
 		@include fz(418);
 		font-style: italic;
 		line-height: 1.2;
-		transition: transform 1.5s $e-out-expo;
 		@include delay(7);
 		@include media_narrow {
+			top: vw(78);
 			@include fz(118);
+		}
+		&.scr-anin--on :deep(.split-span) {
+			transform: translateY(0);
+		}
+		:deep(.split-span) {
+			transition: transform 1.5s $e-out-expo;
+			@include delay(7, 0.1);
 		}
 	}
 	// about-top-prof
@@ -230,19 +328,15 @@ onMounted(() => {
 	.lcl-about-top__big {
 		overflow: hidden;
 		@include ttl-basic;
+		&.scr-anin--on :deep(.split-span) {
+			transform: translateY(0);
+		}
 		:deep(.split-span) {
 			@include delay(6);
 		}
 	}
 	.lcl-about-top__txt {
-		opacity: 0;
-		transform: translateY(100%) rotate(-2deg);
 		@include txt-basic;
-		transition: transform 1.2s $e-out-circ, opacity 1.2s $e-out-circ;
-		&.scr-anin--on {
-			opacity: 1;
-			transform: translateY(0) rotate(0deg);
-		}
 	}
 
 	/* about-btm ------------ */
@@ -282,12 +376,16 @@ onMounted(() => {
 		}
 	}
 	.lcl-about-btm-big__en {
+		clip-path: inset(0 0 -15% 0);
 		color: $c-orange;
 		@include fz(212);
 		font-size: vwclamp(212, 1024, 1206);
 		line-height: 0.9;
 		@include media_narrow {
 			@include fz(68);
+		}
+		:deep(.split-span) {
+			transition: none;
 		}
 	}
 	.lcl-about-btm-big__icon {
@@ -296,30 +394,42 @@ onMounted(() => {
 			width: vw(108);
 		}
 	}
-	.lcl-about-btm-big--reverse {
+	.lcl-about-btm-big--coding {
 		flex-direction: row-reverse;
 		margin-top: vwclamp(125, 1024, 1206);
 		@include media_narrow {
 			margin-top: vw(30);
 		}
 	}
-	.lcl-about-btm__cross {
+	.lcl-about-btm__cross-wrp {
 		position: absolute;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
+	}
+	.lcl-about-btm__cross {
 		@include media_narrow {
 			width: vw(54);
 		}
+	}
+	.lcl-about-btm__row {
+		display: inline-block;
+		overflow: hidden;
 	}
 	.lcl-about-btm__jp-big {
 		margin-top: 150px;
 		margin-inline: auto;
 		width: min(1206px, 100%);
-		@include ttl-basic;
 		@include media_narrow {
 			margin-top: vw(100);
 			padding-left: vw(15);
+		}
+		&.scr-anin--on :deep(.split-span) {
+			transform: translateY(0);
+		}
+		:deep(.split-span) {
+			@include ttl-basic;
+			@include delay(13);
 		}
 	}
 	.lcl-about-btm__txt {

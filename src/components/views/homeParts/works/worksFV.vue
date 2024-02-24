@@ -8,6 +8,7 @@ import IconStar from '~icons/svg/ico-star';
 
 const ttl = ref(null);
 const first = ref(null);
+const firstBG = ref(null);
 const second = ref(null);
 const angle = ref(null);
 
@@ -23,6 +24,7 @@ onMounted(() => {
 		(context) => {
 			let { isPC, isSP } = context.conditions;
 
+			/* Selected Works ------------ */
 			gsap.to(ttl.value, {
 				scale: isPC ? 0.3007209063 : 0.7965116279,
 				xPercent: isPC ? -100 : -60,
@@ -35,6 +37,7 @@ onMounted(() => {
 					pin: ttl.value,
 					pinSpacing: false,
 					scrub: 1,
+					invalidateOnRefresh: true,
 				},
 			});
 			gsap.from(angle.value, {
@@ -49,13 +52,26 @@ onMounted(() => {
 			});
 		}
 	);
+
+	gsap.from(firstBG.value, {
+		scale: 0.8,
+		scrollTrigger: {
+			trigger: first.value,
+			start: 'top bottom',
+			end: 'top top',
+			scrub: 1,
+			markers: true,
+		},
+	});
 });
 </script>
 
 <template>
 	<div class="lcl-works__fv">
 		<div ref="first" class="lcl-works-fv__first">
-			<BGNoise :opacity="5"></BGNoise>
+			<div ref="firstBG" class="lcl-works-fv__first-bg">
+				<BGNoise :opacity="5"></BGNoise>
+			</div>
 			<div ref="ttl" class="lcl-works-ttl">
 				<IconStar></IconStar>
 				<h2 class="lcl-works-ttl__txt">
@@ -89,15 +105,27 @@ onMounted(() => {
 	/* fv-first ------------ */
 	.lcl-works-fv__first {
 		position: relative;
+		width: 100%;
+		height: max(minpx(730), pcvw(730));
+		@include media_narrow {
+			height: 100lvh;
+		}
+	}
+	.lcl-works-fv__first-bg {
+		z-index: -1;
+		position: absolute;
+		top: 0;
+		left: 0;
+		transform-origin: bottom;
+		overflow: hidden;
 		border-top-left-radius: max(minpx(32), pcvw(32));
 		border-top-right-radius: max(minpx(32), pcvw(32));
 		width: 100%;
-		height: max(minpx(730), pcvw(730));
+		height: 100%;
 		background: $c-orange;
 		@include media_narrow {
 			border-top-left-radius: vw(16);
 			border-top-right-radius: vw(16);
-			height: 100lvh;
 		}
 	}
 	.BG-noise {
@@ -147,6 +175,7 @@ onMounted(() => {
 
 	/* fv-second ------------ */
 	.lcl-works-fv__second {
+		z-index: 0;
 		position: relative;
 		width: 100%;
 		height: max(minpx(730), pcvw(730));

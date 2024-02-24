@@ -65,7 +65,6 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to, from, next) => {
 	nextTick(() => {
 		scrollAnimation();
-		txtSpan();
 	});
 
 	/* Scroll animation ------------ */
@@ -82,26 +81,6 @@ router.afterEach((to, from, next) => {
 					e.classList.add('scr-anin--on');
 				}
 			});
-		});
-	}
-
-	/* テキストを分割してspanで囲む ------------ */
-	function txtSpan() {
-		const targets = document.querySelectorAll('.js-txt-span');
-
-		targets.forEach((target) => {
-			const txtContent = target.textContent.trim().replace(/\s/g, '○');
-			let newTxt = '';
-
-			[...txtContent].forEach((char) => {
-				if (char === '○') {
-					newTxt += '<br>';
-				} else {
-					newTxt += `<span class="split-span">${char}</span>`;
-				}
-			});
-
-			target.innerHTML = newTxt;
 		});
 	}
 });

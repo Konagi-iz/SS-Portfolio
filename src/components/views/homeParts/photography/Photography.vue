@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import { gsap } from 'gsap';
 import Slider from '@/components/views/homeParts/photography/Slider.vue';
 import Button01 from '@/components/parts/Button01.vue';
+import TextSplit from '@/components/parts/TextSplit.vue';
 
 const section = ref(null);
 
@@ -24,30 +25,31 @@ onMounted(() => {
 <template>
 	<section ref="section" class="lcl-photo">
 		<div class="lcl-photo-ttl">
-			<img class="lcl-photo__icon" src="/assets/img/home/photo/PC/ico-photo.svg" alt="" width="142" height="142" loading="lazy" />
-			<h2 class="lcl-photo-ttl__txt">
-				<span class="lcl-photo-ttl__en font-en">Photo</span>
-				<span class="lcl-photo-ttl__dp font-dp">graphy</span>
+			<img class="lcl-photo__icon scr-anin" src="/assets/img/home/photo/PC/ico-photo.svg" alt="" width="142" height="142" loading="lazy" />
+			<h2 class="lcl-photo-ttl__txt scr-anin">
+				<span class="lcl-photo-ttl__en font-en">
+					<TextSplit text="Photo"</TextSplit>
+				</span>
+				<span class="lcl-photo-ttl__dp font-dp">
+					<TextSplit text="graphy"></TextSplit>
+				</span>
 			</h2>
 			<!-- .lcl-photo-ttl__txt -->
 		</div>
 		<!-- .lcl-photo-ttl -->
 		<div class="lcl-photo-desc">
-			<p class="lcl-photo-desc__jp">
-				カメラが好きです。
-				<br />
-				写真を撮ります。
-				<br />
-				風景スナップや
-				<br />
-				ストリートスナップ、
-				<br />
+			<!-- prettier-ignore -->
+			<p class="lcl-photo-desc__jp fade-in-txt scr-anin">
+				カメラが好きです。<br />
+				写真を撮ります。<br />
+				風景スナップや<br />
+				ストリートスナップ、<br />
 				ポートレートなど。
 			</p>
 			<!-- .lcl-photo-desc__jp -->
-			<p class="lcl-photo-desc__en font-en">
-				Camera : Fujifilm X-T5
-				<br />
+			<!-- prettier-ignore -->
+			<p class="lcl-photo-desc__en font-en fade-in-txt scr-anin">
+				Camera : Fujifilm X-T5<br />
 				Lens : Sigma 18-50mm F2.8
 			</p>
 			<!-- .lcl-photo-desc__en -->
@@ -89,16 +91,32 @@ onMounted(() => {
 		}
 	}
 	.lcl-photo__icon {
+		opacity: 0;
+		transform: rotate(-90deg);
 		width: 142px;
 		height: auto;
+		transition: opacity .8s $e-out-circ, transform .8s $e-out-circ;
 		@include media_narrow {
 			width: vw(52);
+		}
+		&.scr-anin--on {
+			opacity: 1;
+			transform: rotate(0deg);
 		}
 	}
 	.lcl-photo-ttl__txt {
 		color: $c-orange;
+		&.scr-anin--on :deep(.split-span) {
+			transform: translateY(0);
+		}
+		:deep(.split-span) {
+			transform: translateY(142%);
+			transition: transform 1s $e-out-expo;
+			@include delay(6, 0.1)
+		}
 	}
 	.lcl-photo-ttl__en {
+		overflow: hidden;
 		display: block;
 		@include fz(195);
 		line-height: 0.75;
@@ -107,6 +125,7 @@ onMounted(() => {
 		}
 	}
 	.lcl-photo-ttl__dp {
+		clip-path: inset(0 0 -30% 0);
 		display: block;
 		margin-left: 157px;
 		@include fz(187);

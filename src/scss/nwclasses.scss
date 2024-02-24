@@ -51,10 +51,20 @@
 
 .split-span {
 	display: inline-block;
-	transform: translateY(100%);
+	transform: translateY(116%);
 	transition: transform 1s $e-out-circ;
 	white-space: nowrap;
 }
-.scr-anin--on .split-span {
-	transform: translateY(0);
+
+.fade-in-txt {
+	opacity: 0;
+	transform: translateY(100px) rotate(-2deg);
+	transition: transform 1.2s $e-out-circ, opacity 1.2s $e-out-circ;
+	@include media_narrow {
+		transform: translateY(vw(100)) rotate(-2deg);
+	}
+	&.scr-anin--on {
+		opacity: 1;
+		transform: translateY(0) rotate(0deg);
+	}
 }
