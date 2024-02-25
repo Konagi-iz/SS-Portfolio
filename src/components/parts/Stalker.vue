@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import { gsap } from 'gsap';
 
 const isStalkerActive = ref(false);
+const stalker = ref(null);
 
 const mouse = {
 	x: 0,
@@ -16,7 +17,7 @@ function onMove(e) {
 	mouse.currentY = e.clientY;
 }
 
-// multiplierを小さくするほど補間が強くなる
+// multiplierを小さくするほど補間が強くなる;
 function lerp(start, end, multiplier) {
 	return start * (1 - multiplier) + end * multiplier;
 }
@@ -25,7 +26,7 @@ function onRaf() {
 	mouse.x = lerp(mouse.x, mouse.currentX, 0.1);
 	mouse.y = lerp(mouse.y, mouse.currentY, 0.1);
 
-	gsap.set('.stalker', {
+	gsap.set(stalker.value, {
 		x: mouse.x,
 		y: mouse.y,
 	});
@@ -50,7 +51,7 @@ onMounted(() => {
 </script>
 
 <template>
-	<div class="stalker dn-n" :class="{ 'stalker--active': isStalkerActive }">
+	<div ref="stalker" class="stalker dn-n" :class="{ 'stalker--active': isStalkerActive }">
 		<div class="stalker__circle"></div>
 	</div>
 </template>

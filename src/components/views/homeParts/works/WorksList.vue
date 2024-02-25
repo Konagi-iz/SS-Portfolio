@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import WorksCard from '@/components/parts/WorkCard.vue';
@@ -8,10 +8,11 @@ import Button01 from '@/components/parts/Button01.vue';
 
 const card = ref(null);
 
+let isComponentUnmounted = false;
+
 onMounted(() => {
 	card.value.forEach((item, index) => {
 		const video = item.querySelector('video');
-		let playFlag = true;
 
 		/* 後ろに隠れたら動画をリセットする ------------ */
 		if (index < card.value.length - 1) {
@@ -19,13 +20,20 @@ onMounted(() => {
 				trigger: item,
 				start: '100% top',
 				onEnter: () => {
-					playFlag = false;
 					video.load();
 					video.pause();
 				},
 				onLeaveBack: () => {
-					playFlag = true;
-					video.play();
+					if (!isComponentUnmounted) {
+						video
+							.play()
+							.then(() => {
+								return;
+							})
+							.catch((error) => {
+								console.error('動画の再生に失敗しました。', error);
+							});
+					}
 				},
 			});
 		}
@@ -35,8 +43,15 @@ onMounted(() => {
 			trigger: item,
 			start: 'top bottom',
 			onEnter: () => {
-				if (playFlag) {
-					video.play();
+				if (!isComponentUnmounted) {
+					video
+						.play()
+						.then(() => {
+							return;
+						})
+						.catch((error) => {
+							console.error('動画の再生に失敗しました。', error);
+						});
 				}
 			},
 			onLeaveBack: () => {
@@ -91,19 +106,23 @@ onMounted(() => {
 		},
 	});
 });
+
+onUnmounted(() => {
+	isComponentUnmounted = true;
+});
 </script>
 
 <template>
 	<div class="lcl-works-list">
 		<ul class="lcl-works-list__in">
-			<li v-for="(item, index) in workslist" :key="index" ref="card" class="lcl-works-list__item">
+			<li v-for="(item, index) in workslist[0]" :key="index" ref="card" class="lcl-works-list__item">
 				<WorksCard
-					ref="video"
 					v-bind="{
 						ttl: item.title,
 						year: item.year,
 						role: item.role,
 						tag: item.tag,
+						cat: item.cat,
 					}"
 				></WorksCard>
 			</li>

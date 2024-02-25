@@ -23,7 +23,9 @@ onMounted(() => {
 <template>
 	<section ref="fv" class="lcl-fv">
 		<div class="lcl-fv__bg"></div>
+		<!-- .lcl-fv__bg -->
 		<BGNoise :opacity="20"></BGNoise>
+		<!-- .bg-noise -->
 		<div class="lcl-fv__cnt">
 			<p class="lcl-fv__head">PROFILE</p>
 			<h2 class="lcl-fv-ttl">

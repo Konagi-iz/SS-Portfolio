@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted } from 'vue';
 import { isRouterViewLoaded } from '@/store';
-import FirstView from '@/components/views/worksParts/FirstView.vue';
-import WorksList from '@/components/views/worksParts/WorksList.vue';
+import Detail from '@/components/views/detailParts/Detail.vue';
+import workslist from '@/assets/data/works.json';
 
 /* マウントされたらフラグを有効 ------------ */
 onMounted(() => {
@@ -11,8 +11,7 @@ onMounted(() => {
 </script>
 
 <template>
-	<FirstView></FirstView>
-	<WorksList></WorksList>
+	<Detail></Detail>
 </template>
 
 <style scoped lang="scss"></style>

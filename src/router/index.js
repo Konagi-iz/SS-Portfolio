@@ -22,6 +22,11 @@ const router = createRouter({
 			component: () => import('@/components/views/WorksView.vue'),
 		},
 		{
+			path: '/works/:id',
+			name: 'work',
+			component: () => import('@/components/views/DetailView.vue'),
+		},
+		{
 			path: '/photography',
 			name: 'photo',
 			component: () => import('@/components/views/PhotographyView.vue'),
@@ -58,7 +63,7 @@ const router = createRouter({
 				return window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
 			}
 		}
-		return { x: 0, y: 0 };
+		return { top: 0 };
 	},
 });
 

@@ -197,6 +197,7 @@ onMounted(() => {
 		position: relative;
 		width: 100%;
 		height: 50%;
+		pointer-events: none;
 		@include media_narrow {
 			height: 100%;
 		}
@@ -211,6 +212,7 @@ onMounted(() => {
 	.lcl-works-ttl__in {
 		position: relative;
 		color: $c-black;
+		pointer-events: all;
 	}
 	.lcl-works-ttl__row {
 		display: inline-block;

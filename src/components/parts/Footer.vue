@@ -67,8 +67,29 @@ watch(isRouterViewLoaded, (val) => {
 			<div class="footer-btm">
 				<small class="footer-btm__copyright font-en">&copy;SS PORTFOLIO 2024</small>
 				<ul class="footer-nav">
-					<li v-for="(item, index) in ['HOME', 'ABOUT ME', 'WORKS', 'PHOTOGRAPHY']" :key="index" class="footer-nav__item">
-						<router-link to="" class="footer-nav__link font-en hv-txt">{{ item }}</router-link>
+					<li
+						v-for="(item, index) in [
+							{
+								ttl: 'HOME',
+								route: 'home',
+							},
+							{
+								ttl: 'ABOUT ME',
+								route: 'about',
+							},
+							{
+								ttl: 'WORKS',
+								route: 'works',
+							},
+							{
+								ttl: 'PHOTOGRAPHY',
+								route: 'photo',
+							},
+						]"
+						:key="index"
+						class="footer-nav__item"
+					>
+						<router-link :to="{ name: item.route }" class="footer-nav__link font-en hv-txt">{{ item.ttl }}</router-link>
 					</li>
 				</ul>
 				<!-- .footer-nav -->

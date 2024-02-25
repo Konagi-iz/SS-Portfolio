@@ -30,10 +30,12 @@ font
 		'Meiryo', sans-serif;
 }
 @mixin font-family--en {
-	font-family: 'Arial', sans-serif;
+	font-family: 'Arial', 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', '游ゴシック', 'YuGothic', 'メイリオ', 'Meiryo',
+		sans-serif;
 }
 @mixin font-family--dp {
-	font-family: 'Beatrice-Headline', sans-serif;
+	font-family: 'Beatrice-Headline', 'Arial', 'ヒラギノ角ゴ ProN', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', '游ゴシック', 'YuGothic',
+		'メイリオ', 'Meiryo', sans-serif;
 }
 
 @mixin ttl-display {
