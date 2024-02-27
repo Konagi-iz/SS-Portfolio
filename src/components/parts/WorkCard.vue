@@ -13,12 +13,14 @@ const props = defineProps({
 
 const route = useRoute();
 const isSmall = ref(route.name === 'works' ? true : false);
+const isDetailPage = ref(route.name === 'detail' ? true : false);
 </script>
 
 <template>
-	<div class="workcard" :class="{ 'workcard--small': isSmall }">
+	<div class="workcard" :class="{ 'workcard--small': isSmall, 'workcard--detail': isDetailPage }">
 		<div class="workcard-txt">
 			<div class="workcard-txt__main">
+				<p v-if="isDetailPage" class="workcard-txt__next">TO NEXT</p>
 				<h3 class="workcard-txt__ttl font-en">{{ ttl.toUpperCase() }}</h3>
 				<!-- .workcard-txt__ttl -->
 				<div class="workcard-info">
@@ -74,7 +76,7 @@ const isSmall = ref(route.name === 'works' ? true : false);
 	border-radius: 16px;
 	padding: 30px;
 	width: calc(100% - 100px);
-	height: 600px;
+	height: calc(100% - 100px);
 	background: $c-offwhite;
 	@include media_narrow {
 		flex-direction: column-reverse;
@@ -99,6 +101,16 @@ const isSmall = ref(route.name === 'works' ? true : false);
 		}
 	}
 	.workcard-txt__main {
+	}
+	.workcard-txt__next {
+		color: $c-black;
+		margin-bottom: 45px;
+		@include fz(20);
+		line-height: 1.2;
+		letter-spacing: 0.03em;
+		@include media_narrow {
+			margin-bottom: 16px;
+		}
 	}
 	.workcard-txt__ttl {
 		margin-bottom: 45px;
@@ -237,7 +249,15 @@ const isSmall = ref(route.name === 'works' ? true : false);
 		pointer-events: none;
 		transition: opacity 0.8s $e-out-expo;
 	}
-	.workcard-video__item {
+}
+
+/* detail ------------ */
+.workcard--detail {
+	gap: 95px;
+	width: 100%;
+	height: 100%;
+	.workcard-txt__ttl {
+		max-width: 270px;
 	}
 }
 </style>

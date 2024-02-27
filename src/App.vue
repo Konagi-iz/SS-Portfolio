@@ -15,6 +15,8 @@ let w = window.innerWidth;
 const route = useRoute();
 const router = useRouter();
 
+const wrapper = ref(null);
+
 /* Change root font-size ------------ */
 changeRootFontSize();
 window.addEventListener('resize', () => {
@@ -29,8 +31,6 @@ function changeRootFontSize() {
 		document.documentElement.style.setProperty('--fz', '10px');
 	}
 }
-
-
 
 /* リサイズ時にリロード ------------ */
 window.addEventListener('resize', handleResize);
@@ -56,14 +56,14 @@ function handleResize() {
 </script>
 
 <template>
-	<div class="wrapper">
+	<div ref="wrapper" class="wrapper">
 		<BGNoise :opacity="60"></BGNoise>
 		<div v-if="route.name === 'home'" class="background"></div>
 		<Header></Header>
 		<main id="main">
 			<router-view></router-view>
 		</main>
-		<Footer></Footer>
+		<Footer :wrapper="wrapper"></Footer>
 		<Stalker></Stalker>
 	</div>
 </template>

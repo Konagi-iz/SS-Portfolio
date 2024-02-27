@@ -295,6 +295,7 @@ onMounted(() => {
 		font-style: italic;
 		line-height: 1.2;
 		white-space: nowrap;
+		text-align: center;
 		@include delay(7);
 		@include media_narrow {
 			top: vw(78);

@@ -5,7 +5,10 @@ import workslist from '@/assets/data/works.json';
 
 const route = useRoute();
 const isWorksPage = ref(route.name === 'works' ? true : false);
+
 const listitem = ref(null);
+
+const webdesignWorks = workslist.filter((item) => item.cat === 'web');
 
 defineExpose({ listitem });
 </script>
@@ -14,7 +17,7 @@ defineExpose({ listitem });
 	<ul class="works-fv" :class="{ 'works-fv--works': isWorksPage }">
 		<li
 			ref="listitem"
-			v-for="(item, index) in workslist[0]"
+			v-for="(item, index) in webdesignWorks"
 			:key="index"
 			class="works-fv__item"
 			:class="{ 'works-fv__item--reverse': index % 2 === 0 }"

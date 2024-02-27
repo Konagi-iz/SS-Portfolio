@@ -12,7 +12,6 @@
 }
 
 body {
-	background: $c-darkgray;
 	color: $c-white;
 	@include font-family;
 	@include fz(14);
@@ -61,7 +60,9 @@ html.lenis {
 }
 
 .wrapper {
+	z-index: 0;
 	position: relative;
+	background: $c-darkgray;
 	@include media_wide {
 		min-width: 1024px;
 	}

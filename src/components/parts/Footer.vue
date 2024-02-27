@@ -5,35 +5,51 @@ import TextSplit from '@/components/parts/TextSplit.vue';
 import { isRouterViewLoaded } from '@/store';
 import IconAngleRight from '~icons/svg/ico-angle-right';
 
+const props = defineProps({ wrapper: Object });
+
 const main = ref(null);
 const mail1 = ref(null);
 const mail2 = ref(null);
 const mail3 = ref(null);
+const spacer = ref(null);
+
+let backgroundColor;
+let noiseOpacity;
 
 // Footerより前にあるPinでズレるのを防ぐ為、router-view以下がマウントされてから実行
-watch(isRouterViewLoaded, (val) => {
-	if (val) {
+watch(isRouterViewLoaded, (flag) => {
+	if (flag) {
 		/* 背景色を切り替えるアニメーション ------------ */
-		const body = document.body;
-		gsap.to(body, {
+		if (backgroundColor && noiseOpacity) {
+			backgroundColor.kill();
+			noiseOpacity.kill();
+		}
+
+		gsap.set(props.wrapper, {
+			background: '#101010',
+		});
+
+		backgroundColor = gsap.to(props.wrapper, {
 			background: '#FF2E12',
 			scrollTrigger: {
-				trigger: '.footer__spacer',
+				trigger: spacer.value,
 				start: 'top top',
 				end: 'bottom top',
 				scrub: 1,
 				toggleActions: 'play none no0ne reverse',
+				invalidateOnRefresh: true,
 			},
 		});
 		const noise = document.querySelector('.wrapper .bg-noise');
-		gsap.to(noise, {
+		noiseOpacity = gsap.to(noise, {
 			opacity: 0.05,
 			scrollTrigger: {
-				trigger: '.footer__spacer',
+				trigger: spacer.value,
 				start: 'top top',
 				end: 'bottom top',
 				scrub: 1,
 				toggleActions: 'play none no0ne reverse',
+				invalidateOnRefresh: true,
 			},
 		});
 		gsap.to([...mail1.value.char, ...mail2.value.char, ...mail3.value.char], {
@@ -52,7 +68,7 @@ watch(isRouterViewLoaded, (val) => {
 
 <template>
 	<footer id="footer">
-		<div class="footer__spacer"></div>
+		<div ref="spacer" class="footer__spacer"></div>
 		<div ref="main" class="footer__main">
 			<div class="footer-mail">
 				<p class="footer-mail__txt font-en">contact me</p>

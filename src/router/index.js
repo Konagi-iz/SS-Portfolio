@@ -23,7 +23,7 @@ const router = createRouter({
 		},
 		{
 			path: '/works/:id',
-			name: 'work',
+			name: 'detail',
 			component: () => import('@/components/views/DetailView.vue'),
 		},
 		{

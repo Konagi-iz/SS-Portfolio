@@ -115,8 +115,9 @@ onUnmounted(() => {
 <template>
 	<div class="lcl-works-list">
 		<ul class="lcl-works-list__in">
-			<li v-for="(item, index) in workslist[0]" :key="index" ref="card" class="lcl-works-list__item">
+			<li v-for="(item, index) in workslist" :key="index" ref="card" class="lcl-works-list__item">
 				<WorksCard
+					v-if="item.cat === 'web'"
 					v-bind="{
 						ttl: item.title,
 						year: item.year,

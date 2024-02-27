@@ -1,62 +1,87 @@
 [
-	[
-		{
-			"id": 1,
-			"title": "Project Luna",
-			"year": "2023.03",
-			"role": "Design / KV / Photo&Movie / Development",
-			"tag": "luna",
-			"cat": "web"
-		},
-		{
-			"id": 2,
-			"title": "V.W.P",
-			"year": "2022.12",
-			"role": "Design / Development / (Fan made)",
-			"tag": "vwp",
-			"cat": "web"
-		},
-		{
-			"id": 3,
-			"title": "Realiser",
-			"year": "2023.06",
-			"role": "Design / Logo / Development",
-			"tag": "realiser",
-			"cat": "web"
-		},
-		{
-			"id": 4,
-			"title": "Amearare",
-			"year": "2023.08",
-			"role": "Design / Development",
-			"tag": "amearare",
-			"cat": "web"
-		},
-		{
-			"id": 5,
-			"title": "HAL幼稚園",
-			"year": "2023.07",
-			"role": "Design / Development",
-			"tag": "halyochien",
-			"cat": "web"
+	{
+		"id": 1,
+		"title": "Project Luna",
+		"year": "2023.03",
+		"role": "Design / KV / Photo&Movie / Development",
+		"tag": "luna",
+		"cat": "web",
+		"data": {
+			"tags": ["Landing Page", "Original"],
+			"desc": "学校の大規模なグループワークで他学科が制作したオリジナルCGアニメ作品のLPサイトを制作しました。\n作品の世界観を魅力的に伝えるために装飾やアニメーションに拘り、審査して頂いた企業様から実務でいけるレベルだと評価して頂きました。"
 		}
-	],
-	[
-		{
-			"id": 6,
-			"title": "展示会リーフレット",
-			"year": "2023.03",
-			"role": "Design / Logo",
-			"tag": "leaflet",
-			"cat": "design"
-		},
-		{
-			"id": 7,
-			"title": "毎日新聞広告賞 応募",
-			"year": "2023.03",
-			"role": "Design / Logo",
-			"tag": "koukoku",
-			"cat": "design"
+	},
+	{
+		"id": 2,
+		"title": "V.W.P",
+		"year": "2022.12",
+		"role": "Design / Development / (Fan made)",
+		"tag": "vwp",
+		"cat": "web",
+		"data": {
+			"tags": ["Artist", "Fan made"],
+			"desc": "バーチャルシンガーグループのV.W.Pのアーティストサイトをファンメイドとしてデザインし、コーディングしました。\nアーティストの雰囲気を重視した配色とデザインで、世界観を表現することに重点を置いて制作しました。"
 		}
-	]
+	},
+	{
+		"id": 3,
+		"title": "Realiser",
+		"year": "2023.06",
+		"role": "Design / Logo / Development",
+		"tag": "realiser",
+		"cat": "web",
+		"data": {
+			"tags": ["Restaurant", "Elegant"],
+			"desc": "架空のレストランのホームページを企画し、デザイン、コーディングまで通して制作しました\nお店の上品で高級感のある雰囲気と、大切な日に利用する特別感が伝わるようにデザインで表現しました。"
+		}
+	},
+	{
+		"id": 4,
+		"title": "Amearare",
+		"year": "2023.08",
+		"role": "Design / Development",
+		"tag": "amearare",
+		"cat": "web",
+		"data": {
+			"tags": ["Portfolio", "Scroll animation"],
+			"desc": "友人二人が行っている創作活動グループのポートフォリオサイトを、デザイン、コーディング通して制作しました。\nグループの柔らかいくポップなイメージが伝わるようにデザインに落とし込みました。"
+		}
+	},
+	{
+		"id": 5,
+		"title": "HAL幼稚園",
+		"year": "2023.07",
+		"role": "Design / Development",
+		"tag": "halyochien",
+		"cat": "web",
+		"data": {
+			"tags": ["Pop & Cute", "Cut illust"],
+			"desc": "架空の幼稚園のトップページのみを、デザイン、コーディングまで通して制作しました。\nこのサイトを通して、本園の特徴と魅力、元気で楽しそうな雰囲気を感じてもらえるように、カットイラストを自分で描いて随所に使用しました。"
+		}
+	},
+
+	{
+		"id": 6,
+		"title": "展示会リーフレット",
+		"year": "2023.03",
+		"role": "Design / Logo",
+		"tag": "leaflet",
+		"cat": "design",
+		"data": {
+			"tags": ["Landing Page", "Original"],
+			"desc": "学校の大規模なグループワークで他学科が制作したオリジナルCGアニメ作品のLPサイトを制作しました。\n作品の世界観を魅力的に伝えるために装飾やアニメーションに拘り、審査して頂いた企業様から実務でいけるレベルだと評価して頂きました。"
+		}
+	},
+	{
+		"id": 7,
+		"title": "毎日新聞広告賞 応募",
+		"year": "2023.03",
+		"role": "Design / Logo",
+		"tag": "koukoku",
+		"cat": "design",
+		"data": {
+			"tags": ["Landing Page", "Original"],
+			"desc": "学校の大規模なグループワークで他学科が制作したオリジナルCGアニメ作品のLPサイトを制作しました。\n作品の世界観を魅力的に伝えるために装飾やアニメーションに拘り、審査して頂いた企業様から実務でいけるレベルだと評価して頂きました。"
+		}
+	}
 ]

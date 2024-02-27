@@ -8,7 +8,12 @@ const card = ref(null);
 
 let isComponentUnmounted = false;
 
+const webdesignWorks = workslist.filter((item) => item.cat === 'web');
+const graphicWorks = workslist.filter((item) => item.cat === 'design');
+const categorizedWorks = [webdesignWorks, graphicWorks];
+
 onMounted(() => {
+	/* ホバーで動画再生 ------------ */
 	card.value.forEach((item) => {
 		const video = item.querySelector('video');
 		let videoResetTimer = null;
@@ -66,7 +71,7 @@ function controlVideo(el, control) {
 <template>
 	<section class="lcl-workslist">
 		<div class="lcl-workslist__in">
-			<div v-for="(category, index) in workslist" :key="index" class="lcl-worklist__cat">
+			<div v-for="(category, index) in categorizedWorks" :key="index" class="lcl-worklist__cat">
 				<div class="lcl-workslist-ttl">
 					<p class="lcl-workslist-ttl__index">{{ `0${index + 1}` }}</p>
 					<h2 class="lcl-workslist-ttl__txt font-dp scr-anin">
@@ -176,18 +181,20 @@ function controlVideo(el, control) {
 			margin-top: vw(37);
 		}
 		@include media_hover {
-			&:has(.lcl-workslist-list__item:hover) .lcl-workslist-list__item {
+			&:has(.lcl-workslist-list__item:hover) .lcl-workslist-list__link {
 				opacity: 0.5;
 			}
 		}
 	}
 	.lcl-workslist-list__item {
-		transition: opacity 0.6s $e-out-expo, transform 0.6s $e-out-expo;
 		@include media_wide {
 			&:nth-of-type(even) {
 				transition-delay: 0.1s;
 			}
 		}
+	}
+	.lcl-wroklist-list__link {
+		transition: opacity 0.6s $e-out-expo, transform 0.6s $e-out-expo;
 		@include media_hover {
 			&:hover {
 				opacity: 1 !important;

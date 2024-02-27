@@ -19,6 +19,8 @@ watch(currentRotate, () => {
 });
 watch(isTransitionEnabled, () => {
 	transitionProperty.value = `${isTransitionEnabled.value ? 'rotate' : 'none'}`;
+});
+watch(realSpeed, () => {
 	transitionDuration.value = `${isTransitionEnabled.value ? realSpeed.value / 1000 : 0}s`;
 });
 
@@ -69,8 +71,8 @@ const slideToIndex = (toIndex) => {
 		// 時計回りと反時計回りを比較し、移動距離が小さい方を返す
 		const rotate = Math.abs(clockwiseGap) < Math.abs(counterclockwiseGap) ? clockwiseGap : counterclockwiseGap;
 
-		//　移動距離に応じて0.23秒ずつspeedを遅くする
-		realSpeed.value.value = speed + 230 * (Math.abs(rotate) - 1);
+		// 移動距離に応じて0.23秒ずつspeedを遅くする
+		realSpeed.value = speed + 230 * (Math.abs(rotate) - 1);
 
 		currentRotate.value -= 45 * rotate;
 		currentIndex.value = toIndex;
@@ -231,7 +233,7 @@ const onTransitionEnd = () => {
 		width: max(minpx(73), pcvw(73));
 		height: max(minpx(73), pcvw(73));
 		background: $c-orange;
-		transition: opacity .8s .2s $e-out-circ, transform .8s .2s $e-out-circ, background 0.4s $e-out-expo;
+		transition: opacity 0.8s 0.2s $e-out-circ, transform 0.8s 0.2s $e-out-circ, background 0.4s $e-out-expo;
 		@include media_narrow {
 			top: vw(62);
 			width: vw(38);
