@@ -1,7 +1,7 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
 import { nextTick } from 'vue';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import HomeView from '@/components/views/HomeView.vue';
-import { isRouterViewLoaded } from '@/store';
+import { isRouterViewLoaded, isTransition } from '@/store';
 
 const router = createRouter({
 	history: createWebHashHistory(),
@@ -40,7 +40,7 @@ const router = createRouter({
 		// 	path: '/404',
 		// 	name: '404',
 		// 	component: () => import('@/components/views/404View.vue'),
-		// },
+		// },import { isTransition } from '../store/index';
 	],
 	scrollBehavior: async (to, from, savedPosition) => {
 		const findEl = async (hash) => {
@@ -70,6 +70,7 @@ const router = createRouter({
 /* ページ遷移 前 に行われる処理 ------------ */
 router.beforeEach((to, from, next) => {
 	isRouterViewLoaded.value = false;
+	isTransition.value = true;
 
 	setTimeout(() => {
 		next();
@@ -79,6 +80,7 @@ router.beforeEach((to, from, next) => {
 /* ページ遷移 後 に行われる処理 ------------ */
 router.afterEach((to, from, next) => {
 	nextTick(() => {
+		isTransition.value = false;
 		scrollAnimation();
 	});
 

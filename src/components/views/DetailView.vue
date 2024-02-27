@@ -3,6 +3,7 @@ import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Detail from '@/components/views/detailParts/Detail.vue';
 import ToNext from '@/components/views/detailParts/ToNext.vue';
+import CloseupNav from '@/components/views/detailParts/CloseupNav.vue';
 import workslist from '@/assets/data/works.json';
 import { isRouterViewLoaded } from '@/store';
 
@@ -28,6 +29,13 @@ onMounted(() => {
 			data: currentWorkListItem.data,
 		}"
 	></Detail>
+	<CloseupNav
+		v-bind="{
+			tag: currentWorkListItem.tag,
+			cat: currentWorkListItem.cat,
+			closeup: currentWorkListItem.closeup,
+		}"
+	></CloseupNav>
 	<ToNext
 		v-bind="{
 			ttl: nextWorkListItem.title,

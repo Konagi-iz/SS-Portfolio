@@ -7,6 +7,7 @@ import '@/scss/nwclasses.scss';
 import BGNoise from '@/components/parts/BGNoise.vue';
 import Header from '@/components/parts/Header.vue';
 import Footer from '@/components/parts/Footer.vue';
+import Transition from '@/components/parts/Transition.vue';
 import Stalker from '@/components/parts/Stalker.vue';
 import { isRouterViewLoaded, media } from '@/store';
 
@@ -57,13 +58,14 @@ function handleResize() {
 
 <template>
 	<div ref="wrapper" class="wrapper">
-		<BGNoise :opacity="60"></BGNoise>
 		<div v-if="route.name === 'home'" class="background"></div>
+		<BGNoise :opacity="60"></BGNoise>
 		<Header></Header>
 		<main id="main">
 			<router-view></router-view>
 		</main>
 		<Footer :wrapper="wrapper"></Footer>
+		<Transition></Transition>
 		<Stalker></Stalker>
 	</div>
 </template>

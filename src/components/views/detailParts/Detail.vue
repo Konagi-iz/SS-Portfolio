@@ -1,5 +1,7 @@
 <script setup>
 import Button01 from '@/components/parts/Button01.vue';
+import IconAngleRight from '~icons/svg/ico-angle-right';
+import { media } from '@/store';
 
 const props = defineProps({
 	id: Number,
@@ -16,7 +18,17 @@ const props = defineProps({
 	<section class="lcl-detail">
 		<div class="lcl-detail__main">
 			<div class="lcl-detail__in">
+				<router-link v-if="media === 'SP'" :to="{ name: 'works' }" class="lcl-detail-back">
+					<IconAngleRight></IconAngleRight>
+					<p class="lcl-detail-back__txt">BACK</p>
+				</router-link>
+				<!-- .lcl-detail-back -->
 				<div class="lcl-detail__info">
+					<router-link v-if="media === 'PC'" :to="{ name: 'works' }" class="lcl-detail-back">
+						<IconAngleRight></IconAngleRight>
+						<p class="lcl-detail-back__txt">BACK</p>
+					</router-link>
+					<!-- .lcl-detail-back -->
 					<div class="lcl-detail-ttl">
 						<h2 class="lcl-detail-ttl__txt font-en">{{ ttl.toUpperCase() }}</h2>
 						<div class="lcl-detail-ttl__tags">
@@ -26,7 +38,7 @@ const props = defineProps({
 					<!-- .lcl-detail-ttl -->
 					<p class="lcl-detail__desc" v-text="data.desc"></p>
 					<!-- .lcl-detail__desc -->
-					<router-link to="">
+					<router-link v-if="cat === 'web'" to="" class="lcl-detail__link">
 						<Button01
 							v-bind="{
 								isBig: false,
@@ -39,6 +51,7 @@ const props = defineProps({
 				<!-- .lcl-detail__info -->
 				<div class="lcl-detail-preview">
 					<video
+						v-if="cat === 'web'"
 						class="lcl-detail-preview__video"
 						:src="`assets/img/common/works/PC/video_preview_${tag}.mp4`"
 						muted
@@ -47,6 +60,15 @@ const props = defineProps({
 						disablepictureinpicture
 					></video>
 					<!-- .lcl-detail-preview__video -->
+					<img
+						v-if="cat === 'design'"
+						class="lcl-detail-preview__img"
+						:src="`/assets/img/common/works/PC/img_preview_${tag}.jpg`"
+						alt=""
+						width="1598"
+						height="918"
+					/>
+					<!-- .lcl-detail-preview__img -->
 				</div>
 				<!-- .lcl-detail-preview -->
 			</div>
@@ -74,6 +96,10 @@ const props = defineProps({
 
 <style scoped lang="scss">
 .lcl-detail {
+	@include media_narrow {
+		padding-top: vw(100);
+	}
+
 	/* main ------------ */
 	.lcl-detail__main {
 		display: flex;
@@ -81,12 +107,21 @@ const props = defineProps({
 		justify-content: center;
 		margin-inline: auto;
 		width: min(1900px, 100% - (5.384% * 2));
-		height: max(730px, 100vh);
+		@include media_wide {
+			height: max(730px, 100vh);
+		}
+		@include media_narrow {
+			width: 100%;
+		}
 	}
 	.lcl-detail__in {
 		display: flex;
 		align-items: flex-start;
 		gap: 50px;
+		@include media_narrow {
+			flex-direction: column-reverse;
+			gap: vw(40);
+		}
 	}
 
 	/* info ------------ */
@@ -94,13 +129,46 @@ const props = defineProps({
 		flex-shrink: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 70px;
+		gap: 60px;
+		@include media_narrow {
+			gap: vw(40);
+			padding-inline: vw(15);
+			width: 100%;
+		}
+	}
+	//back
+	.lcl-detail-back {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		@include media_narrow {
+			order: 1;
+			gap: vw(8);
+			padding-left: vw(15);
+		}
+	}
+	.ico-angle-right {
+		transform: scaleX(-1);
+		width: 17px;
+		height: auto;
+		@include media_narrow {
+			width: vw(17);
+		}
+	}
+	.lcl-detail-back__txt {
+		color: $c-white;
+		@include fz(12);
+		line-height: 1.5;
+		letter-spacing: 0.04em;
 	}
 	// ttl
 	.lcl-detail-ttl {
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
+		@include media_narrow {
+			gap: vw(8);
+		}
 	}
 	.lcl-detail-ttl__txt {
 		@include fz(30);
@@ -108,44 +176,81 @@ const props = defineProps({
 		line-height: 1.1;
 		letter-spacing: 0.07em;
 		white-space: nowrap;
+		@include media_narrow {
+			@include fz(24);
+		}
 	}
 	.lcl-detail-ttl__tags {
 		display: flex;
 		gap: 12px;
+		@include media_narrow {
+			gap: vw(12);
+		}
 	}
 	.lcl-detail-ttl__tag {
 		color: $c-gray;
 		@include fz(12);
 		line-height: 1.2;
 		letter-spacing: 0.04em;
+		@include media_narrow {
+			@include fz(10);
+		}
 	}
 	// desc
 	.lcl-detail__desc {
-		max-width: 330px;
 		@include fz(12);
 		line-height: 1.9;
 		white-space: pre-line;
+		@include media_wide {
+			max-width: 330px;
+		}
+		@include media_narrow {
+			@include fz(11);
+		}
 	}
 
 	/* preview ------------ */
 	.lcl-detail-preview {
-		max-width: 1000px;
+		@include media_wide {
+			max-width: 1000px;
+		}
 	}
 	.lcl-detail-preview__video {
 		border-radius: 8px;
 		width: 100%;
 		object-fit: cover;
+		@include media_narrow {
+			border-radius: vw(6);
+		}
+	}
+	.lcl-detail-preview__img {
+		border-radius: 8px;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		@include media_narrow {
+			border-radius: vw(6);
+		}
 	}
 
 	/* foot ------------ */
 	.lcl-detail-foot {
 		margin-top: 100px;
-		margin-left: 50%;
+		@include media_wide {
+			margin-left: 50%;
+		}
+		@include media_narrow {
+			margin-top: vw(100);
+			padding-inline: vw(15);
+		}
 	}
 	.lcl-detail-foot__list {
 		display: flex;
 		flex-direction: column;
 		gap: 32px;
+		@include media_narrow {
+			gap: vw(24);
+		}
 	}
 	.lcl-detail-foot__item {
 	}
@@ -154,11 +259,17 @@ const props = defineProps({
 		@include fz(12);
 		font-weight: 400;
 		line-height: 1.2;
+		@include media_narrow {
+			@include fz(10);
+		}
 	}
 	.lcl-detail-foot__txt {
 		@include fz(14);
 		line-height: 1.5;
 		letter-spacing: 0.04em;
+		@include media_narrow {
+			@include fz(12);
+		}
 	}
 }
 </style>

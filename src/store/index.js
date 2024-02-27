@@ -4,6 +4,8 @@ export const isNavActive = ref(false);
 
 export const isRouterViewLoaded = ref(false);
 
+export const isTransition = ref(false);
+
 export const media = ref('PC');
 let w = window.innerWidth;
 

@@ -47,14 +47,14 @@ const isDetailPage = ref(route.name === 'detail' ? true : false);
 			<!-- .workcard-link -->
 		</div>
 		<!-- .workcard-txt -->
-		<div v-if="cat === 'web'" class="workcard-video">
+		<div v-if="cat === 'web' && !isDetailPage" class="workcard-video">
 			<video class="workcard-video__item" loop preload="auto" muted disablepictureinpicture>
 				<source :src="`/assets/img/common/works/PC/video_${tag}.mp4`" />
 			</video>
 			<!-- .workcard-video__item -->
 		</div>
 		<!-- .workcard-video -->
-		<div v-if="isSmall || cat === 'design'" class="workcard-thumbnail">
+		<div v-if="isSmall || isDetailPage || cat === 'design'" class="workcard-thumbnail">
 			<img
 				class="workcard-thumbnail__img"
 				:src="`/assets/img/common/works/PC/img_thumbnail_${tag}.jpg`"
@@ -253,14 +253,20 @@ const isDetailPage = ref(route.name === 'detail' ? true : false);
 
 /* detail ------------ */
 .workcard--tonext {
-	gap: 95px;
-	width: 100%;
-	height: 100%;
+	@include media_wide {
+		gap: 95px;
+		width: 100%;
+		height: 100%;
+	}
 	.workcard-txt__ttl {
-		max-width: 270px;
+		@include media_wide {
+			max-width: 270px;
+		}
 	}
 	.workcard-thumbnail__img {
-		height: 100%;
+		@include media_wide {
+			height: 100%;
+		}
 	}
 }
 </style>
