@@ -17,7 +17,7 @@ const isDetailPage = ref(route.name === 'detail' ? true : false);
 </script>
 
 <template>
-	<div class="workcard" :class="{ 'workcard--small': isSmall, 'workcard--detail': isDetailPage }">
+	<div class="workcard" :class="{ 'workcard--small': isSmall, 'workcard--tonext': isDetailPage }">
 		<div class="workcard-txt">
 			<div class="workcard-txt__main">
 				<p v-if="isDetailPage" class="workcard-txt__next">TO NEXT</p>
@@ -54,7 +54,7 @@ const isDetailPage = ref(route.name === 'detail' ? true : false);
 			<!-- .workcard-video__item -->
 		</div>
 		<!-- .workcard-video -->
-		<div v-if="isSmall" class="workcard-thumbnail">
+		<div v-if="isSmall || cat === 'design'" class="workcard-thumbnail">
 			<img
 				class="workcard-thumbnail__img"
 				:src="`/assets/img/common/works/PC/img_thumbnail_${tag}.jpg`"
@@ -252,12 +252,15 @@ const isDetailPage = ref(route.name === 'detail' ? true : false);
 }
 
 /* detail ------------ */
-.workcard--detail {
+.workcard--tonext {
 	gap: 95px;
 	width: 100%;
 	height: 100%;
 	.workcard-txt__ttl {
 		max-width: 270px;
+	}
+	.workcard-thumbnail__img {
+		height: 100%;
 	}
 }
 </style>

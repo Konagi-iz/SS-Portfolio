@@ -9,8 +9,7 @@ import { isRouterViewLoaded } from '@/store';
 const route = useRoute();
 
 const currentWorkListItem = workslist[route.params.id - 1];
-const nextWorkListItem = workslist[route.params.id];
-
+const nextWorkListItem = Number(route.params.id) === workslist.length ? workslist[0] : workslist[route.params.id];
 /* マウントされたらフラグを有効 ------------ */
 onMounted(() => {
 	isRouterViewLoaded.value = true;

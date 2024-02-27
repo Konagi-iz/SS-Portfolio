@@ -31,11 +31,11 @@ const props = defineProps({
 <style scoped lang="scss">
 .lcl-tonext {
 	margin-top: 100px;
-	padding: 60px;
-	height: max(730px, 100vh);
 	.lcl-tonext__in {
-		width: 100%;
-		height: 100%;
+		margin-inline: auto;
+		padding: 60px;
+		width: min(1900px, 100%);
+		height: max(730px, 100vh);
 	}
 }
 </style>
