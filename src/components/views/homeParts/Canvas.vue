@@ -69,7 +69,7 @@ const initThreeJS = async () => {
 	const gltfLoader = new GLTFLoader();
 
 	const [{ scene: gltfScene }, env] = await Promise.all([
-		new Promise((res) => gltfLoader.load('/assets/three/dia.glb', res)),
+		new Promise((res) => gltfLoader.load('/assets/three/crystal_02.glb', res)),
 		new Promise((res) => envLoader.load('/assets/three/rustig_koppie_puresky_1k_edit.hdr', res)),
 	]);
 
@@ -77,28 +77,28 @@ const initThreeJS = async () => {
 	scene.environment.mapping = THREE.EquirectangularReflectionMapping;
 
 	// モデルの設定
-	const diamond = gltfScene.getObjectByName('diamond');
-	diamond.material = Object.assign(new MeshTransmissionMaterial(10), {
+	const crystal = gltfScene.getObjectByName('crystal');
+	crystal.material = Object.assign(new MeshTransmissionMaterial(10), {
 		clearcoat: 1,
 		clearcoatRoughness: 0,
 		transmission: 1,
 		chromaticAberration: 0.02,
 		anisotrophicBlur: 0.1,
 		roughness: 0,
-		thickness: 1.5,
-		ior: 1.5,
-		distortion: 0.3,
-		distortionScale: (0.002 * viewport) / w,
+		thickness: 100,
+		ior: 1.4,
+		distortion: 1,
+		distortionScale: (0.0012 * viewport) / w,
 		temporalDistortion: 0.05,
 		envMapIntensity: 0.35,
 		backside: true,
-		backsideThickness: 0.5,
+		backsideThickness: 1,
 	});
 
-	const mask = diamond.clone();
+	const mask = crystal.clone();
 
 	sceneMask.add(mask);
-	scene.add(diamond);
+	scene.add(crystal);
 
 	// TextMesh
 	// const Beatrice = '../../../assets/json/Beatrice_Headline_Italic.json';
@@ -174,15 +174,20 @@ const initThreeJS = async () => {
 	});
 
 	// ポイントライト
-	const pointLightIntensity = [media.value === 'PC' ? 1000 : 20, media.value === 'PC' ? 100 : 10, media.value === 'PC' ? 20000 : 2000];
+	// prettier-ignore
+	const pointLightIntensity = [
+		media.value === 'PC' ? 10000 : 20, 
+		media.value === 'PC' ? 100 : 100, 
+		media.value === 'PC' ? 20000 : 2000
+	];
 	const [keyPointLight, frontPointLight, rearPointLight] = [
 		new THREE.PointLight(0xff7e57, pointLightIntensity[0], 0, 0.1),
 		new THREE.PointLight(0xff7e57, pointLightIntensity[1], 0, 0.01),
 		new THREE.PointLight(0xff4b12, pointLightIntensity[2], 0, 0.01),
 	];
-	keyPointLight.position.set(150, 350, 0);
-	frontPointLight.position.set(0, -400, 2000);
-	rearPointLight.position.set(-400, 400, -2000);
+	keyPointLight.position.set(0, 700, 500);
+	frontPointLight.position.set(200, -400, 1000);
+	rearPointLight.position.set(-400, 400, -500);
 	scene.add(keyPointLight, frontPointLight, rearPointLight);
 
 	// const [keyPointLightHelper, frontPointLightHelper, rearPointLightHelper] = [
@@ -216,11 +221,11 @@ const initThreeJS = async () => {
 			y: mouse.y,
 		});
 		gsap.set(rearPointLight.position, {
-			x: -mouse.x,
-			y: -mouse.y,
+			x: -mouse.x * 3,
+			y: -mouse.y * 3,
 		});
 		// モデルの位置をカーソルに応じて移動
-		gsap.set([diamond.position, mask.position], {
+		gsap.set([crystal.position, mask.position], {
 			x: mouse.x * 0.04,
 			y: mouse.y * 0.04,
 		});
@@ -259,9 +264,9 @@ const initThreeJS = async () => {
 	function tick(t) {
 		const sec = performance.now() / 1000;
 
-		diamond.material.time = t / 1000;
-		[diamond, mask].forEach((obj) => {
-			obj.rotation.x = sec * (Math.PI / 10);
+		crystal.material.time = t / 1000;
+		[crystal, mask].forEach((obj) => {
+			// obj.rotation.z = sec * (Math.PI / 20);
 			obj.rotation.y = sec * (Math.PI / 10);
 		});
 
@@ -283,9 +288,10 @@ const initThreeJS = async () => {
 		canvasW = container.value.clientWidth;
 		canvasH = container.value.clientHeight;
 
-		const diaScale = ((media.value === 'PC' ? 600 : 300) / viewport) * w;
-		[diamond, mask].forEach((obj) => {
-			obj.scale.set(diaScale, diaScale, diaScale);
+		// crystalのサイズ設定
+		const crystalScale = ((media.value === 'PC' ? 8 : 6) / viewport) * w;
+		[crystal, mask].forEach((obj) => {
+			obj.scale.set(crystalScale, crystalScale, crystalScale);
 		});
 
 		renderer.setPixelRatio(window.devicePixelRatio);
