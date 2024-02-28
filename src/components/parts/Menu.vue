@@ -1,11 +1,9 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { isNavActive } from '@/store/index.js';
-import { lenis } from '@/main';
-
+import { useToggleNav } from '@/components/composable/toggleNav';
 
 const props = defineProps({ isNavMenu: Boolean });
-const emits = defineEmits(['isNavActive']);
 
 const isHover = ref(false);
 const isAnimationEnd = ref(false);
@@ -17,22 +15,10 @@ watch(isAnimationEnd, () => {
 		isHover.value = false;
 	}
 });
-
-/* メニュートグル ------------ */
-// 親にisNavActiveのemitを渡す
-const toggleNav = () => {
-	if (isNavActive.value) {
-		isNavActive.value = false;
-		lenis.start();
-	} else {
-		isNavActive.value = true;
-		lenis.stop();
-	}
-};
 </script>
 
 <template>
-	<button @click="toggleNav" @mouseenter="isHover = true" class="menu" :class="{ 'menu--nav': isNavMenu, 'menu--hover': isHover }">
+	<button @click="useToggleNav" @mouseenter="isHover = true" class="menu" :class="{ 'menu--nav': isNavMenu, 'menu--hover': isHover }">
 		<span class="menu__line"></span>
 		<span class="menu__line"></span>
 		<span @animationend="isAnimationEnd = true" class="menu__line"></span>

@@ -59,7 +59,7 @@ function setMenuSticky() {
 	<header id="header" :class="{ 'header--scrolled': isHeaderScrolled, 'header--subpage': route.name !== 'home' }">
 		<div class="header__in">
 			<p class="header__txt header__txt--l font-en">S.S</p>
-			<router-link :to="{ name: 'about' }" class="header__link">
+			<router-link :to="{ name: 'home' }" class="header__link">
 				<h1 class="header__ttl font-en">
 					SHIMAKAWA
 					<br class="br" :class="{ 'br--active': isBr }" />

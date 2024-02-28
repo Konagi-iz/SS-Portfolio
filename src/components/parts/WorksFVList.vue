@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import workslist from '@/assets/data/works.json';
+import { isOpeningReady } from '@/store';
 
 const route = useRoute();
 const isWorksPage = ref(route.name === 'works' ? true : false);
@@ -14,7 +15,7 @@ defineExpose({ listitem });
 </script>
 
 <template>
-	<ul class="works-fv" :class="{ 'works-fv--works': isWorksPage }">
+	<ul class="works-fv" :class="{ 'works-fv--works': isWorksPage, 'opening--on': isOpeningReady }">
 		<li
 			ref="listitem"
 			v-for="(item, index) in webdesignWorks"
@@ -151,20 +152,33 @@ defineExpose({ listitem });
 		padding-inline: vw(8);
 		width: 100%;
 	}
+	&.opening--on .works-fv__item {
+		opacity: 1;
+		transform: translate(0);
+	}
 	.works-fv__item {
+		opacity: 0;
 		flex-direction: column-reverse;
 		gap: 12px;
+		transition: transform 1s 0.5s $e-out-expo, opacity 1s 0.5s $e-out-expo;
+		@include delay(5, 0.1, 0.3);
 		@include media_wide {
+			transform: translateY(-10%);
 			width: 210px;
 		}
 		@include media_narrow {
+			transform: translateX(-10%);
 			flex-direction: row-reverse;
 			gap: vw(8);
 		}
 	}
 	.works-fv__item--reverse {
 		flex-direction: column;
+		@include media_wide {
+			transform: translateY(10%);
+		}
 		@include media_narrow {
+			transform: translateX(10%);
 			flex-direction: row;
 		}
 	}

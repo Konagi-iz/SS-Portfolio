@@ -17,7 +17,7 @@ defineExpose({ char });
 </script>
 
 <template>
-	<span v-for="(char, index) in fixedSplitText" ref="char" :key="index" v-html="char" class="split-span"></span>
+	<span v-for="(_char, index) in fixedSplitText" ref="char" :key="index" v-html="_char" class="split-span"></span>
 </template>
 
 <style scoped lang="scss"></style>

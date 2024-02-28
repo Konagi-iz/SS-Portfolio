@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import Canvas from '@/components/views/homeParts/Canvas.vue';
+import TextSplit from '@/components/parts/TextSplit.vue';
+import { isOpeningReady } from '@/store';
 
 const date = ref({});
 
@@ -24,9 +26,15 @@ function updateDate() {
 		<Canvas></Canvas>
 		<!-- Canvas -->
 		<h2 class="lcl-hero-ttl">
-			<span class="lcl-hero-ttl__txt font-dp">Design.</span>
-			<span class="lcl-hero-ttl__txt font-dp">Cording.</span>
-			<span class="lcl-hero-ttl__txt font-dp">Exciting.</span>
+			<span class="lcl-hero-ttl__txt font-dp" :class="{ 'opening--on': isOpeningReady }">
+				<TextSplit text="Design."></TextSplit>
+			</span>
+			<span class="lcl-hero-ttl__txt font-dp" :class="{ 'opening--on': isOpeningReady }">
+				<TextSplit text="Coding."></TextSplit>
+			</span>
+			<span class="lcl-hero-ttl__txt font-dp" :class="{ 'opening--on': isOpeningReady }">
+				<TextSplit text="Exciting."></TextSplit>
+			</span>
 		</h2>
 		<!-- .lcl-hero-ttl -->
 		<div class="lcl-hero-frame">
@@ -84,13 +92,39 @@ function updateDate() {
 		align-items: center;
 	}
 	.lcl-hero-ttl__txt {
+		clip-path: inset(0 0 -10% 0);
 		color: $c-orange;
 		font-size: max(minpx(228), pcvw(228));
 		line-height: 0.94;
 		letter-spacing: 0.04em;
+		white-space: nowrap;
 		@include media_narrow {
 			@include fz(82);
 			line-height: 1.2;
+		}
+		&:nth-of-type(1) :deep(.split-span) {
+			@for $i from 1 through 7 {
+				&:nth-of-type(#{$i}) {
+					transition-delay: #{0.1 * ($i - 1)}s;
+				}
+			}
+		}
+		&:nth-of-type(2) :deep(.split-span) {
+			@for $i from 1 through 7 {
+				&:nth-of-type(#{$i}) {
+					transition-delay: #{0.1 * ($i - 1) + 0.2}s;
+				}
+			}
+		}
+		&:nth-of-type(3) :deep(.split-span) {
+			@for $i from 1 through 78 {
+				&:nth-of-type(#{$i}) {
+					transition-delay: #{0.1 * ($i - 1) + 0.4}s;
+				}
+			}
+		}
+		&.opening--on :deep(.split-span) {
+			transform: translateY(0);
 		}
 	}
 

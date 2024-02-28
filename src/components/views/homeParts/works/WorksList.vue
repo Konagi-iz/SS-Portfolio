@@ -63,16 +63,16 @@ onMounted(() => {
 		});
 
 		/* 後ろのカードを小さくする ------------ */
-		if (index < card.value.length - 1) {
-			gsap.to(item, {
-				scale: 0.85,
-				scrollTrigger: {
-					trigger: item,
-					start: 'top top',
-					scrub: 1,
-				},
-			});
-		}
+		// if (index < card.value.length - 1) {
+		// 	gsap.to(item, {
+		// 		opacity: 0,
+		// 		scrollTrigger: {
+		// 			trigger: item,
+		// 			start: 'top top',
+		// 			scrub: 1,
+		// 		},
+		// 	});
+		// }
 	});
 
 	/* VIEW ALL WORKS アニメーション ------------ */
@@ -120,6 +120,7 @@ onUnmounted(() => {
 			<li v-for="(item, index) in webdesignWorks" :key="index" ref="card" class="lcl-works-list__item">
 				<WorksCard
 					v-bind="{
+						id: item.id,
 						ttl: item.title,
 						year: item.year,
 						role: item.role,
@@ -133,7 +134,7 @@ onUnmounted(() => {
 		<!-- .lcl-works-list__in -->
 		<div class="lcl-works-list-more">
 			<div class="lcl-works-list-more__in">
-				<router-link to="" class="lcl-works-list-more__link">
+				<router-link :to="{ name: 'works' }" class="lcl-works-list-more__link">
 					<Button01
 						v-bind="{
 							isBig: true,
@@ -164,6 +165,7 @@ onUnmounted(() => {
 		align-items: center;
 		justify-content: center;
 		height: max(730px, 100vh);
+		will-change: transform;
 		@include media_narrow {
 			height: 100lvh;
 		}

@@ -14,8 +14,8 @@ onMounted(() => {
 		background: '#e2e2e2',
 		scrollTrigger: {
 			trigger: section.value,
-			start: 'top center',
-			end: 'top top',
+			start: 'top 80%',
+			end: 'top 50%',
 			scrub: 1,
 		},
 	});
@@ -56,7 +56,7 @@ onMounted(() => {
 		</div>
 		<!-- .lcl-photo-desc -->
 		<Slider></Slider>
-		<router-link to="/" class="lcl-photo__link">
+		<router-link :to="{name: 'photo'}" class="lcl-photo__link">
 			<Button01
 				v-bind="{
 					isBig: true,

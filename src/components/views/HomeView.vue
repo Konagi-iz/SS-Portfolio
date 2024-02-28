@@ -8,7 +8,9 @@ import { isRouterViewLoaded } from '../../store';
 
 /* マウントされたらフラグを有効 ------------ */
 onMounted(() => {
-	isRouterViewLoaded.value = true;
+	setTimeout(() => {
+		isRouterViewLoaded.value = true;
+	}, 1000);
 });
 </script>
 

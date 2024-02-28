@@ -23,6 +23,9 @@ watch(isTransitionEnabled, () => {
 watch(realSpeed, () => {
 	transitionDuration.value = `${isTransitionEnabled.value ? realSpeed.value / 1000 : 0}s`;
 });
+watch(isTransitionEnd, (val) => {
+	console.log(val);
+})
 
 const slideToPrev = () => {
 	slideActiveClassFlag.value = false;
@@ -81,13 +84,16 @@ const slideToIndex = (toIndex) => {
 };
 
 const onTransitionEnd = () => {
-	isTransitionEnd.value = true;
 	realSpeed.value = speed;
 	slideActiveClassFlag.value = true;
 
 	if (currentIndex.value === 0 || currentIndex.value === 7) {
+		isTransitionEnd.value = false;
 		isTransitionEnabled.value = false;
 		currentRotate.value = -45 * currentIndex.value;
+		isTransitionEnd.value = true;
+	} else {
+		isTransitionEnd.value = true;
 	}
 };
 </script>

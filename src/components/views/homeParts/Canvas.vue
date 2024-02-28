@@ -5,8 +5,6 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { MeshTransmissionMaterial } from '@/MeshTransmissionMaterial.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
@@ -14,7 +12,7 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { ClearPass } from 'three/examples/jsm/postprocessing/ClearPass.js';
 import { MaskPass, ClearMaskPass } from 'three/examples/jsm/postprocessing/MaskPass.js';
 import { CopyShader } from 'three/examples/jsm/shaders/CopyShader.js';
-import { media } from '@/store';
+import { media, isOpeningReady } from '@/store';
 
 /*---------------------------------------------
 fv 3D
@@ -95,69 +93,17 @@ const initThreeJS = async () => {
 		backsideThickness: 1,
 	});
 
+	const visibleWrap = new THREE.Group();
+	const maskWrap = new THREE.Group();
+
+	visibleWrap.add(crystal);
 	const mask = crystal.clone();
+	maskWrap.add(mask);
 
-	sceneMask.add(mask);
-	scene.add(crystal);
+	scene.add(visibleWrap);
+	sceneMask.add(maskWrap);
 
-	// TextMesh
-	// const Beatrice = '../../../assets/json/Beatrice_Headline_Italic.json';
-	// const Arial = '@/assets/json/Arial_Regular.json';
-	// const orange = new THREE.Color(0xff4b12);
-	// const white = new THREE.Color(0xffffff);
-	// const textPosZ = -1500;
-	// const fontLoader = new FontLoader();
-	// const txtData = [
-	// 	{
-	// 		font: Beatrice,
-	// 		text: 'SUGOI',
-	// 		size: '256',
-	// 		color: orange,
-	// 		pos: {
-	// 			x: 0,
-	// 			y: 208,
-	// 			z: textPosZ,
-	// 		},
-	// 	},
-	// 	{
-	// 		font: Beatrice,
-	// 		text: 'Portfolio',
-	// 		size: '256',
-	// 		color: orange,
-	// 		pos: {
-	// 			x: 0,
-	// 			y: -100,
-	// 			z: textPosZ,
-	// 		},
-	// 	},
-	// ];
-
-	// create all text
-	// txtData.forEach((e, i) => {
-	// 	createText(e.font, e.text, e.size, e.color, e.pos.x, e.pos.y, e.pos.z);
-	// });
-
-	// create text function
-	// const txtGroup = new THREE.Group();
-	// function createText(font, text, size, color, posX, posY, posZ) {
-	// 	fontLoader.load(font, (font) => {
-	// 		const txtGeometry = new TextGeometry(text, {
-	// 			font: font,
-	// 			size: size,
-	// 			height: 0,
-	// 			curveSegments: 12,
-	// 		});
-	// 		txtGeometry.center();
-	// 		const txtMaterial = new THREE.MeshBasicMaterial({
-	// 			color: color,
-	// 		});
-	// 		const txtMesh = new THREE.Mesh(txtGeometry, txtMaterial);
-	// 		txtMesh.position.set(posX, posY, posZ);
-	// 		txtMesh.layers.set(0);
-	// 		txtGroup.add(txtMesh);
-	// 	});
-	// }
-	// scene.add(txtGroup);
+	/* オープニング ------------ */
 
 	const texture = new THREE.TextureLoader().load(`/assets/img/home/hero/${media.value}/img_hero.jpg`, (tex) => {
 		// 縦横比を保って適当にリサイズ
@@ -289,7 +235,7 @@ const initThreeJS = async () => {
 		canvasH = container.value.clientHeight;
 
 		// crystalのサイズ設定
-		const crystalScale = ((media.value === 'PC' ? 8 : 6) / viewport) * w;
+		const crystalScale = ((media.value === 'PC' ? 8 : 5) / viewport) * w;
 		[crystal, mask].forEach((obj) => {
 			obj.scale.set(crystalScale, crystalScale, crystalScale);
 		});

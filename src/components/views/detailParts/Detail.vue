@@ -50,6 +50,7 @@ const props = defineProps({
 				</div>
 				<!-- .lcl-detail__info -->
 				<div class="lcl-detail-preview">
+					<div class="lcl-detail-loading"></div>
 					<video
 						v-if="cat === 'web'"
 						class="lcl-detail-preview__video"
@@ -211,26 +212,51 @@ const props = defineProps({
 
 	/* preview ------------ */
 	.lcl-detail-preview {
+		position: relative;
+		overflow: hidden;
+		border-radius: 8px;
+		min-height: 400px;
 		@include media_wide {
 			max-width: 1000px;
 		}
-	}
-	.lcl-detail-preview__video {
-		border-radius: 8px;
-		width: 100%;
-		object-fit: cover;
 		@include media_narrow {
 			border-radius: vw(6);
 		}
 	}
+	.lcl-detail-loading {
+		z-index: -1;
+		position: absolute;
+		width: 100%;
+		height: 99%;
+		background: #dcdcdc;
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(to right, transparent 45%, #ffffff 50%, transparent 55%);
+			background-size: 250%;
+			background-position: 100% 0;
+			animation: skelton 1.3s infinite;
+
+			@keyframes skelton {
+				to {
+					background-position: -10%;
+				}
+			}
+			/*---------------- before */
+		}
+	}
+	.lcl-detail-preview__video {
+		width: 100%;
+		object-fit: cover;
+	}
 	.lcl-detail-preview__img {
-		border-radius: 8px;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		@include media_narrow {
-			border-radius: vw(6);
-		}
 	}
 
 	/* foot ------------ */

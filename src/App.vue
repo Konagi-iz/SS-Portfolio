@@ -7,7 +7,7 @@ import '@/scss/nwclasses.scss';
 import BGNoise from '@/components/parts/BGNoise.vue';
 import Header from '@/components/parts/Header.vue';
 import Footer from '@/components/parts/Footer.vue';
-import Transition from '@/components/parts/Transition.vue';
+import TransitionOverlay from '@/components/parts/TransitionOverlay.vue';
 import Stalker from '@/components/parts/Stalker.vue';
 import { isRouterViewLoaded, media } from '@/store';
 
@@ -47,7 +47,6 @@ function handleResize() {
 
 	const resizeTimer = setTimeout(() => {
 		if (resizeAmount >= 200) {
-			console.log('reload!');
 			router.go(0);
 		}
 		clearTimeout(resizeTimer);
@@ -58,14 +57,14 @@ function handleResize() {
 
 <template>
 	<div ref="wrapper" class="wrapper">
-		<div v-if="route.name === 'home'" class="background"></div>
 		<BGNoise :opacity="60"></BGNoise>
+		<div v-if="route.name === 'home'" class="background"></div>
 		<Header></Header>
 		<main id="main">
 			<router-view></router-view>
 		</main>
 		<Footer :wrapper="wrapper"></Footer>
-		<Transition></Transition>
+		<TransitionOverlay></TransitionOverlay>
 		<Stalker></Stalker>
 	</div>
 </template>
@@ -77,7 +76,7 @@ function handleResize() {
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 100dvh;
+	height: 100lvh;
 }
 .background--hide {
 	background: transparent !important;

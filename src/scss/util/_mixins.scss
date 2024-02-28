@@ -19,10 +19,15 @@ mixins
 /*------------------------------------------------
 font
 ------------------------------------------------*/
+// @font-face {
+// 	font-family: 'Beatrice-Headline';
+// 	font-display: swap;
+// 	src: url(../../public/assets/font/BeatriceHeadline-RegularItalic.woff) format('woff');
+// }
 @font-face {
 	font-family: 'Beatrice-Headline';
 	font-display: swap;
-	src: url(../../assets/font/BeatriceHeadline-RegularItalic.woff) format('woff');
+	src: url(/assets/font/BeatriceHeadline-RegularItalic.woff) format('woff');
 }
 
 @mixin font-family {

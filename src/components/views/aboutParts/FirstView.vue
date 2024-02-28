@@ -2,7 +2,9 @@
 import { ref, onMounted } from 'vue';
 import gsap from 'gsap';
 import BGNoise from '@/components/parts/BGNoise.vue';
+import TextSplit from '@/components/parts/TextSplit.vue';
 import IconAngleRight from '~icons/svg/ico-angle-right';
+import { isOpeningReady } from '@/store';
 
 const fv = ref(null);
 const circleText = ref(null);
@@ -26,14 +28,18 @@ onMounted(() => {
 		<!-- .lcl-fv__bg -->
 		<BGNoise :opacity="20"></BGNoise>
 		<!-- .bg-noise -->
-		<div class="lcl-fv__cnt">
+		<div class="lcl-fv__cnt" :class="{ 'opening--on': isOpeningReady }">
 			<p class="lcl-fv__head">PROFILE</p>
 			<h2 class="lcl-fv-ttl">
-				<span class="lcl-fv-ttl__word font-dp">About</span>
-				<span class="lcl-fv-ttl__word font-en">me</span>
+				<span class="lcl-fv-ttl__word font-dp">
+					<TextSplit text="About"></TextSplit>
+				</span>
+				<span class="lcl-fv-ttl__word font-en">
+					<TextSplit text="me"></TextSplit>
+				</span>
 			</h2>
 			<!-- .lcl-fv-ttl -->
-			<div class="lcl-fv-data">
+			<div class="lcl-fv-data" :class="{ 'opening--on': isOpeningReady }">
 				<p class="lcl-fv-data__txt font-en">DATA - NAME</p>
 				<p class="lcl-fv-data__txt font-en">DATA - AGE</p>
 				<p class="lcl-fv-data__txt font-en">DATA - WHERE</p>
@@ -43,7 +49,7 @@ onMounted(() => {
 			<!-- .lcl-fv-data -->
 		</div>
 		<!-- lcl-fv__cnt -->
-		<div class="lcl-fv-scroll">
+		<div class="lcl-fv-scroll" :class="{ 'opening--on': isOpeningReady }">
 			<img ref="circleText" class="lcl-fv-scroll__circle" src="/assets/img/about/PC/text_circle.svg" alt="SCROLL DOWN" />
 			<IconAngleRight></IconAngleRight>
 		</div>
@@ -67,7 +73,7 @@ onMounted(() => {
 		opacity: 0.4;
 		width: 100%;
 		height: 100%;
-		background: linear-gradient(to bottom, $c-orange, $c-darkgray);
+		background: linear-gradient(to bottom, $c-orange, $c-darkgray 60%);
 	}
 
 	/* contents ------------ */
@@ -78,12 +84,22 @@ onMounted(() => {
 			padding-top: vw(267);
 			margin-left: vw(26);
 		}
+		&.opening--on .lcl-fv__head {
+			transform: translateY(0);
+			opacity: 1;
+		}
+		&.opening--on .lcl-fv-ttl__word :deep(.split-span) {
+			transform: translateY(0);
+		}
 	}
 	.lcl-fv__head {
+		transform: translateY(100%);
+		opacity: 0;
 		color: $c-white;
 		@include fz(22);
 		line-height: 1.5;
 		letter-spacing: 0.04em;
+		transition: transform 0.8s $e-out-expo, opacity 0.8s $e-out-expo;
 		@include media_narrow {
 			@include fz(16);
 		}
@@ -95,6 +111,8 @@ onMounted(() => {
 		gap: 68px;
 	}
 	.lcl-fv-ttl__word {
+		display: inline-block;
+		clip-path: inset(0 0 0 -10%);
 		color: $c-orange;
 		@include fz(188);
 		line-height: 1.1;
@@ -107,6 +125,10 @@ onMounted(() => {
 				line-height: 0.9;
 			}
 		}
+		:deep(.split-span) {
+			@include delay(5);
+			transition: transform 1s $e-out-expo;
+		}
 	}
 	.lcl-fv-data {
 		margin-top: 24px;
@@ -116,11 +138,19 @@ onMounted(() => {
 		@include media_narrow {
 			margin-top: vw(4);
 		}
+		&.opening--on .lcl-fv-data__txt {
+			transform: translateY(0);
+			opacity: 1;
+		}
 	}
 	.lcl-fv-data__txt {
+		transform: translateY(100%);
+		opacity: 0;
 		color: $c-gray;
 		@include fz(12);
 		line-height: 1.5;
+		@include delay(5, 0.1, 0.2);
+		transition: transform 0.8s $e-out-expo, opacity 0.8s $e-out-expo;
 		@include media_narrow {
 			@include fz(10);
 		}
@@ -131,14 +161,21 @@ onMounted(() => {
 		position: absolute;
 		bottom: 10px;
 		left: max(15px, 15px + (100% - 1300px) / 2);
+		opacity: 0;
+		transform: translateY(-10%);
 		display: flex;
 		align-items: center;
 		flex-direction: column;
 		gap: 20px;
+		transition: transform 1.2s 0.6s $e-out-circ, opacity 1.2s 0.6s $e-out-circ;
 		@include media_narrow {
 			bottom: vw(15);
 			left: vw(15);
 			gap: vw(12);
+		}
+		&.opening--on {
+			opacity: 1;
+			transform: translateY(0);
 		}
 	}
 	.lcl-fv-scroll__circle {

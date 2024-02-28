@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router';
 import Button01 from '@/components/parts/Button01.vue';
 
 const props = defineProps({
+	id: Number,
 	ttl: String,
 	year: String,
 	role: String,
@@ -35,7 +36,7 @@ const isDetailPage = ref(route.name === 'detail' ? true : false);
 				<!-- .workcard-info -->
 			</div>
 			<!-- .workcard-txt__main -->
-			<router-link v-if="!isSmall" to="" class="workcard-link">
+			<router-link v-if="!isSmall" :to="id ? `/works/${id}` : ''" class="workcard-link">
 				<Button01
 					v-bind="{
 						isBig: false,
@@ -257,6 +258,9 @@ const isDetailPage = ref(route.name === 'detail' ? true : false);
 		gap: 95px;
 		width: 100%;
 		height: 100%;
+	}
+	.workcard-txt {
+		flex-shrink: 0;
 	}
 	.workcard-txt__ttl {
 		@include media_wide {

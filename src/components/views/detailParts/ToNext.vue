@@ -17,6 +17,7 @@ const props = defineProps({
 		<div class="lcl-tonext__in">
 			<WorkCard
 				v-bind="{
+					id: id,
 					ttl: ttl,
 					year: year,
 					role: role,

@@ -19,7 +19,6 @@ let noiseOpacity;
 // Footerより前にあるPinでズレるのを防ぐ為、router-view以下がマウントされてから実行
 watch(isRouterViewLoaded, (flag) => {
 	if (flag) {
-		/* 背景色を切り替えるアニメーション ------------ */
 		if (backgroundColor && noiseOpacity) {
 			backgroundColor.kill();
 			noiseOpacity.kill();
@@ -29,6 +28,7 @@ watch(isRouterViewLoaded, (flag) => {
 			background: '#101010',
 		});
 
+		/* 背景色を切り替えるアニメーション ------------ */
 		backgroundColor = gsap.to(props.wrapper, {
 			background: '#FF2E12',
 			scrollTrigger: {
@@ -52,6 +52,8 @@ watch(isRouterViewLoaded, (flag) => {
 				invalidateOnRefresh: true,
 			},
 		});
+
+		/* メールアドレス ------------ */
 		gsap.to([...mail1.value.char, ...mail2.value.char, ...mail3.value.char], {
 			y: 0,
 			stagger: { each: 0.1 },
@@ -109,7 +111,7 @@ watch(isRouterViewLoaded, (flag) => {
 					</li>
 				</ul>
 				<!-- .footer-nav -->
-				<a class="footer-pagetop font-en" href="#main">BACK TO TOP</a>
+				<router-link to="" class="footer-pagetop font-en">BACK TO TOP</router-link>
 			</div>
 		</div>
 		<!-- .footer__main -->

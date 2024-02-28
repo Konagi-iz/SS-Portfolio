@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { ref, watch, onMounted, onUpdated } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import Detail from '@/components/views/detailParts/Detail.vue';
 import ToNext from '@/components/views/detailParts/ToNext.vue';
 import CloseupNav from '@/components/views/detailParts/CloseupNav.vue';
@@ -8,11 +8,26 @@ import workslist from '@/assets/data/works.json';
 import { isRouterViewLoaded } from '@/store';
 
 const route = useRoute();
+const router = useRouter();
 
-const currentWorkListItem = workslist[route.params.id - 1];
-const nextWorkListItem = Number(route.params.id) === workslist.length ? workslist[0] : workslist[route.params.id];
+const currentWorkListItem = ref();
+const nextWorkListItem = ref();
+
+getWorkData();
+watch(route, () => {
+	getWorkData();
+});
+
+function getWorkData() {
+	currentWorkListItem.value = workslist[route.params.id - 1];
+	nextWorkListItem.value = Number(route.params.id) === workslist.length ? workslist[0] : workslist[route.params.id];
+}
+
 /* マウントされたらフラグを有効 ------------ */
 onMounted(() => {
+	isRouterViewLoaded.value = true;
+});
+onUpdated(() => {
 	isRouterViewLoaded.value = true;
 });
 </script>
@@ -29,15 +44,16 @@ onMounted(() => {
 			data: currentWorkListItem.data,
 		}"
 	></Detail>
-	<CloseupNav
+	<!-- <CloseupNav
 		v-bind="{
 			tag: currentWorkListItem.tag,
 			cat: currentWorkListItem.cat,
 			closeup: currentWorkListItem.closeup,
 		}"
-	></CloseupNav>
+	></CloseupNav> -->
 	<ToNext
 		v-bind="{
+			id: nextWorkListItem.id,
 			ttl: nextWorkListItem.title,
 			year: nextWorkListItem.year,
 			role: nextWorkListItem.role,

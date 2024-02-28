@@ -117,25 +117,25 @@ onMounted(() => {
 						<h2 class="lcl-works-ttl__txt">
 							<span class="lcl-works-ttl__row">
 								<span
-									v-for="(char, index) in ['S', 'e', 'l', 'e', 'c', 't', 'e', 'd']"
+									v-for="(_char, index) in ['S', 'e', 'l', 'e', 'c', 't', 'e', 'd']"
 									:key="index"
 									ref="char"
 									class="lcl-works-ttl__char"
 									:class="index === 6 || index === 7 ? 'font-dp' : 'font-en'"
 								>
-									{{ char }}
+									{{ _char }}
 								</span>
 							</span>
 							<br />
 							<span class="lcl-works-ttl__row">
 								<span
-									v-for="(char, index) in ['W', 'o', 'r', 'k', 's']"
+									v-for="(_char, index) in ['W', 'o', 'r', 'k', 's']"
 									:key="index"
 									ref="char"
 									class="lcl-works-ttl__char"
 									:class="index === 0 || index === 1 ? 'font-en' : 'font-dp'"
 								>
-									{{ char }}
+									{{ _char }}
 								</span>
 							</span>
 						</h2>

@@ -1,35 +1,24 @@
 <script setup>
-import { ref } from 'vue';
-import { isNavActive } from '@/store/index.js';
+import { watch } from 'vue';
 import Menu from '@/components/parts/Menu.vue';
 import IconStar from '~icons/svg/ico-star';
-import { media } from '@/store';
+import { lenis } from '@/main';
+import { isNavActive, media } from '@/store';
+import { useToggleNav } from '@/components/composable/toggleNav';
 
-const navlist = [
-	{
-		en: 'Home',
-		jp: 'ホーム',
-		route: 'home',
-	},
-	{
-		en: 'About me',
-		jp: '私について',
-		route: 'about',
-	},
-	{
-		en: 'Works',
-		jp: '制作実績',
-		route: 'works',
-	},
-	{
-		en: 'Photography',
-		jp: '写真',
-		route: 'photo',
-	},
-];
+/* スクロール無効化 ------------ */
+watch(isNavActive, (val) => {
+	if (val) {
+		lenis.stop();
+	} else {
+		lenis.start();
+	}
+});
 </script>
 
 <template>
+	<div @click="useToggleNav" class="nav-overlay" :class="{ 'nav-overlay--active': isNavActive }"></div>
+
 	<div class="nav-container" :class="{ 'nav-container--active': isNavActive }">
 		<div class="nav-wrp">
 			<div v-if="media === 'SP'" class="nav-menu">
@@ -37,7 +26,32 @@ const navlist = [
 			</div>
 			<nav class="nav">
 				<ul class="nav-list">
-					<li v-for="(item, index) in navlist" :key="index" class="nav-list__item">
+					<li
+						v-for="(item, index) in [
+							{
+								en: 'Home',
+								jp: 'ホーム',
+								route: 'home',
+							},
+							{
+								en: 'About me',
+								jp: '私について',
+								route: 'about',
+							},
+							{
+								en: 'Works',
+								jp: '制作実績',
+								route: 'works',
+							},
+							{
+								en: 'Photography',
+								jp: '写真',
+								route: 'photo',
+							},
+						]"
+						:key="index"
+						class="nav-list__item"
+					>
 						<router-link :to="{ name: item.route }" class="nav-list__link hv-txt">
 							<IconStar></IconStar>
 							<span class="nav-list__en font-dp">{{ item.en }}</span>
@@ -74,6 +88,24 @@ const navlist = [
 </template>
 
 <style scoped lang="scss">
+/* overlay ------------ */
+.nav-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	visibility: hidden;
+	width: 100%;
+	height: 100lvh;
+	background: $c-black;
+	transition: opacity 0.6s $e-out-circ, visibility 0.6s $e-out-circ;
+}
+.nav-overlay--active {
+	opacity: 0.8;
+	visibility: visible;
+}
+
+/* nav ------------ */
 .nav-container {
 	z-index: 1000;
 	position: fixed;

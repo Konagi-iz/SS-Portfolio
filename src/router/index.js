@@ -1,7 +1,7 @@
 import { nextTick } from 'vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import HomeView from '@/components/views/HomeView.vue';
-import { isRouterViewLoaded, isTransition } from '@/store';
+import { isRouterViewLoaded, isNavActive, isOpeningReady } from '@/store';
 
 const router = createRouter({
 	history: createWebHashHistory(),
@@ -30,6 +30,13 @@ const router = createRouter({
 			path: '/photography',
 			name: 'photo',
 			component: () => import('@/components/views/PhotographyView.vue'),
+			redirect: { name: 'coming' },
+		},
+
+		{
+			path: '/commingsoon',
+			name: 'coming',
+			component: () => import('@/components/views/CommingSoonView.vue'),
 		},
 
 		/* 存在しないパスを404にリダイレクト ------------ */
@@ -40,8 +47,9 @@ const router = createRouter({
 		// 	path: '/404',
 		// 	name: '404',
 		// 	component: () => import('@/components/views/404View.vue'),
-		// },import { isTransition } from '../store/index';
+		// }import { isOpeningReady } from './../store/index';
 	],
+
 	scrollBehavior: async (to, from, savedPosition) => {
 		const findEl = async (hash) => {
 			const el = document.querySelector(hash);
@@ -70,17 +78,17 @@ const router = createRouter({
 /* ページ遷移 前 に行われる処理 ------------ */
 router.beforeEach((to, from, next) => {
 	isRouterViewLoaded.value = false;
-	isTransition.value = true;
-
+	
 	setTimeout(() => {
+		isOpeningReady.value = false;
+		isNavActive.value = false;
 		next();
-	}, 1000);
+	}, 700);
 });
 
 /* ページ遷移 後 に行われる処理 ------------ */
 router.afterEach((to, from, next) => {
 	nextTick(() => {
-		isTransition.value = false;
 		scrollAnimation();
 	});
 
