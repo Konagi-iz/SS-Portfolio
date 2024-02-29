@@ -17,15 +17,13 @@ const transitionDuration = ref(`${isTransitionEnabled.value ? realSpeed.value / 
 watch(currentRotate, () => {
 	rotate.value = `${currentRotate.value}deg`;
 });
-watch(isTransitionEnabled, () => {
-	transitionProperty.value = `${isTransitionEnabled.value ? 'rotate' : 'none'}`;
+watch(isTransitionEnabled, (val) => {
+	transitionProperty.value = `${val ? 'rotate' : 'none'}`;
+	transitionDuration.value = `${val ? realSpeed.value / 1000 : 0}s`;
 });
 watch(realSpeed, () => {
 	transitionDuration.value = `${isTransitionEnabled.value ? realSpeed.value / 1000 : 0}s`;
 });
-watch(isTransitionEnd, (val) => {
-	console.log(val);
-})
 
 const slideToPrev = () => {
 	slideActiveClassFlag.value = false;
@@ -91,10 +89,9 @@ const onTransitionEnd = () => {
 		isTransitionEnd.value = false;
 		isTransitionEnabled.value = false;
 		currentRotate.value = -45 * currentIndex.value;
-		isTransitionEnd.value = true;
-	} else {
-		isTransitionEnd.value = true;
 	}
+
+	isTransitionEnd.value = true;
 };
 </script>
 
@@ -152,9 +149,9 @@ const onTransitionEnd = () => {
 	overflow: hidden;
 	.lcl-slider__slider {
 		position: relative;
-		margin-top: max(minpx(90), pcvw(90));
+		margin-top: 98px;
 		width: 100%;
-		height: max(minpx(809), pcvw(809));
+		height: 809px;
 		@include media_narrow {
 			margin-top: vw(80);
 			height: vw(243);
@@ -165,7 +162,7 @@ const onTransitionEnd = () => {
 			left: 0;
 			bottom: 0;
 			width: 100%;
-			height: max(minpx(269), pcvw(269));
+			height: 269px;
 			background: linear-gradient(180deg, rgba(226, 226, 226, 0) 0%, #e2e2e2 69.27%);
 			@include media_narrow {
 				height: vw(54);
@@ -179,8 +176,8 @@ const onTransitionEnd = () => {
 		left: 50%;
 		translate: -50% 0;
 		rotate: v-bind(rotate);
-		width: max(minpx(2278), pcvw(2278));
-		height: max(minpx(2278), pcvw(2278));
+		width: 2278px;
+		height: 2278px;
 		transition-property: v-bind(transitionProperty);
 		transition-duration: v-bind(transitionDuration);
 		transition-timing-function: cubic-bezier(0.22, 1, 0.48, 1);
@@ -202,15 +199,15 @@ const onTransitionEnd = () => {
 	}
 	.lcl-slider__slide {
 		--angle: calc(360deg / 8 * var(--index) - 90deg);
-		--x: calc(cos(var(--angle)) * (max(#{minpx(926.5)}, #{pcvw(926.5)})));
-		--y: calc(sin(var(--angle)) * (max(#{minpx(926.5)}, #{pcvw(926.5)})));
+		--x: calc(cos(var(--angle)) * 926.5px);
+		--y: calc(sin(var(--angle)) * 926.5px);
 		position: absolute;
 		top: 50%;
 		left: 50%;
 		translate: calc(var(--x) - 50%) calc(var(--y) - 50%);
 		rotate: calc(45deg * var(--index));
-		width: max(minpx(425), pcvw(425));
-		height: max(minpx(425), pcvw(425));
+		width: 425px;
+		height: 425px;
 		transition: scale 0.9s $e-out-expo;
 		@include media_narrow {
 			--x: calc(cos(var(--angle)) * #{vw(355)});
@@ -230,14 +227,14 @@ const onTransitionEnd = () => {
 	/* button ------------ */
 	.lcl-slider__btn {
 		position: absolute;
-		top: max(minpx(175.5), pcvw(175.5));
+		top: 175.5px;
 		opacity: 0;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		border-radius: 50%;
-		width: max(minpx(73), pcvw(73));
-		height: max(minpx(73), pcvw(73));
+		width: 73px;
+		height: 73px;
 		background: $c-orange;
 		transition: opacity 0.8s 0.2s $e-out-circ, transform 0.8s 0.2s $e-out-circ, background 0.4s $e-out-expo;
 		@include media_narrow {
@@ -262,8 +259,8 @@ const onTransitionEnd = () => {
 		}
 	}
 	.lcl-slider__btn--prev {
-		left: max(minpx(268), pcvw(268));
-		transform: translateX(100%);
+		right: calc(50% + 309px);
+		transform: translateX(-100%);
 		@include media_narrow {
 			left: vw(21);
 		}
@@ -272,14 +269,14 @@ const onTransitionEnd = () => {
 		}
 	}
 	.lcl-slider__btn--next {
-		left: max(minpx(959), pcvw(959));
+		left: calc(50% + 309px);
 		transform: translateX(-100%);
 		@include media_narrow {
 			left: vw(316);
 		}
 	}
 	.ico-angle-right {
-		width: max(minpx(44), pcvw(44));
+		width: 44px;
 		height: auto;
 		transition: scale 0.6s $e-out-expo;
 		@include media_narrow {
@@ -294,7 +291,7 @@ const onTransitionEnd = () => {
 	.lcl-slider__pagination {
 		z-index: 1;
 		position: absolute;
-		top: max(minpx(511), pcvw(511));
+		top: 511px;
 		left: 50%;
 		transform: translateX(-50%);
 		display: flex;
@@ -306,9 +303,9 @@ const onTransitionEnd = () => {
 	.lcl-slider__bullet {
 		position: relative;
 		box-sizing: content-box;
-		padding: max(minpx(3), pcvw(3));
-		width: max(minpx(8), pcvw(8));
-		height: max(minpx(8), pcvw(8));
+		padding: 3px;
+		width: 8px;
+		height: 8px;
 		transition: transform 0.4s ease-out, width 1.2s $e-out-expo;
 		cursor: pointer;
 		@include media_narrow {
@@ -338,7 +335,7 @@ const onTransitionEnd = () => {
 		}
 	}
 	.lcl-slider__bullet--active {
-		width: max(minpx(38), pcvw(38));
+		width: 30px;
 		@include media_narrow {
 			width: vw(30);
 		}

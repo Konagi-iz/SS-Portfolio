@@ -50,7 +50,8 @@ onMounted(() => {
 			<!-- prettier-ignore -->
 			<p class="lcl-photo-desc__en font-en fade-in-btm scr-anin">
 				Camera : Fujifilm X-T5<br />
-				Lens : Sigma 18-50mm F2.8
+				Lens : Sigma 18-50mm F2.8,<br>
+				　　　 XF 56mm F1.2 R WR
 			</p>
 			<!-- .lcl-photo-desc__en -->
 		</div>

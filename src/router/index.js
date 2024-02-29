@@ -50,35 +50,19 @@ const router = createRouter({
 		// }import { isOpeningReady } from './../store/index';
 	],
 
-	scrollBehavior: async (to, from, savedPosition) => {
-		const findEl = async (hash) => {
-			const el = document.querySelector(hash);
-			if (el) {
-				return el;
-			} else {
-				return new Promise((resolve) => {
-					setTimeout(() => {
-						resolve(findEl(hash));
-					}, 100);
-				});
-			}
-		};
-
-		if (to.hash) {
-			const el = await findEl(to.hash);
-			console.log(el);
-			if (el) {
-				return window.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
-			}
+	scrollBehavior(to, from, savedPosition) {
+		if (savedPosition) {
+			return savedPosition;
+		} else {
+			return { top: 0, behavior: 'smooth' };
 		}
-		return { top: 0 };
 	},
 });
 
 /* ページ遷移 前 に行われる処理 ------------ */
 router.beforeEach((to, from, next) => {
 	isRouterViewLoaded.value = false;
-	
+
 	setTimeout(() => {
 		isOpeningReady.value = false;
 		isNavActive.value = false;

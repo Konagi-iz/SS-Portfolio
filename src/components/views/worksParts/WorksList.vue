@@ -61,7 +61,7 @@ function controlVideo(el, control) {
 					console.error('動画の再生に失敗しました。', error);
 				});
 		} else if (control === 'reset') {
-			el.load();
+			el.currentTime = 0;
 			el.pause();
 		}
 	}

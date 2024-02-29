@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, watch, onMounted, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -23,7 +23,7 @@ let canvasW;
 let canvasH;
 const viewport = media.value === 'PC' ? 1300 : 375;
 
-let renderer;
+let renderer, camera, crystal, mask;
 
 const container = ref(null);
 
@@ -36,6 +36,10 @@ onMounted(() => {
 	canvasW = container.value.clientWidth;
 	canvasH = container.value.clientHeight;
 	initThreeJS();
+});
+
+onUnmounted(() => {
+	window.removeEventListener('resize', onResize);
 });
 
 const initThreeJS = async () => {
@@ -53,7 +57,7 @@ const initThreeJS = async () => {
 	const fov = 5;
 	const fovRad = (fov / 2) * (Math.PI / 180);
 	const dist = canvasH / 2 / Math.tan(fovRad);
-	const camera = new THREE.PerspectiveCamera(fov, canvasW / canvasH, 1, dist * 2);
+	camera = new THREE.PerspectiveCamera(fov, canvasW / canvasH, 1, dist * 2);
 	camera.position.z = dist;
 
 	// const controls = new OrbitControls(camera, renderer.domElement);
@@ -75,8 +79,8 @@ const initThreeJS = async () => {
 	scene.environment.mapping = THREE.EquirectangularReflectionMapping;
 
 	// モデルの設定
-	const crystal = gltfScene.getObjectByName('crystal');
-	crystal.material = Object.assign(new MeshTransmissionMaterial(10), {
+	crystal = gltfScene.getObjectByName('crystal');
+	crystal.material = Object.assign(new MeshTransmissionMaterial(3), {
 		clearcoat: 1,
 		clearcoatRoughness: 0,
 		transmission: 1,
@@ -97,13 +101,31 @@ const initThreeJS = async () => {
 	const maskWrap = new THREE.Group();
 
 	visibleWrap.add(crystal);
-	const mask = crystal.clone();
+	mask = crystal.clone();
 	maskWrap.add(mask);
 
 	scene.add(visibleWrap);
 	sceneMask.add(maskWrap);
 
+	gsap.set([visibleWrap.scale, maskWrap.scale], { x: 0, y: 0, z: 0 });
+
 	/* オープニング ------------ */
+	watch(isOpeningReady, () => {
+		gsap.from([visibleWrap.rotation, maskWrap.rotation], {
+			y: -7,
+			duration: 3,
+			delay: 0.5,
+			ease: 'expo.out',
+		});
+		gsap.to([visibleWrap.scale, maskWrap.scale], {
+			x: 1,
+			y: 1,
+			z: 1,
+			duration: 2,
+			delay: 0.5,
+			ease: 'expo.out',
+		});
+	});
 
 	const texture = new THREE.TextureLoader().load(`/assets/img/home/hero/${media.value}/img_hero.jpg`, (tex) => {
 		// 縦横比を保って適当にリサイズ
@@ -228,24 +250,25 @@ const initThreeJS = async () => {
 	// Resize
 	onResize();
 	window.addEventListener('resize', onResize);
-	function onResize() {
-		w = window.innerWidth;
-		h = window.innerHeight;
-		canvasW = container.value.clientWidth;
-		canvasH = container.value.clientHeight;
-
-		// crystalのサイズ設定
-		const crystalScale = ((media.value === 'PC' ? 8 : 5) / viewport) * w;
-		[crystal, mask].forEach((obj) => {
-			obj.scale.set(crystalScale, crystalScale, crystalScale);
-		});
-
-		renderer.setPixelRatio(window.devicePixelRatio);
-		renderer.setSize(canvasW, canvasH);
-		camera.aspect = canvasW / canvasH;
-		camera.updateProjectionMatrix();
-	}
 };
+
+function onResize() {
+	w = window.innerWidth;
+	h = window.innerHeight;
+	canvasW = container.value.clientWidth;
+	canvasH = container.value.clientHeight;
+
+	// crystalのサイズ設定
+	const crystalScale = ((media.value === 'PC' ? 8 : 5) / viewport) * w;
+	[crystal, mask].forEach((obj) => {
+		obj.scale.set(crystalScale, crystalScale, crystalScale);
+	});
+
+	renderer.setPixelRatio(window.devicePixelRatio);
+	renderer.setSize(canvasW, canvasH);
+	camera.aspect = canvasW / canvasH;
+	camera.updateProjectionMatrix();
+}
 </script>
 
 <template>

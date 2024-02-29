@@ -5,6 +5,7 @@ import BGNoise from '@/components/parts/BGNoise.vue';
 import WorksFVList from '@/components/parts/WorksFVList.vue';
 import IconAngleRight from '~icons/svg/ico-angle-right';
 import IconStar from '~icons/svg/ico-star';
+import { w, h } from '@/store';
 
 const ttlContainer = ref(null);
 const ttl = ref(null);
@@ -30,8 +31,8 @@ onMounted(() => {
 			/* Selected Works Title Pin & Scale ------------ */
 			gsap.to(ttl.value, {
 				scale: isPC ? 0.3007209063 : 0.7965116279,
-				xPercent: isPC ? -50 : -10,
-				yPercent: isPC ? 60 : 180,
+				x: () => (isPC ? Math.min(-486, Math.max(-486 + -((w - 1300) / 2), -486 - 300)) : (-35 / 375) * w),
+				y: () => (isPC ? Math.max(228, (228 / 730) * h) : (270 / 667) * h),
 				color: '#FF2E12',
 				scrollTrigger: {
 					trigger: first.value,
@@ -166,8 +167,10 @@ onMounted(() => {
 	/* fv-first ------------ */
 	.lcl-works-fv__first {
 		position: relative;
+		display: flex;
+		align-items: center;
 		width: 100%;
-		height: max(minpx(730 * 2), pcvw(730 * 2));
+		height: max(730px, 100lvh);
 		@include media_narrow {
 			height: 100lvh;
 		}
@@ -179,8 +182,8 @@ onMounted(() => {
 		left: 0;
 		transform-origin: bottom;
 		overflow: hidden;
-		border-top-left-radius: max(minpx(32), pcvw(32));
-		border-top-right-radius: max(minpx(32), pcvw(32));
+		border-top-left-radius: 32px;
+		border-top-right-radius: 32px;
 		width: 100%;
 		height: 100%;
 		background: $c-orange;
@@ -219,7 +222,7 @@ onMounted(() => {
 		overflow: hidden;
 		white-space: nowrap;
 		&:nth-of-type(1) {
-			margin-left: max(minpx(121), pcvw(121));
+			margin-left: 121px;
 			@include media_narrow {
 				margin-left: vw(42);
 			}
@@ -228,7 +231,7 @@ onMounted(() => {
 	.lcl-works-ttl__char {
 		transform: translateY(0);
 		display: inline-block;
-		font-size: max(minpx(208), pcvw(208));
+		@include fz(208);
 		line-height: 0.9;
 		@include media_narrow {
 			@include fz(74);
@@ -236,9 +239,9 @@ onMounted(() => {
 	}
 	.ico-star {
 		position: absolute;
-		top: max(minpx(69), pcvw(69));
-		left: max(minpx(30), pcvw(30));
-		width: max(minpx(50), pcvw(50));
+		top: 69px;
+		left: 30px;
+		width: 50px;
 		height: auto;
 		@include media_narrow {
 			top: vw(25);
@@ -255,7 +258,7 @@ onMounted(() => {
 		z-index: 0;
 		position: relative;
 		width: 100%;
-		height: max(minpx(730), pcvw(730));
+		height: max(730px, 100lvh);
 		background: linear-gradient(180deg, #ff2e12 0%, #101010 100%);
 		@include media_narrow {
 			height: 100lvh;
@@ -268,7 +271,7 @@ onMounted(() => {
 			left: 0;
 			transform: translateY(100%);
 			width: 100%;
-			height: max(minpx(70), pcvw(70));
+			height: 70px;
 			background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, #101010 70%);
 			@include media_narrow {
 				height: vw(70);
@@ -277,14 +280,14 @@ onMounted(() => {
 		}
 	}
 	.works-fv {
-		margin-inline: auto 0;
+		margin-inline: auto max(0px, ((100% - 1900px) / 2));
 	}
 	.lcl-works__angle-wrp {
 		position: absolute;
-		bottom: max(minpx(26), pcvw(26));
+		bottom: 26px;
 		overflow: hidden;
 		@include media_wide {
-			left: max(minpx(232), pcvw(232));
+			left: max(233px, 233px + ((100% - 1900px) / 2));
 		}
 		@include media_narrow {
 			bottom: vw(15);
@@ -295,7 +298,7 @@ onMounted(() => {
 	}
 	.ico-angle-right {
 		transform: rotate(90deg);
-		width: max(minpx(97), pcvw(97));
+		width: 97px;
 		height: auto;
 		@include media_narrow {
 			width: vw(97);

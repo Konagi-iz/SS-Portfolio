@@ -22,7 +22,7 @@ onMounted(() => {
 				trigger: item,
 				start: '100% top',
 				onEnter: () => {
-					video.load();
+					video.currentTime = 0;
 					video.pause();
 				},
 				onLeaveBack: () => {
@@ -57,7 +57,7 @@ onMounted(() => {
 				}
 			},
 			onLeaveBack: () => {
-				video.load();
+				video.currentTime = 0;
 				video.pause();
 			},
 		});

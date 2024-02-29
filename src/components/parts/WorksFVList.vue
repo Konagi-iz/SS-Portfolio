@@ -37,11 +37,11 @@ defineExpose({ listitem });
 /* home page ------------ */
 .works-fv {
 	display: flex;
-	gap: max(minpx(12), pcvw(12));
-	padding-right: max(minpx(12), pcvw(12));
-	width: max(minpx(933), pcvw(933));
+	gap: 12px;
+	padding-right: 12px;
+	width: clamp(933px, 933px + ((100% - 1300px) / 2), 933px + 300px);
 	@include media_wide {
-		padding-block: max(minpx(12), pcvw(12));
+		padding-block: 12px;
 		height: 100%;
 	}
 	@include media_narrow {
@@ -53,7 +53,7 @@ defineExpose({ listitem });
 	.works-fv__item {
 		display: flex;
 		flex-direction: column;
-		gap: max(minpx(12), pcvw(12));
+		gap: 12px;
 		@include media_narrow {
 			flex-direction: row-reverse;
 			gap: vw(8);
@@ -69,11 +69,11 @@ defineExpose({ listitem });
 	.works-fv__pic {
 		flex: 1;
 		@include media_wide {
-			width: max(minpx(177), pcvw(177));
+			min-height: 0;
 		}
 	}
 	.works-fv__img {
-		border-radius: max(minpx(16), pcvw(16));
+		border-radius: 16px;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
@@ -85,10 +85,10 @@ defineExpose({ listitem });
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		border-radius: max(minpx(16), pcvw(16));
+		border-radius: 16px;
 		background: $c-orange;
 		color: $c-black;
-		font-size: max(minpx(20), pcvw(20));
+		@include fz(20);
 		font-weight: 400;
 		line-height: 0.9;
 		@include media_narrow {
@@ -98,7 +98,7 @@ defineExpose({ listitem });
 	}
 	.works-fv__ttl--01 {
 		@include media_wide {
-			height: max(minpx(84), pcvw(84));
+			height: 84px;
 		}
 		@include media_narrow {
 			width: vw(98);
@@ -106,7 +106,7 @@ defineExpose({ listitem });
 	}
 	.works-fv__ttl--02 {
 		@include media_wide {
-			height: max(minpx(148), pcvw(148));
+			height: 140px;
 		}
 		@include media_narrow {
 			width: vw(58);
@@ -114,7 +114,7 @@ defineExpose({ listitem });
 	}
 	.works-fv__ttl--03 {
 		@include media_wide {
-			height: max(minpx(215), pcvw(215));
+			height: 215px;
 		}
 		@include media_narrow {
 			width: vw(120);
@@ -122,7 +122,7 @@ defineExpose({ listitem });
 	}
 	.works-fv__ttl--04 {
 		@include media_wide {
-			height: max(minpx(84), pcvw(84));
+			height: 84px;
 		}
 		@include media_narrow {
 			width: vw(81);
@@ -130,7 +130,7 @@ defineExpose({ listitem });
 	}
 	.works-fv__ttl--05 {
 		@include media_wide {
-			height: max(minpx(136), pcvw(136));
+			height: 136px;
 		}
 		@include media_narrow {
 			width: vw(85);

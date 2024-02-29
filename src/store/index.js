@@ -7,11 +7,13 @@ export const isRouterViewLoaded = ref(false);
 export const isOpeningReady = ref(false);
 
 export const media = ref('PC');
-let w = window.innerWidth;
+export let w = window.innerWidth;
+export let h = window.innerHeight;
 
 mediaDetect();
 window.addEventListener('resize', () => {
 	w = window.innerWidth;
+	h = window.innerHeight;
 	mediaDetect();
 });
 

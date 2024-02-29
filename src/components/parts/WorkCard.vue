@@ -49,7 +49,7 @@ const isDetailPage = ref(route.name === 'detail' ? true : false);
 		</div>
 		<!-- .workcard-txt -->
 		<div v-if="cat === 'web' && !isDetailPage" class="workcard-video">
-			<video class="workcard-video__item" loop preload="auto" muted disablepictureinpicture>
+			<video class="workcard-video__item" loop preload="auto" playsinlline muted disablepictureinpicture>
 				<source :src="`/assets/img/common/works/PC/video_${tag}.mp4`" />
 			</video>
 			<!-- .workcard-video__item -->
@@ -76,7 +76,7 @@ const isDetailPage = ref(route.name === 'detail' ? true : false);
 	gap: 95px;
 	border-radius: 16px;
 	padding: 30px;
-	width: calc(100% - 100px);
+	width: min(1900px, 100% - 100px);
 	height: calc(100% - 100px);
 	background: $c-offwhite;
 	@include media_narrow {

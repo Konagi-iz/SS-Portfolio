@@ -38,7 +38,7 @@ const props = defineProps({
 					<!-- .lcl-detail-ttl -->
 					<p class="lcl-detail__desc" v-text="data.desc"></p>
 					<!-- .lcl-detail__desc -->
-					<router-link v-if="cat === 'web'" to="" class="lcl-detail__link">
+					<!-- <router-link v-if="cat === 'web'" to="" class="lcl-detail__link">
 						<Button01
 							v-bind="{
 								isBig: false,
@@ -46,7 +46,7 @@ const props = defineProps({
 								txt: 'VISIT LIVE SITE',
 							}"
 						></Button01>
-					</router-link>
+					</router-link> -->
 				</div>
 				<!-- .lcl-detail__info -->
 				<div class="lcl-detail-preview">
@@ -57,6 +57,7 @@ const props = defineProps({
 						:src="`assets/img/common/works/PC/video_preview_${tag}.mp4`"
 						muted
 						autoplay
+						playsinlline
 						loop
 						disablepictureinpicture
 					></video>
@@ -119,6 +120,7 @@ const props = defineProps({
 		display: flex;
 		align-items: flex-start;
 		gap: 50px;
+		width: 100%;
 		@include media_narrow {
 			flex-direction: column-reverse;
 			gap: vw(40);
@@ -214,10 +216,11 @@ const props = defineProps({
 	.lcl-detail-preview {
 		position: relative;
 		overflow: hidden;
+		flex: 1;
 		border-radius: 8px;
-		min-height: 400px;
 		@include media_wide {
 			max-width: 1000px;
+			min-height: 400px;
 		}
 		@include media_narrow {
 			border-radius: vw(6);
@@ -226,9 +229,17 @@ const props = defineProps({
 	.lcl-detail-loading {
 		z-index: -1;
 		position: absolute;
-		width: 100%;
-		height: 99%;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		overflow: hidden;
+		border-radius: 8px;
+		width: 99%;
+		height: 97%;
 		background: #dcdcdc;
+		@include media_narrow {
+			border-radius: vw(6);
+		}
 		&::before {
 			content: '';
 			position: absolute;
