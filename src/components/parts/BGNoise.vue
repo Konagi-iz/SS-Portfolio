@@ -1,9 +1,17 @@
 <script setup>
+import { ref, watch } from 'vue';
+
 const props = defineProps({ opacity: Number });
+
+const opacityPercent = ref(props.opacity / 100);
+
+watch(props, (val) => {
+	opacityPercent.value = val.opacity / 100;
+});
 </script>
 
 <template>
-	<div class="bg-noise" :style="`opacity: ${opacity / 100};`"></div>
+	<div class="bg-noise"></div>
 </template>
 
 <style scoped lang="scss">
@@ -14,6 +22,7 @@ const props = defineProps({ opacity: Number });
 	right: 0;
 	bottom: 0;
 	left: 0;
+	opacity: v-bind(opacityPercent) !important;
 	background: url(/assets/img/common/img_bg-noise.png) repeat 0 0 / 200px;
 	animation: bg-noise 0.2s linear infinite;
 	pointer-events: none;

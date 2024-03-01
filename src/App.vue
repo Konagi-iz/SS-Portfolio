@@ -20,6 +20,11 @@ const route = useRoute();
 const router = useRouter();
 
 const wrapper = ref(null);
+const noise = ref(60);
+
+watch(route, (val) => {
+	noise.value = val.name === 'photo' ? 4 : 60;
+});
 
 /* Change root font-size ------------ */
 changeRootFontSize();
@@ -77,8 +82,8 @@ if (!ScrollTrigger.isTouch) {
 </script>
 
 <template>
-	<div ref="wrapper" class="wrapper">
-		<BGNoise :opacity="60"></BGNoise>
+	<div ref="wrapper" class="wrapper" :class="{ 'bg-white': $route.name === 'photo' }">
+		<BGNoise :opacity="noise"></BGNoise>
 		<Header></Header>
 		<main id="main">
 			<router-view></router-view>

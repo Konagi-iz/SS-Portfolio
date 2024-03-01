@@ -104,17 +104,12 @@ onMounted(() => {
 			top: vw(76);
 			left: vw(17);
 		}
-		&.scr-anin--on :deep(.photo-ttl__icon) {
+		&.scr-anin--on :deep(.ico-photo) {
 			opacity: 1;
 			transform: rotate(0deg);
 		}
 		&.scr-anin--on :deep(.split-span) {
 			transform: translateY(0);
-		}
-		:deep(.split-span) {
-			transform: translateY(142%);
-			transition: transform 1s $e-out-expo;
-			@include delay(6, 0.1);
 		}
 	}
 

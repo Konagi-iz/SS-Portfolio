@@ -1,10 +1,11 @@
 <script setup>
 import TextSplit from '@/components/parts/TextSplit.vue';
+import IconPhoto from '~icons/svg/ico-photo';
 </script>
 
 <template>
 	<div class="photo-ttl">
-		<img class="photo-ttl__icon" src="/assets/img/home/photo/PC/ico-photo.svg" alt="" width="142" height="142" loading="lazy" />
+		<IconPhoto></IconPhoto>
 		<h2 class="photo-ttl__txt">
 			<span class="photo-ttl__en font-en">
 				<TextSplit text="Photo"></TextSplit>
@@ -23,8 +24,9 @@ import TextSplit from '@/components/parts/TextSplit.vue';
 .photo-ttl {
 	display: flex;
 	align-items: flex-start;
+	color: $c-orange;
 }
-.photo-ttl__icon {
+:deep(.ico-photo) {
 	opacity: 0;
 	transform: rotate(-90deg);
 	width: 142px;
@@ -34,8 +36,16 @@ import TextSplit from '@/components/parts/TextSplit.vue';
 		width: vw(52);
 	}
 }
+:deep(.ico-photo__fill) {
+	fill: currentColor;
+}
 .photo-ttl__txt {
-	color: $c-orange;
+	color: currentColor;
+	:deep(.split-span) {
+		transform: translateY(142%);
+		transition: transform 1s $e-out-expo;
+		@include delay(6, 0.1);
+	}
 }
 .photo-ttl__en {
 	overflow: hidden;
