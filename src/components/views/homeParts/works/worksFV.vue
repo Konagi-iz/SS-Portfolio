@@ -176,7 +176,6 @@ onMounted(() => {
 		}
 	}
 	.lcl-works-fv__first-bg {
-		z-index: -1;
 		position: absolute;
 		top: 0;
 		left: 0;

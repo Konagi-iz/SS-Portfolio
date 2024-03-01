@@ -1,6 +1,9 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, watch } from 'vue';
 import { RouterView, useRoute, useRouter } from 'vue-router';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from '@studio-freight/lenis';
 import 'destyle.css';
 import '@/scss/base.scss';
 import '@/scss/nwclasses.scss';
@@ -9,7 +12,7 @@ import Header from '@/components/parts/Header.vue';
 import Footer from '@/components/parts/Footer.vue';
 import TransitionOverlay from '@/components/parts/TransitionOverlay.vue';
 import Stalker from '@/components/parts/Stalker.vue';
-import { isRouterViewLoaded, media } from '@/store';
+import { isNavActive, media } from '@/store';
 
 let w = window.innerWidth;
 
@@ -53,12 +56,29 @@ function handleResize() {
 		resizeAmount = 0;
 	}, 500);
 }
+
+/* 慣性スクロール ------------ */
+if (!ScrollTrigger.isTouch) {
+	const lenis = new Lenis({ lerp: 0.13 });
+	lenis.on('scroll', ScrollTrigger.update);
+	gsap.ticker.add((time) => {
+		lenis.raf(time * 1000);
+	});
+	gsap.ticker.lagSmoothing(0);
+	/* メニューを開いた時にスクロール無効化 ------------ */
+	watch(isNavActive, (val) => {
+		if (val) {
+			lenis.stop();
+		} else {
+			lenis.start();
+		}
+	});
+}
 </script>
 
 <template>
 	<div ref="wrapper" class="wrapper">
 		<BGNoise :opacity="60"></BGNoise>
-		<div v-if="route.name === 'home'" class="background"></div>
 		<Header></Header>
 		<main id="main">
 			<router-view></router-view>
@@ -69,16 +89,4 @@ function handleResize() {
 	</div>
 </template>
 
-<style scoped lang="scss">
-.background {
-	z-index: -1;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100lvh;
-}
-.background--hide {
-	background: transparent !important;
-}
-</style>
+<style scoped lang="scss"></style>

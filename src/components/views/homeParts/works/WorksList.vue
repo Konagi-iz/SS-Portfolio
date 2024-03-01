@@ -16,63 +16,51 @@ onMounted(() => {
 	card.value.forEach((item, index) => {
 		const video = item.querySelector('video');
 
-		/* 後ろに隠れたら動画をリセットする ------------ */
-		if (index < card.value.length - 1) {
+		if (video) {
+			/* 後ろに隠れたら動画をリセットする ------------ */
+			if (index < card.value.length - 1) {
+				ScrollTrigger.create({
+					trigger: item,
+					start: '100% top',
+					onEnter: () => {
+						video.currentTime = 0;
+						video.pause();
+					},
+					onLeaveBack: () => {
+						if (!isComponentUnmounted) {
+							video.play();
+						}
+					},
+				});
+			}
+
+			/* 画面に入ったら動画を再生する ------------ */
 			ScrollTrigger.create({
 				trigger: item,
-				start: '100% top',
+				start: 'top bottom',
 				onEnter: () => {
-					video.currentTime = 0;
-					video.pause();
+					if (!isComponentUnmounted) {
+						video.play();
+					}
 				},
 				onLeaveBack: () => {
-					if (!isComponentUnmounted) {
-						video
-							.play()
-							.then(() => {
-								return;
-							})
-							.catch((error) => {
-								console.error('動画の再生に失敗しました。', error);
-							});
-					}
+					video.currentTime = 0;
+					video.pause();
 				},
 			});
 		}
 
-		/* 画面に入ったら動画を再生する ------------ */
-		ScrollTrigger.create({
-			trigger: item,
-			start: 'top bottom',
-			onEnter: () => {
-				if (!isComponentUnmounted) {
-					video
-						.play()
-						.then(() => {
-							return;
-						})
-						.catch((error) => {
-							console.error('動画の再生に失敗しました。', error);
-						});
-				}
-			},
-			onLeaveBack: () => {
-				video.currentTime = 0;
-				video.pause();
-			},
-		});
-
 		/* 後ろのカードを小さくする ------------ */
-		// if (index < card.value.length - 1) {
-		// 	gsap.to(item, {
-		// 		opacity: 0,
-		// 		scrollTrigger: {
-		// 			trigger: item,
-		// 			start: 'top top',
-		// 			scrub: 1,
-		// 		},
-		// 	});
-		// }
+		if (index < card.value.length - 1) {
+			gsap.to(item, {
+				scale: 0.95,
+				scrollTrigger: {
+					trigger: item,
+					start: 'top top',
+					scrub: 1,
+				},
+			});
+		}
 	});
 
 	/* VIEW ALL WORKS アニメーション ------------ */

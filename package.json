@@ -12,7 +12,7 @@
     "@studio-freight/lenis": "^1.0.36",
     "destyle.css": "^4.0.1",
     "gsap": "^3.12.5",
-    "swiper": "^11.0.6",
+    "swiper": "^11.0.7",
     "three": "^0.151.0",
     "unplugin-fonts": "^1.1.1",
     "vue": "^3.4.15",

@@ -30,7 +30,7 @@ const router = createRouter({
 			path: '/photography',
 			name: 'photo',
 			component: () => import('@/components/views/PhotographyView.vue'),
-			redirect: { name: 'coming' },
+			// redirect: { name: 'coming' },
 		},
 
 		{

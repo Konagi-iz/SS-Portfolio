@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch, onMounted, onUnmounted } from 'vue';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -111,10 +112,11 @@ const initThreeJS = async () => {
 
 	/* オープニング ------------ */
 	watch(isOpeningReady, () => {
+		const delay = 1;
 		gsap.from([visibleWrap.rotation, maskWrap.rotation], {
 			y: -7,
 			duration: 3,
-			delay: 0.5,
+			delay: delay,
 			ease: 'expo.out',
 		});
 		gsap.to([visibleWrap.scale, maskWrap.scale], {
@@ -122,7 +124,7 @@ const initThreeJS = async () => {
 			y: 1,
 			z: 1,
 			duration: 2,
-			delay: 0.5,
+			delay: delay,
 			ease: 'expo.out',
 		});
 	});
@@ -165,7 +167,7 @@ const initThreeJS = async () => {
 	// ];
 	// scene.add(keyPointLightHelper, frontPointLightHelper, rearPointLightHelper);
 
-	// ライトをカーソルに追従させるカーソル
+	// ライトをカーソルに追従させる
 	const mouse = {
 		x: 0,
 		y: 0,
@@ -198,9 +200,11 @@ const initThreeJS = async () => {
 			y: mouse.y * 0.04,
 		});
 	}
-	container.value.parentElement.addEventListener('mousemove', (e) => {
-		onMove(e.clientX, e.clientY);
-	});
+	if (!ScrollTrigger.isTouch) {
+		container.value.parentElement.addEventListener('mousemove', (e) => {
+			onMove(e.clientX, e.clientY);
+		});
+	}
 
 	// マスク
 	const clearPass = new ClearPass();
@@ -234,13 +238,13 @@ const initThreeJS = async () => {
 
 		crystal.material.time = t / 1000;
 		[crystal, mask].forEach((obj) => {
-			// obj.rotation.z = sec * (Math.PI / 20);
 			obj.rotation.y = sec * (Math.PI / 10);
 		});
 
-		if (media.value === 'PC') {
+		if (!ScrollTrigger.isTouch) {
 			onRaf();
 		}
+
 		// renderer.render(scene, camera);
 		renderer.clear();
 		composer.render();
@@ -252,6 +256,7 @@ const initThreeJS = async () => {
 	window.addEventListener('resize', onResize);
 };
 
+/* リサイズ処理 ------------ */
 function onResize() {
 	w = window.innerWidth;
 	h = window.innerHeight;

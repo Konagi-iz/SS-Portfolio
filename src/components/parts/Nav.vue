@@ -2,18 +2,10 @@
 import { watch } from 'vue';
 import Menu from '@/components/parts/Menu.vue';
 import IconStar from '~icons/svg/ico-star';
-import { lenis } from '@/main';
 import { isNavActive, media } from '@/store';
 import { useToggleNav } from '@/components/composable/toggleNav';
 
-/* スクロール無効化 ------------ */
-watch(isNavActive, (val) => {
-	if (val) {
-		lenis.stop();
-	} else {
-		lenis.start();
-	}
-});
+
 </script>
 
 <template>

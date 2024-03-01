@@ -3,14 +3,15 @@ import { ref, onMounted } from 'vue';
 import { gsap } from 'gsap';
 import Slider from '@/components/views/homeParts/photography/Slider.vue';
 import Button01 from '@/components/parts/Button01.vue';
+import PhotographyTitle from '@/components/parts/PhotographyTitle.vue';
 import TextSplit from '@/components/parts/TextSplit.vue';
 
 const section = ref(null);
+const bg = ref(null);
 
 onMounted(() => {
 	/* 背景色の切り替えアニメーション ------------ */
-	const bg = document.querySelector('.background');
-	gsap.to(bg, {
+	gsap.to(bg.value, {
 		background: '#e2e2e2',
 		scrollTrigger: {
 			trigger: section.value,
@@ -19,23 +20,24 @@ onMounted(() => {
 			scrub: 1,
 		},
 	});
+	gsap.to(bg.value, {
+		autoAlpha: 0,
+		duration: 0.01,
+		scrollTrigger: {
+			trigger: section.value,
+			start: '110% top',
+			toggleActions: 'play none none reverse',
+		},
+	});
 });
 </script>
 
 <template>
+	<Teleport to=".wrapper">
+		<div v-if="$route.name === 'home'" ref="bg" class="background"></div>
+	</Teleport>
 	<section ref="section" class="lcl-photo">
-		<div class="lcl-photo-ttl">
-			<img class="lcl-photo__icon scr-anin" src="/assets/img/home/photo/PC/ico-photo.svg" alt="" width="142" height="142" loading="lazy" />
-			<h2 class="lcl-photo-ttl__txt scr-anin">
-				<span class="lcl-photo-ttl__en font-en">
-					<TextSplit text="Photo"</TextSplit>
-				</span>
-				<span class="lcl-photo-ttl__dp font-dp">
-					<TextSplit text="graphy"></TextSplit>
-				</span>
-			</h2>
-			<!-- .lcl-photo-ttl__txt -->
-		</div>
+		<PhotographyTitle class="lcl-photo-ttl scr-anin"></PhotographyTitle>
 		<!-- .lcl-photo-ttl -->
 		<div class="lcl-photo-desc">
 			<!-- prettier-ignore -->
@@ -57,7 +59,7 @@ onMounted(() => {
 		</div>
 		<!-- .lcl-photo-desc -->
 		<Slider></Slider>
-		<router-link :to="{name: 'photo'}" class="lcl-photo__link">
+		<router-link :to="{ name: 'photo' }" class="lcl-photo__link">
 			<Button01
 				v-bind="{
 					isBig: true,
@@ -70,6 +72,20 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+/* background ------------ */
+.background {
+	z-index: -1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100lvh;
+}
+.background--hide {
+	background: transparent !important;
+}
+
+/* photo ------------ */
 .lcl-photo {
 	position: relative;
 	padding-block: 439px 202px;
@@ -84,56 +100,21 @@ onMounted(() => {
 		position: absolute;
 		top: 176px;
 		left: calc((100% - 1000px) / 2);
-		display: flex;
-		align-items: flex-start;
 		@include media_narrow {
 			top: vw(76);
 			left: vw(17);
 		}
-	}
-	.lcl-photo__icon {
-		opacity: 0;
-		transform: rotate(-90deg);
-		width: 142px;
-		height: auto;
-		transition: opacity .8s $e-out-circ, transform .8s $e-out-circ;
-		@include media_narrow {
-			width: vw(52);
-		}
-		&.scr-anin--on {
+		&.scr-anin--on :deep(.photo-ttl__icon) {
 			opacity: 1;
 			transform: rotate(0deg);
 		}
-	}
-	.lcl-photo-ttl__txt {
-		color: $c-orange;
 		&.scr-anin--on :deep(.split-span) {
 			transform: translateY(0);
 		}
 		:deep(.split-span) {
 			transform: translateY(142%);
 			transition: transform 1s $e-out-expo;
-			@include delay(6, 0.1)
-		}
-	}
-	.lcl-photo-ttl__en {
-		overflow: hidden;
-		display: block;
-		@include fz(195);
-		line-height: 0.75;
-		@include media_narrow {
-			@include fz(70);
-		}
-	}
-	.lcl-photo-ttl__dp {
-		clip-path: inset(0 0 -30% 0);
-		display: block;
-		margin-left: 157px;
-		@include fz(187);
-		line-height: 0.75;
-		@include media_narrow {
-			margin-left: vw(50);
-			@include fz(70);
+			@include delay(6, 0.1);
 		}
 	}
 

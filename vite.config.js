@@ -7,7 +7,13 @@ import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 
 export default defineConfig({
 	plugins: [
-		vue(),
+		vue({
+			template: {
+				compilerOptions: {
+					isCustomElement: (tag) => /^(swiper|swiper-slide|swiper-container)$/.test(tag),
+				},
+			},
+		}),
 		UnFonts({
 			google: {
 				families: [
