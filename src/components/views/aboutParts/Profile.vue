@@ -73,7 +73,7 @@ import IconStar from '~icons/svg/ico-star';
 			<!-- .lcl-profile-list -->
 			<img
 				class="lcl-profile__img scr-anin fade-in-btm"
-				src="/assets/img/about/PC/img_prof.jpg"
+				src="/assets/img/about/PC/img_prof.webp"
 				alt="私のプロフィール写真"
 				width="1000"
 				height="1308"

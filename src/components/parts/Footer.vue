@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import { gsap } from 'gsap';
 import TextSplit from '@/components/parts/TextSplit.vue';
 import { isRouterViewLoaded } from '@/store';
@@ -7,6 +8,7 @@ import IconAngleRight from '~icons/svg/ico-angle-right';
 
 const props = defineProps({ wrapper: Object });
 
+const route = useRoute();
 const main = ref(null);
 const mail1 = ref(null);
 const mail2 = ref(null);
@@ -25,7 +27,7 @@ watch(isRouterViewLoaded, (flag) => {
 		}
 
 		gsap.set(props.wrapper, {
-			background: '#101010',
+			background: route.name === 'photo' ? '#e2e2e2' : '#101010',
 		});
 
 		/* 背景色を切り替えるアニメーション ------------ */
@@ -181,13 +183,23 @@ watch(isRouterViewLoaded, (flag) => {
 		:deep(.split-span) {
 			@include fz(64);
 			line-height: 0.9;
+			transition: transform 1s $e-out-circ, translate 0.8s $e-out-expo;
 			@include media_narrow {
 				@include fz(48);
+			}
+			@include media_hover {
+				&:hover {
+					translate: 0 -60% !important;
+				}
+				&:hover + *,
+				&:has(+ *:hover) {
+					translate: 0 -30% !important;
+				}
 			}
 		}
 	}
 	.footer-mail__in {
-		clip-path: inset(0 0 -10% 0);
+		clip-path: inset(-100% 0 -14% 0);
 		display: inline-block;
 	}
 

@@ -24,8 +24,8 @@ defineExpose({ listitem });
 			:class="{ 'works-fv__item--reverse': index % 2 === 0 }"
 		>
 			<picture class="works-fv__pic">
-				<source :srcset="`/assets/img/common/works/SP/img_selected_${item.tag}.jpg`" media="(max-width: 677px)" />
-				<img class="works-fv__img" :src="`/assets/img/common/works/PC/img_selected_${item.tag}.jpg`" alt="" width="177" height="610" />
+				<source :srcset="`/assets/img/common/works/SP/img_selected_${item.tag}.webp`" media="(max-width: 677px)" />
+				<img class="works-fv__img" :src="`/assets/img/common/works/PC/img_selected_${item.tag}.webp`" alt="作品画像" width="177" height="610" />
 			</picture>
 			<p class="works-fv__ttl font-en" :class="`works-fv__ttl--0${index + 1}`">{{ item.title }}</p>
 		</li>

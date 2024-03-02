@@ -24,7 +24,7 @@ let canvasW;
 let canvasH;
 const viewport = media.value === 'PC' ? 1300 : 375;
 
-let renderer, camera, crystal, mask;
+let renderer, camera, crystal, mask, keyPointLight, frontPointLight, rearPointLight;
 
 const container = ref(null);
 
@@ -129,7 +129,7 @@ const initThreeJS = async () => {
 		});
 	});
 
-	const texture = new THREE.TextureLoader().load(`/assets/img/home/hero/${media.value}/img_hero.jpg`, (tex) => {
+	const texture = new THREE.TextureLoader().load(`/assets/img/home/hero/${media.value}/img_hero.webp`, (tex) => {
 		// 縦横比を保って適当にリサイズ
 		const imgW = w * 1.05;
 		const imgH = tex.image.height / (tex.image.width / imgW);
@@ -150,7 +150,7 @@ const initThreeJS = async () => {
 		media.value === 'PC' ? 100 : 100, 
 		media.value === 'PC' ? 20000 : 2000
 	];
-	const [keyPointLight, frontPointLight, rearPointLight] = [
+	[keyPointLight, frontPointLight, rearPointLight] = [
 		new THREE.PointLight(0xff7e57, pointLightIntensity[0], 0, 0.1),
 		new THREE.PointLight(0xff7e57, pointLightIntensity[1], 0, 0.01),
 		new THREE.PointLight(0xff4b12, pointLightIntensity[2], 0, 0.01),
@@ -167,43 +167,8 @@ const initThreeJS = async () => {
 	// ];
 	// scene.add(keyPointLightHelper, frontPointLightHelper, rearPointLightHelper);
 
-	// ライトをカーソルに追従させる
-	const mouse = {
-		x: 0,
-		y: 0,
-		currentX: 0,
-		currentY: 0,
-	};
-	function onMove(x, y) {
-		mouse.currentX = (x - w / 2) * 2;
-		mouse.currentY = (-y + w / 3) * 2;
-	}
-	// multiplierを小さくするほど補間が強くなる
-	function lerp(start, end, multiplier) {
-		return start * (1 - multiplier) + end * multiplier;
-	}
-	function onRaf() {
-		mouse.x = lerp(mouse.x, mouse.currentX, 0.015);
-		mouse.y = lerp(mouse.y, mouse.currentY, 0.015);
-		// pointLightの位置をカーソルに応じて移動
-		gsap.set(frontPointLight.position, {
-			x: mouse.x,
-			y: mouse.y,
-		});
-		gsap.set(rearPointLight.position, {
-			x: -mouse.x * 3,
-			y: -mouse.y * 3,
-		});
-		// モデルの位置をカーソルに応じて移動
-		gsap.set([crystal.position, mask.position], {
-			x: mouse.x * 0.04,
-			y: mouse.y * 0.04,
-		});
-	}
 	if (!ScrollTrigger.isTouch) {
-		container.value.parentElement.addEventListener('mousemove', (e) => {
-			onMove(e.clientX, e.clientY);
-		});
+		container.value.parentElement.addEventListener('mousemove', onMove);
 	}
 
 	// マスク
@@ -255,6 +220,40 @@ const initThreeJS = async () => {
 	onResize();
 	window.addEventListener('resize', onResize);
 };
+
+/* ライトをカーソルに追従させる ------------ */
+const mouse = {
+	x: 0,
+	y: 0,
+	currentX: 0,
+	currentY: 0,
+};
+function onMove(event) {
+	mouse.currentX = (event.clientX - w / 2) * 2;
+	mouse.currentY = (-event.clientY + w / 3) * 2;
+}
+// multiplierを小さくするほど補間が強くなる
+function lerp(start, end, multiplier) {
+	return start * (1 - multiplier) + end * multiplier;
+}
+function onRaf() {
+	mouse.x = lerp(mouse.x, mouse.currentX, 0.015);
+	mouse.y = lerp(mouse.y, mouse.currentY, 0.015);
+	// pointLightの位置をカーソルに応じて移動
+	gsap.set(frontPointLight.position, {
+		x: mouse.x,
+		y: mouse.y,
+	});
+	gsap.set(rearPointLight.position, {
+		x: -mouse.x * 3,
+		y: -mouse.y * 3,
+	});
+	// モデルの位置をカーソルに応じて移動
+	gsap.set([crystal.position, mask.position], {
+		x: mouse.x * 0.04,
+		y: mouse.y * 0.04,
+	});
+}
 
 /* リサイズ処理 ------------ */
 function onResize() {

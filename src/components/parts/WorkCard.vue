@@ -60,7 +60,7 @@ const isHomePage = ref(route.name === 'home' ? true : false);
 		<div v-if="isSmall || isDetailPage || cat === 'design' || (media === 'SP' && isHomePage)" class="workcard-thumbnail">
 			<img
 				class="workcard-thumbnail__img"
-				:src="`/assets/img/common/works/PC/img_thumbnail_${tag}.jpg`"
+				:src="`/assets/img/common/works/PC/img_thumbnail_${tag}.webp`"
 				:alt="`${ttl}のサムネイル`"
 				width="932"
 				height="474"

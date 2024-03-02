@@ -13,7 +13,7 @@ import TextSplit from '@/components/parts/TextSplit.vue';
 			<li class="lcl-hobbies-list__item lcl-hobbies-list__item--gadget scr-anin fade-in-btm">
 				<img
 					class="lcl-hobbies-list__img"
-					src="/assets/img/about/PC/img_gadget.jpg"
+					src="/assets/img/about/PC/img_gadget.webp"
 					alt="自室のPCデスクの写真"
 					loading="lazy"
 					width="1656"
@@ -25,7 +25,7 @@ import TextSplit from '@/components/parts/TextSplit.vue';
 			<li class="lcl-hobbies-list__item lcl-hobbies-list__item--photography scr-anin fade-in-btm">
 				<img
 					class="lcl-hobbies-list__img"
-					src="/assets/img/about/PC/img_photography.jpg"
+					src="/assets/img/about/PC/img_photography.webp"
 					alt="カメラを持っている写真"
 					loading="lazy"
 					width="1280"
@@ -46,7 +46,7 @@ import TextSplit from '@/components/parts/TextSplit.vue';
 			<li class="lcl-hobbies-list__item lcl-hobbies-list__item--bike scr-anin fade-in-btm">
 				<img
 					class="lcl-hobbies-list__img"
-					src="/assets/img/about/PC/img_bike.jpg"
+					src="/assets/img/about/PC/img_bike.webp"
 					alt="愛車（自転車）の写真"
 					loading="lazy"
 					width="1300"
@@ -120,7 +120,7 @@ import TextSplit from '@/components/parts/TextSplit.vue';
 	}
 	.lcl-hobbies-list__item--photography {
 		@include media_wide {
-			align-items: center;
+			align-items: flex-end;
 			margin-inline: auto 0;
 			margin-top: -95px;
 			width: calc(100% - 540px);
@@ -131,6 +131,11 @@ import TextSplit from '@/components/parts/TextSplit.vue';
 				width: 100%;
 				height: 420px;
 				transition: transform 1s $e-out-expo;
+			}
+			.lcl-hobbies-list__ttl {
+				@include media_wide {
+					margin-right: 258px;
+				}
 			}
 		}
 	}

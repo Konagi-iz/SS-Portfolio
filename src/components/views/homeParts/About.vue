@@ -105,7 +105,7 @@ onMounted(() => {
 			<img
 				ref="topBG"
 				class="lcl-about-top__bg"
-				src="/assets/img/home/about/PC/img_bg.png"
+				src="/assets/img/home/about/PC/img_bg.webp"
 				alt=""
 				width="1166"
 				height="1858"
@@ -114,7 +114,7 @@ onMounted(() => {
 			<div class="lcl-about-top__img-wrp">
 				<img
 					class="lcl-about-top__img"
-					src="/assets/img/home/about/PC/img_prof.jpg"
+					src="/assets/img/home/about/PC/img_prof.webp"
 					alt="私のプロフィール写真"
 					width="424"
 					height="555"
@@ -144,7 +144,7 @@ onMounted(() => {
 		<!-- .lcl-about-top -->
 
 		<div class="lcl-about-btm">
-			<img class="lcl-about-btm__bg" src="/assets/img/home/about/PC/img_bg.png" alt="" width="1166" height="1858" loading="lazy" />
+			<img class="lcl-about-btm__bg" src="/assets/img/home/about/PC/img_bg.webp" alt="" width="1166" height="1858" loading="lazy" />
 			<div ref="primary" class="lcl-about-btm__primary">
 				<div ref="design" class="lcl-about-btm-big lcl-about-btm-big--design">
 					<p class="lcl-about-btm-big__en font-dp">
@@ -162,7 +162,7 @@ onMounted(() => {
 				</div>
 				<!-- .lcl-about-btm-big -->
 				<div class="lcl-about-btm__cross-wrp">
-					<img ref="crossIcon" class="lcl-about-btm__cross" src="/assets/img/home/about/PC/ico_cross.svg" alt="" />
+					<img ref="crossIcon" class="lcl-about-btm__cross" src="/assets/img/home/about/PC/ico_cross.svg" alt="掛ける" />
 				</div>
 				<div ref="coding" class="lcl-about-btm-big lcl-about-btm-big--coding">
 					<p class="lcl-about-btm-big__en font-dp">

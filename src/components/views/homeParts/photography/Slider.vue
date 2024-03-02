@@ -109,8 +109,8 @@ const onTransitionEnd = () => {
 					>
 						<img
 							class="lcl-slider__img"
-							:src="`/assets/img/home/photo/PC/img_0${index + 1}.png`"
-							alt=""
+							:src="`/assets/img/home/photo/PC/img_0${index + 1}.webp`"
+							alt="写真"
 							width="558"
 							height="558"
 							loading="lazy"

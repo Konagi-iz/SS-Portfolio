@@ -42,7 +42,7 @@ watch(modalContent, (content) => {
 			<!-- .lcl-modal__txt -->
 			<img
 				class="lcl-modal__img"
-				src="/assets/img/common/works/PC/img_closeup_design_luna.jpg"
+				src="/assets/img/common/works/PC/img_closeup_design_luna.webp"
 				alt=""
 				width="760"
 				height="720"

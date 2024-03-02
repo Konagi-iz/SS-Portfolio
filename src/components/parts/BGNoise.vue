@@ -11,7 +11,7 @@ watch(props, (val) => {
 </script>
 
 <template>
-	<div class="bg-noise"></div>
+	<div class="bg-noise" :style="`opacity: ${opacityPercent}`"></div>
 </template>
 
 <style scoped lang="scss">
@@ -22,7 +22,6 @@ watch(props, (val) => {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	opacity: v-bind(opacityPercent) !important;
 	background: url(/assets/img/common/img_bg-noise.png) repeat 0 0 / 200px;
 	animation: bg-noise 0.2s linear infinite;
 	pointer-events: none;

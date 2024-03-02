@@ -65,8 +65,8 @@ const props = defineProps({
 					<img
 						v-if="cat === 'design'"
 						class="lcl-detail-preview__img"
-						:src="`/assets/img/common/works/PC/img_preview_${tag}.jpg`"
-						alt=""
+						:src="`/assets/img/common/works/PC/img_preview_${tag}.webp`"
+						alt="作品画像"
 						width="1598"
 						height="918"
 					/>

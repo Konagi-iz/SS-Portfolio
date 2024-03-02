@@ -47,7 +47,7 @@ function autoplay() {
 			>
 				<img
 					class="lcl-fv-slider__img"
-					:src="`/assets/img/photography/PC/img_fv_0${index + 1}.jpg`"
+					:src="`/assets/img/photography/PC/img_fv_0${index + 1}.webp`"
 					:alt="`マジックアワーの写真${index + 1}`"
 					width="1560"
 					height="1404"
@@ -75,14 +75,24 @@ function autoplay() {
 <style scoped lang="scss">
 .lcl-fv {
 	position: relative;
+	overflow: hidden;
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
 	width: 100%;
 	height: 730px;
+	@include media_narrow {
+		height: max(667px, 100lvh);
+	}
 
 	/* slider ------------ */
 	.lcl-fv-slider {
+		position: relative;
 		display: flex;
 		width: 100%;
-		height: 100%;
+		height: 702px;
+		@include media_narrow {
+			height: 98%;
+		}
 		&.opening--on .lcl-fv-slider__slide {
 			opacity: 1;
 		}
@@ -140,6 +150,11 @@ function autoplay() {
 		left: 39px;
 		display: flex;
 		gap: 8px;
+		@include media_narrow {
+			left: vw(15);
+			bottom: vw(69);
+			gap: vw(6);
+		}
 	}
 	.lcl-fv-pagination__bullet {
 		position: relative;
@@ -150,6 +165,10 @@ function autoplay() {
 		background: $c-white;
 		transition: width 0.6s $e-out-circ, background-color 0.6s $e-out-circ;
 		cursor: pointer;
+		@include media_narrow {
+			width: vw(6);
+			height: vw(6);
+		}
 		&::after {
 			content: '';
 			position: absolute;
@@ -172,6 +191,9 @@ function autoplay() {
 	}
 	.lcl-fv-pagination__bullet--active {
 		width: 50px;
+		@include media_narrow {
+			width: vw(30);
+		}
 		&::after {
 			transform: scaleX(1);
 			transition-duration: v-bind(_delay);
@@ -185,6 +207,10 @@ function autoplay() {
 		left: 31px;
 		bottom: 91px;
 		color: $c-white;
+		@include media_narrow {
+			left: vw(7);
+			bottom: vw(92);
+		}
 		&.opening--on :deep(.ico-photo) {
 			opacity: 1;
 			transform: rotate(0deg);

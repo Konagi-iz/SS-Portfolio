@@ -82,7 +82,7 @@ if (!ScrollTrigger.isTouch) {
 </script>
 
 <template>
-	<div ref="wrapper" class="wrapper" :class="{ 'bg-white': $route.name === 'photo' }">
+	<div ref="wrapper" class="wrapper">
 		<BGNoise :opacity="noise"></BGNoise>
 		<Header></Header>
 		<main id="main">

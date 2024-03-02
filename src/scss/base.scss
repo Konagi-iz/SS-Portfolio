@@ -67,7 +67,4 @@ html.lenis {
 	@include media_wide {
 		min-width: 1024px;
 	}
-	&.bg-white {
-		background: $c-offwhite !important;
-	}
 }

@@ -35,7 +35,7 @@ import TextSplit from '@/components/parts/TextSplit.vue';
 		</ul>
 		<!-- .lcl-awards-list -->
 		<div class="lcl-awards-tips">
-			<img class="lcl-awards-tips__icon" src="/assets/img/about/PC/ico-tips.svg" alt="" width="24" height="24" loading="lazy" />
+			<img class="lcl-awards-tips__icon" src="/assets/img/about/PC/ico-tips.svg" alt="tips" width="24" height="24" loading="lazy" />
 			<p class="lcl-awards-tips__txt">
 				HAL 3校合同学内コンテスト：東京、名古屋、大阪の3校の同じ専攻の学生が同じ課題に取り組む学内コンテスト
 			</p>
