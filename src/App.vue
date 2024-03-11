@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { RouterView, useRoute, useRouter } from 'vue-router';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -78,6 +78,38 @@ if (!ScrollTrigger.isTouch) {
 			lenis.start();
 		}
 	});
+}
+
+/* AFKでトップに戻る ------------ */
+let AFKTimer;
+const events = ['mousemove', 'scroll'];
+
+onMounted(() => {
+	setAFKTimer();
+	events.forEach((e) => {
+		window.addEventListener(e, clearAFKTimer);
+	});
+});
+
+function setAFKTimer() {
+	AFKTimer = setTimeout(() => {
+		backToHome();
+	}, 60000);
+}
+
+function clearAFKTimer() {
+	if (AFKTimer) {
+		clearTimeout(AFKTimer);
+		setAFKTimer();
+	}
+}
+
+function backToHome() {
+	if (route.name === 'home') {
+		router.go(0);
+	} else {
+		router.push({ name: 'home' });
+	}
 }
 </script>
 
